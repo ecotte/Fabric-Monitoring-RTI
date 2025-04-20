@@ -34,5 +34,9 @@
     {
         "name": "Monitoring Extraction Scanner.Notebook",
         "id": "a09748a4-ab11-9a40-4567-bffd9c19595e"
+    },
+    {
+        "name": "Platform Monitoring.KQLDashboard",
+        "id": "95ac7fd2-7032-88aa-413d-f195f8397f91"
     }
 ]
