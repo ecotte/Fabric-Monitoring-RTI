@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "id": "10e64794-a92d-412e-b05c-cc524c2d5ba1",
+      "name": "CapacityEvents",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "b9b655ca-c23a-4551-98cd-f6ac5a56420a",
+      "name": "PlatformMonitoringEventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "3952ada3-75b7-84cd-411f-7d1aaf376871",
+        "tableName": "CapacityEventsRaw",
+        "connectionName": "CapacityUtilizationEvents",
+        "mappingRuleName": "CapacityEventsRaw_mapping"
+      },
+      "inputNodes": [
+        {
+          "name": "CapacityUtilizationEvents-stream"
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "34c86e78-855b-4780-a57f-d3e4b5f2070e",
+      "name": "CapacityUtilizationEvents-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "new-source"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.0"
+}
