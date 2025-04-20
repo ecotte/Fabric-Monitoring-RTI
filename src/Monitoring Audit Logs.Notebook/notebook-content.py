@@ -38,7 +38,7 @@
 # CELL ********************
 
 cluster_ingest = "{kusto_ingest_uri}"
-cluster_query = "{kusto_ingest_uri}"
+cluster_query = "{kusto_query_uri}"
 database_name = '{kusto_db_name}'
 
 key_vault_uri = f"{key_vault_uri}"
