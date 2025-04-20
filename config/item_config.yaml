@@ -1,0 +1,8 @@
+workspace: 
+  src: 'Fabric Platform Monitoring [Dev]'
+  trg: 'Fabric Platform Monitoring [Test]'
+
+items:
+  - PlatformMonitoring.Eventhouse
+  - PlatformMonitoring.KQLDatabase
+  

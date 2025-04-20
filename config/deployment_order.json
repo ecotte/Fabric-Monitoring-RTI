@@ -1,0 +1,10 @@
+[
+    {
+        "name": "PlatformMonitoring.Eventhouse",
+        "id": "569fc432-6c1c-b12c-4955-5bc489624da3"
+    },
+    {
+        "name": "PlatformMonitoring.KQLDatabase",
+        "id": "3952ada3-75b7-84cd-411f-7d1aaf376871"
+    }
+]
