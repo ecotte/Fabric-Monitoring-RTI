@@ -1,6 +1,6 @@
 workspace: 
-  src: 'Fabric Platform Monitoring [Dev]'
-  trg: 'Fabric Platform Monitoring [Test]'
+  src: 'Microsoft Fabric Platform Monitoring'
+  trg: 'Microsoft Fabric Platform Monitoring [Test]'
 
 items:
   - PlatformMonitoring.Eventhouse
