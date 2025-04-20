@@ -48,7 +48,7 @@ key_vault_client_secret = f"{key_vault_client_secret}"
 
 WAIT_TIME = 2
 
-DAILY = True
+DAILY = False
 
 # METADATA ********************
 
