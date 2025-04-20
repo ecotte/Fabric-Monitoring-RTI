@@ -4,5 +4,4 @@ workspace:
 
 items:
   - PlatformMonitoring.Eventhouse
-  - PlatformMonitoring.KQLDatabase
   
