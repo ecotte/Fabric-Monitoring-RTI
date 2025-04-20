@@ -5,4 +5,9 @@ workspace:
 items:
   - PlatformMonitoring.Eventhouse
   - PlatformMonitoring.KQLDatabase
-  
+  - CapacityUtilizationEvents.Eventstream
+  - GatewayMonitoringHeartbeat.Eventstream
+  - GatewayMonitoringReports.Eventstream
+  - Monitoring Audit Logs.Notebook
+  - Monitoring Extraction Inventory.Notebook
+  - Monitoring Extraction Scanner.Notebook
