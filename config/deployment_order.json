@@ -4,11 +4,11 @@
         "id": "63b564e3-bc45-46b0-aa00-31e28a727076"
     },
     {
-        "name": "PlatformMonitoring.Eventhouse",
+        "name": "Platform and Audit DB.Eventhouse",
         "id": "569fc432-6c1c-b12c-4955-5bc489624da3"
     },
     {
-        "name": "PlatformMonitoring.KQLDatabase",
+        "name": "Platform and Audit DB.KQLDatabase",
         "id": "3952ada3-75b7-84cd-411f-7d1aaf376871"
     },
     {

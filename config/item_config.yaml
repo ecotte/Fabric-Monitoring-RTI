@@ -3,8 +3,8 @@ workspace:
   trg: 'Microsoft Fabric Platform Monitoring [Test]'
 
 items:
-  - PlatformMonitoring.Eventhouse
-  - PlatformMonitoring.KQLDatabase
+  - Platform and Audit DB.Eventhouse
+  - Platform and Audit DB.KQLDatabase
   - CapacityUtilizationEvents.Eventstream
   - GatewayMonitoringHeartbeat.Eventstream
   - GatewayMonitoringReports.Eventstream
