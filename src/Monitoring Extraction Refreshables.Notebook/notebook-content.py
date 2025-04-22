@@ -158,15 +158,18 @@ def refreshables_process(connection_info:dict,all:bool=False):
             key_vault_tenant_id=connection_info['key_vault_tenant_id'],
             key_vault_client_id=connection_info['key_vault_client_id'],
             key_vault_client_secret=connection_info['key_vault_client_secret']):
-            refreshables = admin.get_refreshables(
+            df = admin.get_refreshables(
                 expand="capacity,group",
                 filter=filter,
                 )
 
     if len(refreshables.index) > 0:
-        kusto_ingest_process(df=refreshables,table_name="RefreshablesRaw",connection_info=connection_info)
+        df["Configured By"]=df["Configured By"].apply(json.dumps)
+        df["Refresh Schedule Days"]=df["Refresh Schedule Days"].apply(json.dumps)
+        df["Refresh Schedule Times"]=df["Refresh Schedule Times"].apply(json.dumps)
+        kusto_ingest_process(df=df,table_name="RefreshablesRaw",connection_info=connection_info)
     
-    return refreshables
+    return df
 
 
 # METADATA ********************

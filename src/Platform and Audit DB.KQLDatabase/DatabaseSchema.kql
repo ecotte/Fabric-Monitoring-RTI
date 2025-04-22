@@ -824,7 +824,7 @@ RefreshablesRaw
 | summarize arg_max(IngestionTime, ['Workspace Id'], ['Workspace Name'], ['Item Id'], ['Item Name'], ['Item Kind'], ['Capacity Id'], ['Capacity Name'],['Capacity SKU'], ['Refresh Type'], ['Start Time']=todatetime(['Start Time']), ['End Time']=todatetime(['End Time']), Status, ['Service Exception Json'], ['Extended Status'], ['Refresh Attempts']) by ['Request Id']
 | extend Duration=totimespan(['End Time'] - ['Start Time'])
 | extend DurationMs=round(tolong(Duration)/10000,0)
-| join kind=leftanti ItemRefreshes on ['Request Id']
+| join kind=leftanti ItemRefreshes on ['Start Time'] and ['Request Id']
 }
 .create-or-alter materialized-view with (Folder = "Gateway/Information")  GatewayNodeInfo on table GatewayNodeInfoRaw { GatewayNodeInfoRaw | summarize arg_max(logDate, clusterId,clusterName,machine,cloudDatasourceRefresh,contactInformation,customConnectors,status,type,version,versionStatus,osName,osVersion,cores,logicalCores,memoryGb) by nodeId }
 .create-or-alter materialized-view with (Folder = "Gateway/Information")  GatewayNodeStatus on table GatewaysHeartbeat { GatewaysHeartbeat | project-rename nodeId = GatewayId, lastStatusDate = ServerTimestampUTC | summarize arg_max(lastStatusDate,FileVersion,Responding) by nodeId }
