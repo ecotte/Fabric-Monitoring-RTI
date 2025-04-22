@@ -11,4 +11,5 @@ items:
   - Monitoring Audit Logs.Notebook
   - Monitoring Extraction Inventory.Notebook
   - Monitoring Extraction Scanner.Notebook
+  - Monitoring Extraction Refreshables.Notebook
   - Platform Monitoring.KQLDashboard
