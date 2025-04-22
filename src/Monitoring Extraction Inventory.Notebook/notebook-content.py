@@ -16,8 +16,8 @@
 
 # CELL ********************
 
-#%pip install ./builtin/semantic_link_labs-0.9.6-py3-none-any.whl --quiet
-%pip install semantic-link-labs --quiet
+%pip install ./builtin/semantic_link_labs-0.9.6-py3-none-any.whl --quiet
+# %pip install semantic-link-labs --quiet
 %pip install azure-kusto-data==4.6.3 --quiet
 %pip install azure-kusto-ingest==4.6.3 --quiet
 
@@ -530,6 +530,47 @@ def connections_process(connection_info):
 
         response_cp = kusto_query(query=query_connections,connection_info=connection_info)
 
+def git_connections_process(connection_info):
+    query_connections = """
+    .set-or-replace GitConnections <|
+        GitConnectionsHistory
+        | where scanTime > toscalar(
+                GitConnections
+                | project scanTime
+                | summarize scantime=iff(isempty(max(scanTime)), datetime('2020-01-01'), max(scanTime))
+            )
+        | summarize arg_max(
+                    scanTime,
+                    *
+                )
+            by ['Workspace Id']
+        | project-reorder
+            ['Workspace Id'],
+            ['Workspace Name'],
+            ['Organization Name'],
+            ['Owner Name'],
+            ['Project Name'],
+            ['Git Provider Type'],
+            ['Repository Name'],
+            ['Branch Name'],
+            ['Directory Name'],
+            scanTime
+    """
+
+    scan_time = pd.Timestamp.now()
+    with labs.service_principal_authentication(
+        key_vault_uri=connection_info['key_vault_uri'], 
+        key_vault_tenant_id=connection_info['key_vault_tenant_id'],
+        key_vault_client_id=connection_info['key_vault_client_id'],
+        key_vault_client_secret=connection_info['key_vault_client_secret']):
+        df = labs.admin.list_git_connections()
+    df['scanTime'] = pd.Timestamp(scan_time)
+
+    if len(df.index) > 0:
+        kusto_ingest_process(df=df,table_name='GitConnectionsHistory',connection_info=connection_info)
+
+        response = kusto_query(query=query_connections,connection_info=connection_info)
+
 # METADATA ********************
 
 # META {
@@ -664,6 +705,21 @@ gateway_process(connection_info=connection_info)
 # CELL ********************
 
 connections_process(connection_info=connection_info)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "jupyter_python"
+# META }
+
+# MARKDOWN ********************
+
+# ## Git Connections
+
+# CELL ********************
+
+git_connections_process(connection_info=connection_info)
 
 # METADATA ********************
 
