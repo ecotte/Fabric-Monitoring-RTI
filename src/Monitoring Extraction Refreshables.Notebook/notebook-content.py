@@ -163,7 +163,7 @@ def refreshables_process(connection_info:dict,all:bool=False):
                 filter=filter,
                 )
 
-    if len(refreshables.index) > 0:
+    if len(df.index) > 0:
         df["Configured By"]=df["Configured By"].apply(json.dumps)
         df["Refresh Schedule Days"]=df["Refresh Schedule Days"].apply(json.dumps)
         df["Refresh Schedule Times"]=df["Refresh Schedule Times"].apply(json.dumps)
@@ -181,7 +181,7 @@ def refreshables_process(connection_info:dict,all:bool=False):
 
 # CELL ********************
 
-refreshables = refreshables_process(connection_info=connection_info)
+refreshables = refreshables_process(connection_info=connection_info,all=True)
 
 # METADATA ********************
 
