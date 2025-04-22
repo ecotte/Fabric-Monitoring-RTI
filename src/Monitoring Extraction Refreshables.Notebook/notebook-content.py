@@ -58,6 +58,7 @@ import sempy_labs as labs
 from dateutil.parser import parse as dtparser
 import pandas as pd
 import json
+from sempy_labs import admin
 
 from azure.kusto.data import KustoConnectionStringBuilder
 from azure.kusto.data.data_format import DataFormat
