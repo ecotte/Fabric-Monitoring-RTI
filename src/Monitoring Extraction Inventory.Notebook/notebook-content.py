@@ -45,8 +45,6 @@ key_vault_client_secret = f"{key_vault_client_secret}"
 
 WAIT_TIME = 2
 
-GATEWAYS = False
-
 # METADATA ********************
 
 # META {
@@ -650,8 +648,7 @@ domain_delegated_settings_process(connection_info=connection_info)
 
 # CELL ********************
 
-if GATEWAYS:
-    gateway_process(connection_info=connection_info)
+gateway_process(connection_info=connection_info)
 
 # METADATA ********************
 
@@ -666,8 +663,7 @@ if GATEWAYS:
 
 # CELL ********************
 
-if GATEWAYS:
-    connections_process(connection_info=connection_info)
+connections_process(connection_info=connection_info)
 
 # METADATA ********************
 
