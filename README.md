@@ -16,6 +16,32 @@ This solution uses Microsoft Fabric to address these issues by providing:
 
 Benefits include faster incident response, improved health analytics, and streamlined operations, consequently enhancing overall efficiency and reducing downtime. 
 
+# List of items used
+
+The following Fabric items are deployed and used:
+- Eventstreams:
+   - CapacityUtilizationEvents: For the RTH Capacity Events
+   - GatewayMonitoringHeartbeat: To receive the gateway heartbeat
+   - GatewayMonitoringReports: To receoive the gateway reports
+- Eventhouse:
+   - Platform and Audit DB: To process, store and query all the information ingested
+- Notebooks:
+   - Monitoring Audit Logs: Extract the Audit logs from the API and ingest them incrementally in the Eventhouse. (Recommended to be configured to run every 5 min)
+   - Monitoring Extraction Refreshables: Extract the refreshables from all the capacities and stores the last refresh incrementally. (Recommended to be configured to run every 5 min)
+   - Monitoring Extraction Scanner: Extract the full inventory with the Scanner API. Creates the snapshot and loads incrementally. (Recommended to be configured to run every 30 min)
+   - Monitoring Extraction Inventory: Extracts the following information at tenant level (Recommended to be configured to run every 1 day):
+      - Capacities
+      - Apps
+      - Domains
+      - Tenant Settings
+      - Workspace Delegated Settings
+      - Capacity Delegated Settings
+      - Domain Delegated Settings
+      - Gateways and Members
+      - Gateway Connections
+      - Git Connections
+    
+The Notebooks uses the [Semantic Link Labs](https://github.com/microsoft/semantic-link-labs) to interact with the APIs.
 
 # Implementation guide 
 
@@ -52,11 +78,11 @@ To implement this solution, we have some step to follow. This steps will cover t
 
 ## Fabric initial setup 
 
-First use the [Gateway Config Notebook](/setup/Gateway Config.ipynb) to generate the configuration script for the PowerShell application.
+Create a workspace and import the Platform Monitoring Setup Notebook. Follow the instructions for the first run.
 
-Download the config.json created in the “Built-in Resources” of the notebook.
+If you change the variable "FIRST_RUN" to "False" the script will update the Eventhouse definition and notebooks. 
 
-![image](/Images/02_Notebook_Builtin_Resources_Example.png)
+WARNING: No change are made to any additional item in the workspace or eventhouse. But if you customize the default ones (Notebook, Policies, Tables, Functions, etc), the change could be reverted back or the update could fail.
 
 ## Eventstream changes
 
