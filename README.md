@@ -20,27 +20,41 @@ Benefits include faster incident response, improved health analytics, and stream
 
 The following Fabric items are deployed and used:
 - Eventstreams:
-   - CapacityUtilizationEvents: For the RTH Capacity Events
-   - GatewayMonitoringHeartbeat: To receive the gateway heartbeat
-   - GatewayMonitoringReports: To receoive the gateway reports
+   - CapacityUtilizationEvents
+      - For the RTH Capacity Events
+   - GatewayMonitoringHeartbeat
+      - To receive the gateway heartbeat
+   - GatewayMonitoringReports
+      - To receoive the gateway reports
 - Eventhouse:
-   - Platform and Audit DB: To process, store and query all the information ingested
+   - Platform and Audit DB
+      - To process, store and query all the information ingested
 - Notebooks:
-   - Monitoring Audit Logs: Extract the Audit logs from the API and ingest them incrementally in the Eventhouse. (Recommended to be configured to run every 5 min)
-   - Monitoring Extraction Refreshables: Extract the refreshables from all the capacities and stores the last refresh incrementally. (Recommended to be configured to run every 5 min)
-   - Monitoring Extraction Scanner: Extract the full inventory with the Scanner API. Creates the snapshot and loads incrementally. (Recommended to be configured to run every 30 min)
-   - Monitoring Extraction Inventory: Extracts the following information at tenant level (Recommended to be configured to run every 1 day):
-      - Capacities
-      - Apps
-      - Domains
-      - Tenant Settings
-      - Workspace Delegated Settings
-      - Capacity Delegated Settings
-      - Domain Delegated Settings
-      - Gateways and Members
-      - Gateway Connections
-      - Git Connections
-    
+   - Monitoring Audit Logs
+      - Extract the Audit logs from the API and ingest them incrementally in the Eventhouse.
+      - Recommended to be configured to run every 5 min.
+   - Monitoring Extraction Refreshables:
+      - Extract the refreshables from all the capacities and stores the last refresh incrementally.
+      - Recommended to be configured to run every 5 min.
+   - Monitoring Extraction Scanner:
+      - Extract the full inventory with the Scanner API.
+      - Creates the snapshot and loads incrementally.
+      - Recommended to be configured to run every 30 min.
+   - Monitoring Extraction Inventory:
+      - Extracts the following information at tenant level:
+         - Capacities
+         - Apps
+         - Domains
+         - Tenant Settings
+         - Workspace Delegated Settings
+         - Capacity Delegated Settings
+         - Domain Delegated Settings
+         - Gateways and Members
+         - Gateway Connections
+         - Git Connections
+      - Recommended to be configured to run every 1 day.
+
+
 The Notebooks uses the [Semantic Link Labs](https://github.com/microsoft/semantic-link-labs) to interact with the APIs.
 
 # Implementation guide 
@@ -97,7 +111,7 @@ These are available scripts to retrieve and process logs from on-premises gatewa
 You can find the gateway scripts in the subfolder [/gateway/PowerShellScript](/gateway/PowerShellScript)
 
 Requerements:
--PowerShell 7+
+- PowerShell 7+
 
 ### The setup-configuration 
 
