@@ -14,6 +14,32 @@ C:\Windows\ServiceProfiles\PBIEgwService\AppData\Local\Microsoft\On-premises dat
 
 #requires -Version 7
 
+$ErrorActionPreference = "Stop"
+
+Write-Host "*******************************************************************"
+Write-Host "Starting Gateway Monitor Configuration"
+Write-Host "*******************************************************************"
+Write-Host "*******************************************************************"
+
+if ((Read-Host "Install PowerShell Module Az.Accounts? Needed only for Lakehouse connectivity (Y/N)").ToUpper() -eq "Y") {
+    Install-Module -Name Az.Accounts -Force
+}
+
+if ((Read-Host "Install PowerShell Module Az.Storage? Needed only for Lakehouse connectivity (Y/N)").ToUpper() -eq "Y") {
+    Install-Module -Name Az.Storage -Force
+}
+
+if ((Read-Host "Install PowerShell Module DataGateway? Needed only for Lakehouse connectivity (Y/N)").ToUpper() -eq "Y") {
+    Install-Module -Name DataGateway -Force
+}
+
+if ((Read-Host "Install PowerShell Module MicrosoftPowerBIMgmt? Needed only for GatewayInfo (Y/N)").ToUpper() -eq "Y") {
+    Install-Module -Name MicrosoftPowerBIMgmt -Force
+}
+
+Write-Host "*******************************************************************"
+Write-Host "*******************************************************************"
+
 param(
     [string]
     $configFilePath = ".\configs\Config.json",
@@ -44,7 +70,7 @@ Write-Host "*******************************************************************"
 Write-Host "Gateway Log Path: $($config.GatewayLogsPath[0])"
 
 #Set Gateway Heartbeat
-if ((Read-Host "Do you want to change the Gateway Log Path? (Y/N)").ToUpper() -eq "Y") {
+if ((Read-Host "Do you want to change the default Gateway Log Path? (Y/N)").ToUpper() -eq "Y") {
 
     $GatewayPath = $config.GatewayLogsPath[0]
 
@@ -64,32 +90,26 @@ Write-Host "*******************************************************************"
 #Set Gateway Id
 Write-Host "Gateway Id: $($config.GatewayId)"
 
-#Set Gateway Heartbeat
-if ((Read-Host "Do you want to change the Gateway Id? (Y/N)").ToUpper() -eq "Y") {
+$reportFile = Get-ChildItem -path $config.GatewayLogsPath[0] -Recurse  | Where-Object { $_.Name -ilike "*Report_*.log" } | Sort-Object Length | Select-Object -first 1
 
-    $reportFile = Get-ChildItem -path $config.GatewayLogsPath[0] -Recurse  | Where-Object { $_.Name -ilike "*Report_*.log" } | Sort-Object Length | Select-Object -first 1
-
-    if (!$reportFile) {
-        Write-Host "Cannot find any report ('*Report_*.log') file on '$($config.GatewayLogsPath[0])' to infer the GatewayId."
-        $config.GatewayId = Read-Host "Set the Gateway Id Manually"
-    }
-    else {
-        $gatewayIdFromCSV = Get-Content -path $reportFile.FullName -First 2 | ConvertFrom-Csv | Select-Object -ExpandProperty GatewayObjectId            
-        $config.GatewayId = $gatewayIdFromCSV  
-    }
-
-    Write-Host "Gateway Id: $($config.GatewayId)"
-    
+if (!$reportFile) {
+    Write-Host "Cannot find any report ('*Report_*.log') file on '$($config.GatewayLogsPath[0])' to infer the GatewayId."
+    $config.GatewayId = Read-Host "Set the Gateway Id Manually"
 }
+else {
+    $gatewayIdFromCSV = Get-Content -path $reportFile.FullName -First 2 | ConvertFrom-Csv | Select-Object -ExpandProperty GatewayObjectId            
+    $config.GatewayId = $gatewayIdFromCSV  
+}
+
+Write-Host "Gateway Id: $($config.GatewayId)"
+
 
 Write-Host "*******************************************************************"
 Write-Host "*******************************************************************"
 
 #Configure Service Principal
-if ((Read-Host "Do you want to configure the Service Principal Secret? (Y/N)").ToUpper() -eq "Y") {    
 
-    $config.ServicePrincipal.SecretText = ConvertFrom-SecureString -SecureString (Read-Host "Set the Service Principal Secret Text" -AsSecureString)
-}
+$config.ServicePrincipal.SecretText = ConvertFrom-SecureString -SecureString (Read-Host "Set the Service Principal Secret Text" -AsSecureString)
 
 Write-Host "*******************************************************************"
 Write-Host "*******************************************************************"
