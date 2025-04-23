@@ -1,10 +1,19 @@
 {
   "sources": [
     {
-      "id": "10e64794-a92d-412e-b05c-cc524c2d5ba1",
-      "name": "CapacityEvents",
-      "type": "CustomEndpoint",
-      "properties": {}
+      "id": "78993b94-f985-4cb2-8edc-86ed504d9c82",
+      "name": "FabricCapacity",
+      "type": "FabricCapacityUtilizationEvents",
+      "properties": {
+        "eventScope": "Capacity",
+        "capacityId": "31998247-b1ac-4a64-b855-b58555596473",
+        "includedEventTypes": [
+          "Microsoft.Fabric.Capacity.Operation",
+          "Microsoft.Fabric.Capacity.State",
+          "Microsoft.Fabric.Capacity.Summary"
+        ],
+        "filters": []
+      }
     }
   ],
   "destinations": [
@@ -24,6 +33,232 @@
         {
           "name": "CapacityUtilizationEvents-stream"
         }
+      ],
+      "inputSchemas": [
+        {
+          "name": "CapacityUtilizationEvents-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "specversion",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "source",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "time",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "id",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "subject",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "type",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "data",
+                "type": "Record",
+                "fields": [
+                  {
+                    "name": "capacityId",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "capacityName",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "capacitySku",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workspaceId",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workspaceName",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "itemId",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "itemName",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "itemKind",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "capacityUnitMs",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "durationMs",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "throttlingDelayMs",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "operationId",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "status",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "operationStartTime",
+                    "type": "DateTime",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "releaseType",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "operationName",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "utilizationType",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "windowStartTime",
+                    "type": "DateTime",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "windowEndTime",
+                    "type": "DateTime",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "isVirtualWorkspaceName",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "isVirtualArtifactName",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workloadAutoscaleCapacityUnitsLimit",
+                    "type": "BigInt",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workspaceDomain",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workspaceDomainId",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workspaceParentDomain",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  },
+                  {
+                    "name": "workspaceParentDomainId",
+                    "type": "Nvarchar(max)",
+                    "fields": null,
+                    "items": null
+                  }
+                ],
+                "items": null
+              },
+              {
+                "name": "EventProcessedUtcTime",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "PartitionId",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "EventEnqueuedUtcTime",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
       ]
     }
   ],
@@ -34,6 +269,9 @@
       "type": "DefaultStream",
       "properties": {},
       "inputNodes": [
+        {
+          "name": "EdgarCotte-Trial-Capacity"
+        },
         {
           "name": "new-source"
         }

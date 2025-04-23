@@ -13,3 +13,6 @@ items:
   - Monitoring Extraction Scanner.Notebook
   - Monitoring Extraction Refreshables.Notebook
   - Platform Monitoring.KQLDashboard
+
+capacity:
+  name: FabricCapacity
