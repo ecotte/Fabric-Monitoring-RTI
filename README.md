@@ -1,22 +1,20 @@
 # Introduction 
 
-An on-premises data gateway is software that you install in an on-premises network. The gateway facilitates access to data in that network. The current process involves moving data from an on-premises data source through a gateway to various Microsoft cloud services, such as Power BI. On-premises data gateways serve as bridges, facilitating secure data transfer between these endpoints. These gateways enable multiple users to connect to multiple on-premises data sources, making them suitable for complex scenarios where various users need access to different data sources. 
+Platform administrators face the challenge of observing the activities within the entire platform. There are multiple sources that provide information, such as capacity events, gateway locks, audit logs, and the platform inventory itself. Additionally, there is a need to obtain this data quickly to observe and react to events automatically.
 
-However, managing the traffic through an on-premises data gateway is challenging due to the number of data sources involved. Currently, there is no solution that provides visibility into the logs of all queries passing through a gateway, making it difficult to trace queries back to their respective data sources. Also a challenge that on-premises data gateways often face is effectively leveraging real-time log analytics, leading to high latency and less-than-optimal information, affecting incident response and gateway health monitoring. 
+To address this, a solution has been developed based on Fabric Real-Time Intelligence (RTI). This solution extracts information from sources like the new capacity events available in the Real Time Hub (RTH), audit logs through the API, gateway locks via a script included in the solution, and the inventory of the whole platform through the API.
 
-Our proposed solution addresses this issue by centralizing the logs for easier analysis. This will allow for better management and tracking of data traffic through the gateway. 
+The following architecture illustrates how the solution interacts with different components to receive, process, store, present dashboards, and react to the platform's information. It also enables longer retention of logs for historical purposes and allows comparison of the current state with previous states to create custom solutions.
 
-Using Microsoft Fabric, these logs are centralized in an event stream and processed efficiently through the Eventhouse. This centralized data is then available for analysis in Power BI and can support automated response rules via a data activator (pending implementation). 
-
-![image](https://github.com/ecotte/rt-gateway-log/blob/main/Images/01%20-%20Gateway%20Monitoring%20Architecture.png)
+![image](/Images/01_PlatformObservabilityArchitecture.png)
 
 This solution uses Microsoft Fabric to address these issues by providing: 
 
-- In-App Configurations  
-- PowerShell Setup Configurations 
-- Power BI Template  
+- In-App Configurations
+- Real-Time Dashboard
+- PowerShell Setup Configurations for the Gateway Events
 
-Benefits include faster incident response, improved gateway health analytics, and streamlined operations, consequently enhancing overall efficiency and reducing downtime. 
+Benefits include faster incident response, improved health analytics, and streamlined operations, consequently enhancing overall efficiency and reducing downtime. 
 
 
 # Implementation guide 
@@ -26,68 +24,64 @@ Benefits include faster incident response, improved gateway health analytics, an
 To implement this solution, we have some step to follow. This steps will cover the creation of all the items in the previous architecture and the script in the Gateway Nodes. We can find the following steps needs to be done: 
 
 - Fabric items initial setup
-- Script deployment and setup in the gateway nodes
-- Connect Fabric Items
-- Report deployment
+- Eventstream changes
+- Notebook scheduling
+- Real-Time Dashboard configuration
+- Script deployment and setup in the gateway nodes (Optional)
+- Power BI Gateway Report (Optional)
+
 
 ## Requirements and estimated workloads 
 
-- Powershell 7+
-- Microsoft Fabric Capacity of F16 or higher (the capacity size needed will depend on the amount of logs sent and processed by the system)
-- Service Principal with Member access to the Workspace and Power BI API Permission "Tenant.Read.All" for extracting the Gateway Information
+- Service Principal - [How to Register an App in Microsoft Entra ID](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app)
+- An Entra ID Security Group with the Service Principal as Member
+- An Azure Key Vault ([What is Azure Key Vault?](https://learn.microsoft.com/azure/key-vault/general/basic-concepts)) with the following secrets:
+   - Tenant ID
+   - App (Client) ID of the Service Principal
+   - Secret of the Service Principal
+- The user that is going to execute the scripts must have at least "Key Vault Secrets User" - [Provide access to Key Vault keys, certificates, and secrets with Azure role-based access control](https://learn.microsoft.com/azure/key-vault/general/rbac-guide?tabs=azure-cli)
+- The Security Group of the service principal must have the following permissions in Fabric Tenant Settings:
+   - [Service principals can use Fabric APIs](https://learn.microsoft.com/en-us/fabric/admin/tenant-settings-index#developer-settings)
+   - [Service principals can access read-only admin APIs](https://learn.microsoft.com/en-us/fabric/admin/tenant-settings-index#admin-api-settings)
+   - [Enhance admin APIs responses with detailed metadata](https://learn.microsoft.com/en-us/fabric/admin/tenant-settings-index#admin-api-settings)
+   - [Enhance admin APIs responses with DAX and mashup expressions](https://learn.microsoft.com/en-us/fabric/admin/tenant-settings-index#admin-api-settings)
+   - [Member Role over the workspace to use](https://learn.microsoft.com/en-us/fabric/fundamentals/roles-workspaces)
+   - [Admin Role over the On-Premise Data Gateways to monitor](https://learn.microsoft.com/en-us/data-integration/gateway/manage-security-roles)
+- Microsoft Fabric Capacity of F8 or higher, recommended F16 (the capacity size needed will depend on the amount of logs sent and processed by the system)
+
 
 ## Fabric initial setup 
 
-### Eventstream 
+First use the [Gateway Config Notebook](/setup/Gateway Config.ipynb) to generate the configuration script for the PowerShell application.
 
-Definition: The event stream feature in Microsoft Fabric offers a centralized place where you to capture, transform and route real-time events to various destinations with a no-code experience. 
+Download the config.json created in the “Built-in Resources” of the notebook.
 
-You will need to create 2 Eventstream. 1 for the Heartbeat and another for the reports.
+![image](/Images/02_Notebook_Builtin_Resources_Example.png)
 
-To create an Eventstream go to "New Item -> Eventstream"
+## Eventstream changes
 
-Once the Eventstream is created, click on "New Source" and select "Custom App".
+## Notebook scheduling
 
-<img width="682" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/02%20-%20New%20Eventstream.png">
+## Real-Time Dashboard configuration
 
-For each Eventstream, go to the "Custom App" source, and select the connection string. It will be used for the setup of the script.
-
-<img width="652" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/03%20-%20Custom%20App%20Eventstream.png">
-
-
-### Lakehouse 
-
-Definition: The Microsoft Fabric Lakehouse is a unified data architecture that combines features of data lakes and data warehouses. It integrates structured and unstructured data, providing a flexible platform for storing, managing, and analysing large volumes of information.   
-
-To create the Lakehouse go to "New Item -> Lakehouse"
-
-Copy the workspace id and Lakehouse id from the URL as shown in the image.
-
-<img width="810" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/04%20-%20Lakehouse.png">
-
-
-### Eventhouse 
-
-Definition: The Eventhouse in Microsoft Fabric is primarily used to store and analyse real-time analytics data. It’s a fully managed Kusto engine that allows queries to be executed using the Kusto Query Language (KQL). You can use the KQL database to store historical data and process streaming data as needed 
-
-First create the Eventhouse with "New Item -> Eventhouse"
-
-After creating the Eventhouse, we are going to run the content of the script "[KQL\Setup.kql](https://github.com/ecotte/rt-gateway-log/blob/main/KQL/Setup.kql)" and create the tables and policies.
-
-The data flow is as follow:
-
-![image](https://github.com/ecotte/rt-gateway-log/blob/main/Images/05%20-%20Gateway%20Report%20Data%20Logic.png)
-
-
-## Script deployment and setup in the gateway nodes
+## Script deployment and setup in the gateway nodes (Optional)
 
 These are available scripts to retrieve and process logs from on-premises gateways. These scripts help in managing and processing logs. 
 
+You can find the gateway scripts in the subfolder [/gateway/PowerShellScript](/gateway/PowerShellScript)
+
+Requerements:
+-PowerShell 7+
+
 ### The setup-configuration 
 
-This script is there to set up the configurations and connect the on-premises gateway to the different endpoints within Fabric (Eventstream, Lakehouse, Eventhouse, etc.) 
+First use the [Gateway Config Notebook](/setup/Gateway Config.ipynb) to generate the configuration script for the PowerShell application.
 
-The script will first ask you whether you still need to install the necessary PowerShell Modules needed for Lakehouse connectivity (Az.Accounts, Az.Storage, DataGateway).  
+Download the config.json created in the “Built-in Resources” of the notebook and create a folder "/configs/" in the scripts root folder and copy the JSON file.
+
+![image](/Images/ 02_Notebook_Builtin_Resources_Example.png)
+
+Execute the Setup-UpdateConfiguration Script. The script will first ask you whether you still need to install the necessary PowerShell Modules needed for Lakehouse connectivity (Az.Accounts, Az.Storage, DataGateway).  
 
 Az.Accounts is a module that manages credentials and common configuration for all Azure modules. The Az.Storage module is a PowerShell module that provides cmdlets for managing and interacting with Azure Storage resources. The Data Gateway module is responsible for managing On-premises data gateway and also Power BI data sources. 
 
@@ -101,14 +95,6 @@ Az.Accounts is a module that manages credentials and common configuration for al
 - [Use Azure service principals with Azure PowerShell | Microsoft Learn ](https://learn.microsoft.com/en-us/powershell/azure/create-azure-service-principal-azureps?view=azps-11.6.0)
 
 Once the modules have been set, the script will automatically retrieve the Gateway ID and set up the connections to the Eventstream and Lakehouse.
-
-### Setup-UpdateConfiguration Script 
-
-This script can be used to update system configurations in response to changes in the setup.  The following parameters can be modified: 
-
-- Gateway logs path, default: "C:\Windows\ServiceProfiles\PBIEgwService\AppData\Local\Microsoft\On-premises data gateway" 
-- Gateway ID 
-- Service principal 
 
 ### Run-GatewayHeartbeat Script:  
 
@@ -126,44 +112,8 @@ It will get the Gateway Node info, we can run this once per week or even lower r
 
 We can use the Task Scheduler in Windows to automate the script. You will fin a template of the Task Schedulers in the folder [\TaskSchedulers](https://github.com/ecotte/rt-gateway-log/tree/main/TaskSchedulers)
 
-## Connect Fabric Items
 
-After creating the Fabric items and setting up the scripts, you should start receiving data in the Eventstream, and now we need to connect the Eventstream to the Eventhouse.
-
-### Heartbeat Eventstream
-
-Go to the Heartbeat Eventstream, and select "New Destination -> KQL Database"
-
-Use the "Direct ingestion" options and look for the KQL Database.
-
-<img width="247" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/06%20-%20Connect%20to%20KQL%20Database.png">
-
-Select the "GatewayHeartbeat" table and name the connector.
-
-<img width="857" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/07%20-%20Select%20Eventhouse%20Table.png">
-
-Once you see some data, click in "Advance" and chose "Existing mapping", and select from the drop down "GatewayHeartbeat_mapping".
-
-<img width="719" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/08%20-%20Select%20Mapping.png">
-
-### Report Eventstream
-
-Go to the Report Eventstream, and select "New Destination -> KQL Database"
-
-Use the "Direct ingestion" options and look for the KQL Database.
-
-<img width="239" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/09%20-%20Connect%20to%20KQL%20Database%20Report.png">
-
-Select the "GatewayReport-Raw" table and name the connector.
-
-<img width="716" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/10%20-%20Select%20Eventhouse%20Table%20Report.png">
-
-
-Once you see some data, click in "Advance" and chose "Existing mapping", and select from the drop down "GatewayReport-Raw_mapping".
-
-<img width="722" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/12%20-%20Select%20Mapping%20Report.png">
-
-## Report Deployment
+## Power BI Gateway Report (Optional)
 
 Use the template in the [\Gateway Monitoring.pbit](https://github.com/ecotte/rt-gateway-log/blob/main/Fabric%20Items/Gateway%20Monitor.pbit) and put the parameters:
 -KustoURL: The Query URL found in the Eventhouse
@@ -224,4 +174,3 @@ Will show only the jobs that are running in the gateways. Selecting a job and go
 Overview of the system counters report generated by the Gateways.
 
 <img width="1406" alt="image" src="https://github.com/ecotte/rt-gateway-log/blob/main/Images/18%20-%20Report%20System%20Information.png">
-
