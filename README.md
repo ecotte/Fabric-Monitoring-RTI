@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This solution accelerator is not an official Microsoft product! It is a solution accelerator, which can help you implement a monitoring solution within Fabric. As such there is no offical support available and there is a risk that things might break.
+
 # Introduction 
 
 Platform administrators face the challenge of observing the activities within the entire platform. There are multiple sources that provide information, such as capacity events, gateway locks, audit logs, and the platform inventory itself. Additionally, there is a need to obtain this data quickly to observe and react to events automatically.
