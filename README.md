@@ -16,6 +16,9 @@ This solution uses Microsoft Fabric to address these issues by providing:
 
 Benefits include faster incident response, improved health analytics, and streamlined operations, consequently enhancing overall efficiency and reducing downtime. 
 
+> [!CAUTION]
+> This solution accelerator is not an official Microsoft product! It is a solution accelerator, which can help you implement a monitoring solution within Fabric. As such there is no offical support available and there is a risk that things might break.
+
 # List of items used
 
 The following Fabric items are deployed and used:
