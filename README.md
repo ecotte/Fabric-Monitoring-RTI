@@ -96,7 +96,8 @@ Create a workspace and import the [Platform Monitoring Setup Notebook](/setup/Pl
 
 If you change the variable "FIRST_RUN" to "False" the script will update the Eventhouse definition and notebooks. 
 
-WARNING: No change are made to any additional item in the workspace or eventhouse. But if you customize the default ones (Notebook, Policies, Tables, Functions, etc), the change could be reverted back or the update could fail.
+> [!CAUTION]
+> No change are made to any additional item in the workspace or eventhouse. But if you customize the default ones (Notebook, Policies, Tables, Functions, etc), the change could be reverted back or the update could fail.
 
 ## Eventstream changes
 
