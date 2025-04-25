@@ -12,8 +12,7 @@
 
 # CELL ********************
 
-# %pip install semantic-link-labs
-%pip install ./builtin/semantic_link_labs-0.9.6-py3-none-any.whl --quiet
+%pip install semantic-link-labs --quiet
 %pip install azure-kusto-data==4.6.3 --quiet
 %pip install azure-kusto-ingest==4.6.3 --quiet
 
