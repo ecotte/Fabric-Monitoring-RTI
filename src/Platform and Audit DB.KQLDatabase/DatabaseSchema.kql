@@ -74,6 +74,7 @@
 .create-merge table ItemRefreshes (['Request Id']:guid, IngestionTime:datetime, ['Workspace Id']:guid, ['Workspace Name']:string, ['Item Id']:guid, ['Item Name']:string, ['Item Kind']:string, ['Capacity Id']:guid, ['Capacity Name']:string, ['Capacity SKU']:string, ['Refresh Type']:string, ['Start Time']:datetime, ['End Time']:datetime, Status:string, ['Service Exception Json']:string, ['Extended Status']:dynamic, ['Refresh Attempts']:dynamic, Duration:timespan, DurationMs:real) with (folder = "Platform/Events") 
 .create-merge table GitConnectionsHistory (['Workspace Id']:guid, ['Workspace Name']:string, ['Organization Name']:string, ['Owner Name']:string, ['Project Name']:string, ['Git Provider Type']:string, ['Repository Name']:string, ['Branch Name']:string, ['Directory Name']:string, scanTime:datetime) with (folder = "Platform/History/Inventory") 
 .create-merge table GitConnections (['Workspace Id']:guid, ['Workspace Name']:string, ['Organization Name']:string, ['Owner Name']:string, ['Project Name']:string, ['Git Provider Type']:string, ['Repository Name']:string, ['Branch Name']:string, ['Directory Name']:string, scanTime:datetime) with (folder = "Platform/Inventory") 
+.create-merge table CapacityState (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, transitionTime:datetime, capacityState:string, stateChangeReason:string, data:dynamic) with (folder = "Platform/Events") 
 .create-or-alter function with (folder = "Platform/UpdatePolicyFunctions", docstring = "Function to extract data from ActivityEventsRaw", skipvalidation = "true") parse_AcitivityEvents() {
     let columns=dynamic(["Id", "Workload", "RecordType", "RequestId", "RefreshEnforcementPolicy", "CreationTime", "Activity", "Operation", "OrganizationId", "UserId", "UserKey", "UserType"]);
     ActivityEventsRaw
@@ -837,6 +838,31 @@ let _withOperationId =CapacityOperations
 _withoutOperationId
 | union _withOperationId
 }
+.create-or-alter function with (folder = "Platform/UpdatePolicyFunctions", skipvalidation = "true") parse_CapacityEventsState() {
+CapacityEventsRaw
+| where ["type"] == "Microsoft.Fabric.Capacity.State"
+| extend
+    capacityId=toguid(data.capacityId),
+    capacityName=tostring(data.capacityName),
+    capacitySku=tostring(data.capacitySku),
+    transitionTime=todatetime(data.transitionTime),
+    capacityState=tostring(data.capacityState),
+    stateChangeReason=tostring(data.stateChangeReason)
+| project
+    id,
+    specversion,
+    source,
+    ['time'],
+    subject,
+    type,
+    capacityId,
+    capacityName,
+    capacitySku,
+    transitionTime,
+    capacityState,
+    stateChangeReason,
+    data
+}
 .create-or-alter materialized-view with (Folder = "Gateway/Information")  GatewayNodeInfo on table GatewayNodeInfoRaw { GatewayNodeInfoRaw | summarize arg_max(logDate, clusterId,clusterName,machine,cloudDatasourceRefresh,contactInformation,customConnectors,status,type,version,versionStatus,osName,osVersion,cores,logicalCores,memoryGb) by nodeId }
 .create-or-alter materialized-view with (Folder = "Gateway/Information")  GatewayNodeStatus on table GatewaysHeartbeat { GatewaysHeartbeat | project-rename nodeId = GatewayId, lastStatusDate = ServerTimestampUTC | summarize arg_max(lastStatusDate,FileVersion,Responding) by nodeId }
 .create-or-alter materialized-view with (Folder = "Platform/Events")  ItemsLastView on table ActivityEvents { ItemsViews()
@@ -940,12 +966,13 @@ _withoutOperationId
 .alter table WorkspaceDelegatedSettingsHistory policy caching hotdata = time(730.00:00:00) hotindex = time(730.00:00:00)
 .alter table AppsHistory policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table AppsHistory policy caching hotdata = time(730.00:00:00) hotindex = time(730.00:00:00)
+.alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"00:00:00","Recoverability":"Disabled"}'
 .alter table CapacitySummary policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacitySummary policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
-.alter table CapacitySummary policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsSummary()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table CapacitySummary policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsSummary()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
 .alter table CapacityOperations policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityOperations policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
-.alter table CapacityOperations policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsOperation()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":true,\"ManagedIdentity\":null}]"
+.alter table CapacityOperations policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsOperation()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
 .alter table RefreshablesRaw policy retention @'{"SoftDeletePeriod":"00:00:01","Recoverability":"Disabled"}'
 .alter table RefreshablesRaw policy caching hotdata = time(00:01:00) hotindex = time(00:01:00)
 .alter table RefreshablesRaw policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
@@ -961,3 +988,6 @@ _withoutOperationId
 .alter column ItemRefreshes.['Item Id'] policy encoding type = 'Null'
 .alter column ItemRefreshes.['Capacity Id'] policy encoding type = 'Null'
 .alter table GitConnectionsHistory policy retention @'{"SoftDeletePeriod":"750.00:00:00","Recoverability":"Disabled"}'
+.alter table CapacityState policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
+.alter table CapacityState policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
+.alter table CapacityState policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsState()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
