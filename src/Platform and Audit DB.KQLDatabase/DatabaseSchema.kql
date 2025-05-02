@@ -990,4 +990,4 @@ CapacityEventsRaw
 .alter table CapacityState policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityState policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityState policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsState()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"01:00:00","Recoverability":"Disabled"}'
+.alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"00:00:00","Recoverability":"Disabled"}'
