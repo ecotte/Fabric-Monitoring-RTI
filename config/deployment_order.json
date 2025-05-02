@@ -29,19 +29,61 @@
     },
     {
         "name": "Monitoring Audit Logs.Notebook",
-        "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c"
+        "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
+        "schedule": {
+            "configuration": {
+                "type": "Cron",
+                "startDateTime": "2025-03-01T00:00:00",
+                "endDateTime": "2030-12-31T23:59:59",
+                "localTimeZoneId": "GMT Standard Time",
+                "interval": 5
+              },
+            "enabled": true
+        }
     },
     {
         "name": "Monitoring Extraction Inventory.Notebook",
-        "id": "505b4c37-0557-a70e-404c-02d18abdd261"
+        "id": "505b4c37-0557-a70e-404c-02d18abdd261",
+        "schedule": {
+            "configuration": {
+                "type": "Daily",
+                "startDateTime": "2025-04-21T00:00:00",
+                "endDateTime": "2030-12-31T23:59:00",
+                "localTimeZoneId": "GMT Standard Time",
+                "times": [
+                  "01:00"
+                ]
+              },
+            "enabled": true
+        }
     },
     {
         "name": "Monitoring Extraction Scanner.Notebook",
-        "id": "a09748a4-ab11-9a40-4567-bffd9c19595e"
+        "id": "a09748a4-ab11-9a40-4567-bffd9c19595e",
+        "schedule": {
+            "configuration": {
+                "type": "Cron",
+                "startDateTime": "2025-03-01T00:00:00",
+                "endDateTime": "2030-12-31T23:59:59",
+                "localTimeZoneId": "GMT Standard Time",
+                "interval": 30
+              },
+            "enabled": true
+        }
     },
     {
         "name": "Monitoring Extraction Refreshables.Notebook",
-        "id": "754f754a-4d28-8d57-48b5-705db14578f8"
+        "id": "754f754a-4d28-8d57-48b5-705db14578f8",
+        "schedule": {
+            "configuration": {
+                "type": "Cron",
+                "startDateTime": "2025-03-01T00:00:00",
+                "endDateTime": "2030-12-31T23:59:59",
+                "localTimeZoneId": "GMT Standard Time",
+                "interval": 5
+              },
+            "enabled": true
+        }
     },
     {
         "name": "Platform Monitoring.KQLDashboard",
