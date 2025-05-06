@@ -1,0 +1,1709 @@
+{
+  "schema_version": "60",
+  "pagesNavWidth": 287.33331298828125,
+  "autoRefresh": {
+    "enabled": true,
+    "defaultInterval": "30s"
+  },
+  "tiles": [
+    {
+      "id": "6974a542-17be-4905-988f-7fdecec76e83",
+      "title": "Capacities",
+      "visualType": "card",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "e5170ff6-70d0-4b12-80d3-7568e68b1788"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "ae8e97f4-5d5c-4eb9-8681-7fd174ab245f",
+      "title": "Capacity Overview",
+      "visualType": "table",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 0,
+        "y": 8,
+        "width": 24,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "2209ebd8-b492-4547-aa5e-1ce9e404a29d"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Capacity Id",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "pairs": [
+              {
+                "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+                "property": "Capacity Id"
+              }
+            ],
+            "destinationPages": [
+              "a1c59cad-7d9d-435a-b176-0a4cbaed8244"
+            ],
+            "disabled": false
+          }
+        ],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "8477576f-319d-4dae-a2bd-c1413aaf6b76",
+      "title": "Capacities by Sku",
+      "visualType": "pie",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 3,
+        "y": 0,
+        "width": 7,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "514df283-d93a-4fea-9175-28b94183c503"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "right",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "value"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "donut",
+        "pie__topNSlices": null,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Sku",
+            "parameterId": "cc0f1e7c-ce27-4119-8af9-aef51bd5b588",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "d44f9fdd-53a9-4b10-aa04-d64fc3f17c08",
+      "title": "Workspaces By Capacity Type",
+      "visualType": "column",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 10,
+        "y": 0,
+        "width": 7,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "ecde8ae0-f2db-4a1b-83b7-a3c8283ae8f4"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Capacity Sku",
+        "yColumns": [
+          "Workspaces"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Capacity Sku",
+            "parameterId": "cc0f1e7c-ce27-4119-8af9-aef51bd5b588",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "f32e8fda-af2b-4379-a4b5-9dc81bda47ed",
+      "title": "Workspaces With Activity",
+      "visualType": "card",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 0,
+        "y": 4,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "bf399679-102f-499c-abf0-6a4eb78915fa"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": "Workspaces",
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "2e939041-8d86-467a-9c9c-c275a63d9020",
+      "title": "Top 100 Workspaces",
+      "visualType": "table",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 0,
+        "y": 16,
+        "width": 24,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "e962395e-c051-4431-91e3-15d6063d660e"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Workspace Id",
+            "parameterId": "c679ed27-182d-4448-b3c5-b0f5a57eaaf0",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "pairs": [
+              {
+                "parameterId": "c679ed27-182d-4448-b3c5-b0f5a57eaaf0",
+                "property": "Workspace Id"
+              }
+            ],
+            "destinationPages": [
+              "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f"
+            ],
+            "disabled": false
+          }
+        ],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "bae6f4e9-5696-4d00-8d0b-c304c336cff3",
+      "title": "Workspaces by Capacity",
+      "visualType": "column",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 17,
+        "y": 0,
+        "width": 7,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "9ea9db19-ea56-427d-84a3-bcfa93d40cea"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Capacity Name",
+        "yColumns": [
+          "Workspaces"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Capacity Id",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "pairs": [
+              {
+                "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+                "property": "Capacity Id"
+              }
+            ],
+            "destinationPages": [
+              "a1c59cad-7d9d-435a-b176-0a4cbaed8244"
+            ],
+            "disabled": false
+          }
+        ],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "0db8bda2-4f4e-4a90-a86c-91f5450fa583",
+      "title": "Top 10 CU Consumption Workspaces",
+      "visualType": "bar",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 0,
+        "y": 21,
+        "width": 12,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "542b8c5c-f8a5-4465-b2fc-8270dc6c2ed5"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Workspace Name",
+        "yColumns": [
+          "CU´s"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Workspace Id",
+            "parameterId": "c679ed27-182d-4448-b3c5-b0f5a57eaaf0",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "pairs": [
+              {
+                "parameterId": "c679ed27-182d-4448-b3c5-b0f5a57eaaf0",
+                "property": "Workspace Id"
+              }
+            ],
+            "destinationPages": [
+              "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f"
+            ],
+            "disabled": false
+          }
+        ],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": true,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "id": "d6d75b7f-99ed-4645-acda-d2836febd166",
+      "title": "CU Consumption by Operation",
+      "visualType": "pie",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 12,
+        "y": 21,
+        "width": 12,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "473c8429-9626-4abf-b141-57c8fc0188d9"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "left",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "87fc1555-2ad2-4f72-be0b-52ede00780e9",
+      "title": "Capacity Utilization %",
+      "visualType": "line",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 0,
+        "y": 4,
+        "width": 24,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "0f025ecf-84f2-4d4b-a178-28cdc7c16260"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": 150,
+            "yAxisMinimumValue": 0,
+            "yAxisScale": "linear",
+            "horizontalLines": [
+              {
+                "id": "9bb3c878-d5f7-47df-b327-2edcdbcc502d",
+                "value": 100
+              }
+            ]
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Window Time",
+        "yColumns": [
+          "Capacity Useage %"
+        ],
+        "seriesColumns": [
+          "Capacity Name"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "capacityId",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": true,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "id": "09ba739b-6bea-48fe-8e88-2cfcb09ef07c",
+      "title": "Unsmoothed CU´s Utilization by Reported Time",
+      "visualType": "anomalychart",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 0,
+        "y": 14,
+        "width": 24,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "4cf37353-354b-4667-9676-bd799a038ee0"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "anomalyColumns": [],
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": true,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "id": "b24f42a0-8b8a-47d8-9601-ecc21f6d72ca",
+      "title": "# Operations by Reported Time",
+      "visualType": "anomalychart",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 0,
+        "y": 30,
+        "width": 24,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "1bf77edd-975b-48d1-a3d7-bdb4f5174c5d"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "anomalyColumns": [],
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "e0e63cc9-bee3-4885-ba36-222de5cac2cf",
+      "title": "Capacities",
+      "visualType": "stacked100column",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 18,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b8248bc8-f848-49cb-b32a-eee75c32def1"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "CapacityId",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "6ca0735a-95fd-4097-961f-28439c664ab7",
+      "title": "Workspaces in Capacity",
+      "visualType": "card",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 3,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "60cffd00-6eb2-4f93-abae-abadc5ba3ab1"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "7c736b3d-bfcd-4e26-b6d6-257a67e7cd99",
+      "title": "Average Capacity Usage",
+      "visualType": "card",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "bf262f6b-8c5e-4eb9-954e-c7b479fa5093"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "d20180d9-8358-41ac-bace-5e3a2ea59a9e",
+      "title": "Items in Workspace",
+      "visualType": "card",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "de6fc093-8958-40fa-91b8-3908950cb67d"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "64947cbf-f546-4842-abb9-4ecd38795395",
+      "title": "Workspace",
+      "visualType": "card",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 16,
+        "y": 0,
+        "width": 8,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "ab81ed5b-a5e7-4aab-a770-87b2c0277f96"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": "Workspace Name",
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "a690d0ac-8d6e-4e06-afe5-f05ceb5fac73",
+      "title": "Top 10 CU Consumption Workspaces",
+      "visualType": "bar",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 0,
+        "y": 4,
+        "width": 10,
+        "height": 11
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "373e93d4-d43b-4de5-ae63-a962bddc3060"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Item",
+        "yColumns": [
+          "CU´s"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Item Id",
+            "parameterId": "49a4d4b7-c5d0-4452-9d05-e55eca8ec5ad",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": true,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "id": "649bb586-1d59-46af-bd05-59fc08b0be34",
+      "title": "CU Consumed by Operation",
+      "visualType": "pie",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 10,
+        "y": 4,
+        "width": 14,
+        "height": 11
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "f8060dd0-c711-4eef-9a25-66a4d1c93539"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "left",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "5c075b33-759e-4878-935d-83ba80a51287",
+      "title": "# Operations by Reported Time",
+      "visualType": "anomalychart",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 0,
+        "y": 15,
+        "width": 24,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "34f1c55e-f4d1-4e25-b489-224b68488fe9"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "anomalyColumns": [],
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "5ab22358-877c-4271-bb99-4bd702d3aaf4",
+      "title": "Unsmoothed CU´s Utilization by Reported Time",
+      "visualType": "anomalychart",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 0,
+        "y": 24,
+        "width": 24,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "716db562-0f8f-4391-ac8d-ccfc6bb9677d"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "anomalyColumns": [],
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": true,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "id": "587660f5-a9ef-4798-9a81-0bfa8d8262d3",
+      "title": "Operations Detail",
+      "visualType": "table",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 0,
+        "y": 31,
+        "width": 24,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "65ba3a08-390d-4f8f-873b-500cfa863b03"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "8a83a00e-c7a9-45c6-8887-cb33d323a5b7",
+      "title": "Total CU Consumed",
+      "visualType": "card",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 3,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "561c6219-4c0c-4c0d-b25f-bde9faebabcb"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "3eb52ffc-b75b-471a-a17f-0426a046cc31",
+      "title": "Nº Operations",
+      "visualType": "card",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "759edb6d-8a89-40c3-a105-b6b4fcbbc7e9"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "7b661764-a5f1-4630-a3c0-8d54ae1f85ae",
+      "title": "Operation by Utilization Type",
+      "visualType": "stacked100bar",
+      "pageId": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "layout": {
+        "x": 9,
+        "y": 0,
+        "width": 7,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "d4fee504-5fa7-4ebc-8392-09a8d340d1ce"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Workspace Name",
+        "yColumns": [
+          "count_",
+          "Operations"
+        ],
+        "seriesColumns": [
+          "Utilization Type"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    }
+  ],
+  "baseQueries": [
+    {
+      "id": "952f73d4-42f8-42f2-b69d-b6a0c5ebc51f",
+      "queryId": "c09adb1c-1644-48da-af50-cced5a19cf25",
+      "variableName": "_capacityBase"
+    },
+    {
+      "id": "9949ad0c-33d5-4601-a4c6-31b22b2b2146",
+      "queryId": "f0e17fe2-a3de-45e2-be40-7fe29d450ddb",
+      "variableName": "_workspaceQuery"
+    },
+    {
+      "id": "6d9c96a4-2f14-4b18-83be-97d03aba25e5",
+      "queryId": "4d717879-3c09-4078-8afa-f03196247f21",
+      "variableName": "_capacitySummary"
+    },
+    {
+      "id": "b22e8769-a5b4-4c82-96e7-255683472388",
+      "queryId": "24a09133-bec6-4998-bc00-69da895bf0c4",
+      "variableName": "_capacityOperations"
+    },
+    {
+      "id": "caaa1647-b364-49fa-b6ff-2bc1bae40573",
+      "queryId": "b0bb9bd0-8f26-476f-948a-6ef456dde672",
+      "variableName": "_capacityOperationsTimepoint"
+    },
+    {
+      "id": "67f67883-9272-4a44-a58f-4ef9b0578402",
+      "queryId": "a280da9d-d8fe-4d8d-8fb8-9ff9a4a8f594",
+      "variableName": "_capacityCalculatedSmoothing"
+    }
+  ],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "b5502e34-f456-4421-8006-f487e5896867",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "e5e21d78-33e3-471d-8e8b-57df0c3695fb",
+          "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+          "1c4f2529-4172-40aa-9d15-0847f70d4224",
+          "18e30e2b-75d2-4a6a-96af-33afe350a391",
+          "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f"
+        ]
+      }
+    },
+    {
+      "kind": "string",
+      "id": "cc0f1e7c-ce27-4119-8af9-aef51bd5b588",
+      "displayName": "Capacity Sku",
+      "description": "",
+      "variableName": "_capacityType",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "capacitySku"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "5710b390-579e-4d9c-b636-744f4da0e879"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "1c4f2529-4172-40aa-9d15-0847f70d4224",
+          "18e30e2b-75d2-4a6a-96af-33afe350a391",
+          "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+          "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f"
+        ]
+      },
+      "allIsNull": false
+    },
+    {
+      "kind": "string",
+      "id": "606524c1-03d6-44c4-9646-c463f112007c",
+      "displayName": "Capacity",
+      "description": "",
+      "variableName": "_capacities",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "CapacityId",
+          "label": "CapacityName"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "83eb2ef4-88ac-4ba3-8e10-19327bcd5a3d"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "1c4f2529-4172-40aa-9d15-0847f70d4224",
+          "18e30e2b-75d2-4a6a-96af-33afe350a391",
+          "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+          "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f"
+        ]
+      },
+      "allIsNull": false
+    },
+    {
+      "kind": "string",
+      "selectionType": "freetext",
+      "id": "76eeb2c3-ac8f-47a3-a121-231100464801",
+      "displayName": "Workspace Name Search",
+      "variableName": "_workspaceNameSearch",
+      "description": "",
+      "defaultValue": {
+        "kind": "all"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "string",
+      "id": "c679ed27-182d-4448-b3c5-b0f5a57eaaf0",
+      "displayName": "Workspace Name Exact (Limit 1000)",
+      "description": "",
+      "variableName": "_workspaceNameExact",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "workspaceId",
+          "label": "workspaceName"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "430479e6-69ae-4a84-b5bb-46b8bcffb4f7"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "all"
+      },
+      "allIsNull": false
+    },
+    {
+      "kind": "string",
+      "id": "49a4d4b7-c5d0-4452-9d05-e55eca8ec5ad",
+      "displayName": "Item",
+      "description": "",
+      "variableName": "_item",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "Item Id",
+          "label": "Item"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "bc5933b1-fca8-4811-8d22-bcbb554c665a"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f"
+        ]
+      },
+      "allIsNull": false
+    }
+  ],
+  "dataSources": [
+    {
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "3952ada3-75b7-84cd-411f-7d1aaf376871",
+      "name": "PlatformMonitoring",
+      "id": "8a9a70d8-02b9-4236-85be-90fa83a60c8e",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Capacity Summary",
+      "id": "1c4f2529-4172-40aa-9d15-0847f70d4224"
+    },
+    {
+      "id": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "name": "Capacity CU Consumption"
+    },
+    {
+      "id": "da6da675-cf39-4a9f-a9ad-2031fa3ccb3f",
+      "name": "Workspace CU Consumption"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityBase\n| count ",
+      "id": "e5170ff6-70d0-4b12-80d3-7568e68b1788",
+      "usedVariables": [
+        "_capacityBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let workspaces_count = _capacityOperations | summarize Workspaces=count_distinct(['Workspace Id']) by ['Capacity Id'];\n_capacitySummary\n| project ['Consumption %'], ['Capacity Id'], ['Capacity Name'], ['Capacity Sku'], Region, State\n| summarize ['Capacity Usage %'] = round(avg(['Consumption %']),2) by ['Capacity Id'],['Capacity Name'], ['Capacity Sku'], Region, State\n| extend  ['Capacity Usage %'] = strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")\n| lookup workspaces_count on ['Capacity Id']\n| project ['Capacity Name'], ['Capacity Id'], ['Capacity Sku'], Region, State, Workspaces, ['Capacity Usage %']\n| where Workspaces > 0\n| order by Workspaces desc ",
+      "id": "2209ebd8-b492-4547-aa5e-1ce9e404a29d",
+      "usedVariables": [
+        "_capacityOperations",
+        "_capacitySummary"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityBase\n| summarize Capacities=count() by Sku",
+      "id": "514df283-d93a-4fea-9175-28b94183c503",
+      "usedVariables": [
+        "_capacityBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| summarize Workspaces=count_distinct(['Workspace Id']) by ['Capacity Sku']",
+      "id": "ecde8ae0-f2db-4a1b-83b7-a3c8283ae8f4",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| project ['Workspace Id']\n| summarize Workspaces=count_distinct(['Workspace Id'])",
+      "id": "bf399679-102f-499c-abf0-6a4eb78915fa",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| project ['Capacity Name'], ['Workspace Name'], ['Workspace Id'], ['CU´s'],Domain,['Parent Domain']\n| summarize ['CU´s']=round(sum(['CU´s']),2) by ['Capacity Name'], ['Workspace Name'], ['Workspace Id'], Domain, ['Parent Domain']\n| top 100 by ['CU´s']",
+      "id": "e962395e-c051-4431-91e3-15d6063d660e",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| summarize Workspaces=count_distinct(['Workspace Id']) by ['Capacity Name'], ['Capacity Id']\n| order by Workspaces",
+      "id": "9ea9db19-ea56-427d-84a3-bcfa93d40cea",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| project ['Capacity Name'], ['Workspace Name'], ['Workspace Id'], ['CU´s'],Domain,['Parent Domain']\n| summarize ['CU´s']=round(sum(['CU´s']),2) by ['Workspace Name'], ['Workspace Id']\n| top 10 by ['CU´s']",
+      "id": "542b8c5c-f8a5-4465-b2fc-8270dc6c2ed5",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| summarize CapacityUnitsSeconds=sum(['CU´s']) by ['Operation Name']",
+      "id": "473c8429-9626-4abf-b141-57c8fc0188d9",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacitySummary\n| project ['Capacity Name'], ['Capacity Useage %'] = round((['Consumption %']), 2), ['Window Time']=['Window Start Time'], ['Capacity Id']\n| make-series ['Capacity Useage %']=avg(['Capacity Useage %']) on ['Window Time'] step _timespan by ['Capacity Name'], ['Capacity Id']",
+      "id": "0f025ecf-84f2-4d4b-a178-28cdc7c16260",
+      "usedVariables": [
+        "_capacitySummary",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacityOperations\n| extend ['CU´s']=['CU´s'], ['Capacity Name'], ['Time']\n| make-series ['CU´s']=sum(['CU´s']) on ['Time'] step _timespan by ['Capacity Name']\n// | extend anomalie = series_decompose_anomalies(['CU´s'])",
+      "id": "4cf37353-354b-4667-9676-bd799a038ee0",
+      "usedVariables": [
+        "_capacityOperations",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacityOperations\n| extend  ['Capacity Name'], Time\n| make-series ['Operations']=count() on Time step _timespan by ['Capacity Name']\n// | extend anomalie = series_decompose_anomalies(Operations)",
+      "id": "1bf77edd-975b-48d1-a3d7-bdb4f5174c5d",
+      "usedVariables": [
+        "_capacityOperations",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityBase\n| project CapacityName,CapacityId, Capacity=1",
+      "id": "b8248bc8-f848-49cb-b32a-eee75c32def1",
+      "usedVariables": [
+        "_capacityBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| project ['Workspace Id']\n| summarize Workspaces=count_distinct(['Workspace Id'])",
+      "id": "60cffd00-6eb2-4f93-abae-abadc5ba3ab1",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacitySummary\n| project ['Consumption %']\n| summarize ['Capacity Usage %'] = round(avg(['Consumption %']),2)\n| project strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")",
+      "id": "bf262f6b-8c5e-4eb9-954e-c7b479fa5093",
+      "usedVariables": [
+        "_capacitySummary"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| project ['Item Id']\n| summarize Workspaces=count_distinct(['Item Id'])",
+      "id": "de6fc093-8958-40fa-91b8-3908950cb67d",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\r\n| where ['Workspace Id'] in (_workspaceNameExact)\r\n| project ['Workspace Name']\r\n| take 1",
+      "id": "ab81ed5b-a5e7-4aab-a770-87b2c0277f96",
+      "usedVariables": [
+        "_capacityOperations",
+        "_workspaceNameExact"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| project ['CU´s'], ['Item'] = strcat(['Item Name'], \" - \", ['Item Kind']), ['Workspace Id'], ['Item Id']\n| summarize ['CU´s']=round(sum(['CU´s']),2) by Item, ['Workspace Id'], ['Item Id']\n| top 10 by ['CU´s']",
+      "id": "373e93d4-d43b-4de5-ae63-a962bddc3060",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| summarize CapacityUnitsSeconds=sum(['CU´s']) by ['Operation Name']",
+      "id": "f8060dd0-c711-4eef-9a25-66a4d1c93539",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacityOperations\n| extend  ['Capacity Name'], Time\n| make-series ['Operations']=count() on Time step _timespan by ['Capacity Name'], ['Utilization Type']\n// | extend anomalie = series_decompose_anomalies(Operations)",
+      "id": "34f1c55e-f4d1-4e25-b489-224b68488fe9",
+      "usedVariables": [
+        "_capacityOperations",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacityOperations\n| extend ['CU´s']=['CU´s'], ['Capacity Name'], ['Time']\n| make-series ['CU´s']=sum(['CU´s']) on ['Time'] step _timespan by ['Capacity Name'], ['Utilization Type']",
+      "id": "716db562-0f8f-4391-ac8d-ccfc6bb9677d",
+      "usedVariables": [
+        "_capacityOperations",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\r\n| project ['Capacity Name'], ['Capacity Id'], ['Capacity Sku'],['Workspace Name'],['Workspace Id'], ['Item Name'], ['Item Id'], ['Item Kind'], ['Operation Name'],\r\n['CU´s'],['Operation Start Time'], ['Reported Time'] = Time, ['Duration Ms'], ['Window Start Time'], ['Window End Time'],\r\nTimepoints, ['Timepoint CU']",
+      "id": "65ba3a08-390d-4f8f-873b-500cfa863b03",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| summarize round(sum(['CU´s']),2)",
+      "id": "561c6219-4c0c-4c0d-b25f-bde9faebabcb",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| count ",
+      "id": "759edb6d-8a89-40c3-a105-b6b4fcbbc7e9",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityOperations\n| summarize Operations=count() by ['Utilization Type'], ['Workspace Name']\n| take 1",
+      "id": "d4fee504-5fa7-4ebc-8392-09a8d340d1ce",
+      "usedVariables": [
+        "_capacityOperations"
+      ]
+    },
+    {
+      "id": "c09adb1c-1644-48da-af50-cced5a19cf25",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "Capacities\n| where CapacityId in (_capacities)\n| where Sku in (_capacityType)",
+      "usedVariables": [
+        "_capacities",
+        "_capacityType"
+      ]
+    },
+    {
+      "id": "f0e17fe2-a3de-45e2-be40-7fe29d450ddb",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _wsId = Items | where itemType in (_itemType) | summarize by workspaceId;\nWorkspaces\n| where id in (_wsId)\n| where isOnDedicatedCapacity in (_isOnCapacity)\n    and type in (_type)\n    and name contains _workspaceName\n    and state in (_state)\n    and case(\n        isnotempty(_workspaceName) and isnotempty(_workspaceNameExact), id in (_workspaceNameExact),\n        true\n    )\n| where iff(\n    false in (_isOnCapacity),\n    isempty(capacityId) or capacityId in (_capacities),\n    capacityId in (_capacities)\n    )",
+      "usedVariables": [
+        "_capacities",
+        "_isOnCapacity",
+        "_itemType",
+        "_state",
+        "_type",
+        "_workspaceName",
+        "_workspaceNameExact"
+      ]
+    },
+    {
+      "id": "4d717879-3c09-4078-8afa-f03196247f21",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacitySummary\n| where windowStartTime between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| lookup Capacities on $left.capacityId == $right.CapacityId\n| project ['Capacity Id'] = capacityId,\n['Capacity Name'] = CapacityName,\n['Capacity Sku'] = capacitySku,\nRegion,\nState,\n['CU´s'] = capacityUnitMs/1000.0,\n['Consumption %'] = 100*(capacityUnitMs/1000.0)/timepointCapacityUnits,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoint Base CU']=timepointCapacityUnits,\n['Base CU']=baseCapacityUnits",
+      "usedVariables": [
+        "_capacities",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "id": "24a09133-bec6-4998-bc00-69da895bf0c4",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacityOperations\n| where windowStartTime  between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| lookup Capacities on $left.capacityId == $right.CapacityId\n| project ['Capacity Name'] = CapacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Time']=['time'],\n['Operation Name'] = operationName,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Timepoint CU'] = (capacityUnitMs/1000.0)/((windowEndTime - windowStartTime)/30s),\n['Utilization Type']=utilizationType,\n['Operation Start Time'] = operationStartTime,\n['Duration Ms'] = durationMs",
+      "usedVariables": [
+        "_capacities",
+        "_endTime",
+        "_item",
+        "_startTime",
+        "_workspaceNameExact"
+      ]
+    },
+    {
+      "id": "b0bb9bd0-8f26-476f-948a-6ef456dde672",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacityOperations\n| where windowStartTime  between (datetime_add('day',-1,_startTime) .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| project \n['Id'] = id,\n['Capacity Name'] = capacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Operation Name'] = operationName,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Utilization Type']=utilizationType\n| extend \n['Timepoint CU'] = ['CU´s']/Timepoints\n| extend times = pack_array(['Window Start Time'],datetime_add('second',-30, ['Window End Time']))\n| mv-expand times\n| extend times=todatetime(times)\n| make-series ['Timepoint CU']=sum(['Timepoint CU']) default = \"\" on times step 30s by ['Capacity Id'], ['Capacity Sku'],\n ['Domain Id'],  ['Parent Domain Id'], ['Workspace Id'],['Item Id'], ['Utilization Type'], Timepoints, wst=['Window Start Time']\n| extend  ['Timepoint CU']=series_fill_forward(['Timepoint CU'])\n| mv-expand ['Timepoint CU'] to typeof(real), times to typeof(datetime)\n| project-away wst\n| project-rename ['Window Start Time'] = times\n\n\n\n// let _operations=_capacityOperationsTimepoint | summarize sum(['Timepoint CU']) by ['Capacity Id'], ['Window Start Time'];\n// let _summary=_capacitySummary;\n// _summary\n// | join _operations on ['Capacity Id'],['Window Start Time']",
+      "usedVariables": [
+        "_capacities",
+        "_endTime",
+        "_item",
+        "_startTime",
+        "_workspaceNameExact"
+      ]
+    },
+    {
+      "id": "a280da9d-d8fe-4d8d-8fb8-9ff9a4a8f594",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime > timespan(1d), timespan(0s),\n    timespan(30s)\n);\nlet _timepoints = _capacitySummary\n| project ['Timepoint Base CU']=['Base CU'] * (_timespan/1s), ['Window Start Time'], ['Capacity Id'];\nlet _operations = _capacityOperationsTimepoint\n| project ['Capacity Id'], ['Window Start Time'],['Window End Time'],['Utilization Type'],['Timepoints'] = (['Window End Time'] - ['Window Start Time']) /_timespan,\n['Timepoint CU'] = (['CU´s'])/((['Window End Time'] - ['Window Start Time'])/_timespan);\n_timepoints\n| join kind=fullouter _operations on ['Capacity Id']\n| where ['Window Start Time'] >= ['Window Start Time1'] and ['Window Start Time'] <= ['Window End Time']\n| summarize sum(['Timepoint CU']), max(['Timepoint Base CU']) by ['Window Start Time'], ['Capacity Id']\n| extend ['Capacity %'] = 100*['sum_Timepoint CU']/['max_Timepoint Base CU']\n| summarize strcat(round(avg(['Capacity %']),2),\"%\")",
+      "usedVariables": [
+        "_capacityOperationsTimepoint",
+        "_capacitySummary",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacitySummary\n| distinct capacitySku",
+      "id": "5710b390-579e-4d9c-b636-744f4da0e879",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "Capacities\n| where Sku in (_capacityType)\n| distinct CapacityId,CapacityName",
+      "id": "83eb2ef4-88ac-4ba3-8e10-19327bcd5a3d",
+      "usedVariables": [
+        "_capacityType"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacityOperations\n| where ['time'] between (_startTime .. _endTime)\n| where workspaceName contains _workspaceNameSearch\n| where capacityId in (_capacities)\n| distinct workspaceId,workspaceName\n| take 1000",
+      "id": "430479e6-69ae-4a84-b5bb-46b8bcffb4f7",
+      "usedVariables": [
+        "_capacities",
+        "_endTime",
+        "_startTime",
+        "_workspaceNameSearch"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacityOperations\n| where windowStartTime  between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| project \n['Workspace Id'] = workspaceId,\n['Operation Name'] = operationName,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind\n| summarize by ['Item Id'], ['Item'] = strcat(['Item Name'],\" - \", ['Item Kind']), ['Workspace Id']",
+      "id": "bc5933b1-fca8-4811-8d22-bcbb554c665a",
+      "usedVariables": [
+        "_capacities",
+        "_endTime",
+        "_startTime",
+        "_workspaceNameExact"
+      ]
+    }
+  ]
+}

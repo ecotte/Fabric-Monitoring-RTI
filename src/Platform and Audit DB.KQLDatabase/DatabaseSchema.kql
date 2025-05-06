@@ -69,7 +69,7 @@
 [{"Properties":{"Path":"$['specversion']"},"column":"specversion","datatype":""},{"Properties":{"Path":"$['source']"},"column":"source","datatype":""},{"Properties":{"Path":"$['time']"},"column":"time","datatype":""},{"Properties":{"Path":"$['id']"},"column":"id","datatype":""},{"Properties":{"Path":"$['subject']"},"column":"subject","datatype":""},{"Properties":{"Path":"$['type']"},"column":"type","datatype":""},{"Properties":{"Path":"$['data']"},"column":"data","datatype":""}]
 ```
 .create-merge table CapacitySummary (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, baseCapacityUnits:long, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:real, timepointCapacityUnits:long, capacityUnitSecond:real, windowStartTime:datetime, windowEndTime:datetime, data:dynamic) with (folder = "Platform/Events") 
-.create-merge table CapacityOperations (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:long, durationMs:long, isVirtualArtifactName:bool, isVirtualWorkspaceName:bool, itemId:guid, itemKind:string, itemName:string, operationId:guid, operationName:string, operationStartTime:datetime, releaseType:string, status:string, throttlingDelayMs:long, utilizationType:string, windowStartTime:datetime, windowEndTime:datetime, workloadAutoscaleCapacityUnitsLimit:long, workspaceId:guid, workspaceName:string, workspaceDomainId:string, workspaceDomain:string, workspaceParentDomainId:string, workspaceParentDomain:string, data:dynamic) with (folder = "Platform/Events") 
+.create-merge table CapacityOperations (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:long, durationMs:long, isVirtualArtifactName:bool, isVirtualWorkspaceName:bool, itemId:guid, itemKind:string, itemName:string, operationId:string, operationName:string, operationStartTime:datetime, releaseType:string, status:string, throttlingDelayMs:long, utilizationType:string, windowStartTime:datetime, windowEndTime:datetime, workloadAutoscaleCapacityUnitsLimit:long, workspaceId:guid, workspaceName:string, workspaceDomainId:string, workspaceDomain:string, workspaceParentDomainId:string, workspaceParentDomain:string, data:dynamic) with (folder = "Platform/Events") 
 .create-merge table RefreshablesRaw (['Workspace Id']:guid, ['Workspace Name']:string, ['Item Id']:guid, ['Item Name']:string, ['Item Kind']:string, ['Capacity Id']:guid, ['Capacity Name']:string, ['Capacity SKU']:string, ['Refresh Count']:int, ['Refresh Failures']:int, ['Average Duration']:decimal, ['Median Duration']:decimal, ['Refreshes Per Day']:int, ['Refresh Type']:string, ['Start Time']:string, ['End Time']:string, Status:string, ['Request Id']:guid, ['Service Exception Json']:string, ['Extended Status']:dynamic, ['Refresh Attempts']:dynamic, ['Refresh Schedule Days']:dynamic, ['Refresh Schedule Times']:dynamic, ['Refresh Schedule Enabled']:bool, ['Refresh Schedule Local Timezone Id']:string, ['Refresh Schedule Notify Option']:string, ['Configured By']:dynamic) with (folder = "Platform/History/Inventory") 
 .create-merge table ItemRefreshes (['Request Id']:guid, IngestionTime:datetime, ['Workspace Id']:guid, ['Workspace Name']:string, ['Item Id']:guid, ['Item Name']:string, ['Item Kind']:string, ['Capacity Id']:guid, ['Capacity Name']:string, ['Capacity SKU']:string, ['Refresh Type']:string, ['Start Time']:datetime, ['End Time']:datetime, Status:string, ['Service Exception Json']:string, ['Extended Status']:dynamic, ['Refresh Attempts']:dynamic, Duration:timespan, DurationMs:real) with (folder = "Platform/Events") 
 .create-merge table GitConnectionsHistory (['Workspace Id']:guid, ['Workspace Name']:string, ['Organization Name']:string, ['Owner Name']:string, ['Project Name']:string, ['Git Provider Type']:string, ['Repository Name']:string, ['Branch Name']:string, ['Directory Name']:string, scanTime:datetime) with (folder = "Platform/History/Inventory") 
@@ -734,7 +734,7 @@ Foreground | union Background
         windowStartTime=todatetime(data.windowStartTime)
     | extend
         timepointCapacityUnits = baseCapacityUnits * 30,
-        capacityUnitSecond=capacityUnitMs / 1000
+        capacityUnitSecond=capacityUnitMs / 1000.0
     | project
         id,
         specversion,
@@ -767,7 +767,7 @@ CapacityEventsRaw
     itemId=toguid(data.itemId),
     itemKind=tostring(data.itemKind),
     itemName=tostring(data.itemName),
-    operationId=toguid(data.operationId),
+    operationId= iff(isempty(data.operationId), tostring(new_guid()), tostring(data.operationId)),
     operationName=tostring(data.operationName),
     operationStartTime=todatetime(data.operationStartTime),
     releaseType=tostring(data.releaseType),
@@ -827,16 +827,6 @@ RefreshablesRaw
 | extend Duration=totimespan(['End Time'] - ['Start Time'])
 | extend DurationMs=round(tolong(Duration)/10000,0)
 | join kind=leftanti ItemRefreshes on ['Start Time'] and ['Request Id']
-}
-.create-or-alter function with (folder = "Platform/Events", skipvalidation = "true") CapacityOperationUnique() {
-let _withoutOperationId=CapacityOperations
-| where isempty(operationId)
-| project operationId, itemId, operationName,capacityId,capacitySku,itemKind,releaseType,isVirtualArtifactName,isVirtualWorkspaceName,utilizationType,['time'],status,capacityUnitSec=capacityUnitMs/1000, windowStartTime, windowEndTime, operationEndTime,durationMs,throttlingDelayMs;
-let _withOperationId =CapacityOperations
-| where isnotempty(operationId)
-| summarize arg_max(['time'],status),capacityUnitSec=sum(capacityUnitMs/1000), windowStartTime=min(windowStartTime), windowEndTime=max(windowEndTime), operationStartTime=min(operationStartTime),durationMs=sum(durationMs), throttlingDelayMs=sum(throttlingDelayMs) by operationId, itemId, operationName,capacityId,capacitySku,itemKind,releaseType,isVirtualArtifactName,isVirtualWorkspaceName,utilizationType;
-_withoutOperationId
-| union _withOperationId
 }
 .create-or-alter function with (folder = "Platform/UpdatePolicyFunctions", skipvalidation = "true") parse_CapacityEventsState() {
 CapacityEventsRaw
@@ -966,12 +956,14 @@ CapacityEventsRaw
 .alter table WorkspaceDelegatedSettingsHistory policy caching hotdata = time(730.00:00:00) hotindex = time(730.00:00:00)
 .alter table AppsHistory policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table AppsHistory policy caching hotdata = time(730.00:00:00) hotindex = time(730.00:00:00)
+.alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"00:00:00","Recoverability":"Disabled"}'
 .alter table CapacitySummary policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacitySummary policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacitySummary policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsSummary()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
 .alter table CapacityOperations policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityOperations policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityOperations policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsOperation()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter column CapacityOperations.['operationStartTime'] policy encoding type = 'EmbeddedPresenceLZ4'
 .alter table RefreshablesRaw policy retention @'{"SoftDeletePeriod":"00:00:01","Recoverability":"Disabled"}'
 .alter table RefreshablesRaw policy caching hotdata = time(00:01:00) hotindex = time(00:01:00)
 .alter table RefreshablesRaw policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
@@ -990,4 +982,3 @@ CapacityEventsRaw
 .alter table CapacityState policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityState policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityState policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsState()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-.alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"00:00:00","Recoverability":"Disabled"}'

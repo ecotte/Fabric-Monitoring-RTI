@@ -90,7 +90,14 @@
         "pie__orderBy": "size",
         "pie__kind": "donut",
         "pie__topNSlices": null,
-        "crossFilter": [],
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "itemType",
+            "parameterId": "34e75136-fe42-4819-bbed-a38401e18a0a",
+            "disabled": false
+          }
+        ],
         "drillthrough": []
       }
     },
@@ -377,14 +384,14 @@
     },
     {
       "id": "ae8e97f4-5d5c-4eb9-8681-7fd174ab245f",
-      "title": "Capacity List",
+      "title": "Capacity Overview",
       "visualType": "table",
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
-        "x": 0,
-        "y": 15,
-        "width": 12,
-        "height": 17
+        "x": 11,
+        "y": 7,
+        "width": 13,
+        "height": 9
       },
       "queryRef": {
         "kind": "query",
@@ -544,10 +551,10 @@
       "visualType": "table",
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
-        "x": 12,
-        "y": 15,
-        "width": 12,
-        "height": 17
+        "x": 0,
+        "y": 16,
+        "width": 24,
+        "height": 10
       },
       "queryRef": {
         "kind": "query",
@@ -599,8 +606,8 @@
       "layout": {
         "x": 0,
         "y": 7,
-        "width": 24,
-        "height": 8
+        "width": 11,
+        "height": 9
       },
       "queryRef": {
         "kind": "query",
@@ -643,14 +650,14 @@
     },
     {
       "id": "0db8bda2-4f4e-4a90-a86c-91f5450fa583",
-      "title": "Top 100 CU Consumption Workspaces",
+      "title": "Top 10 CU Consumption Workspaces",
       "visualType": "bar",
       "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
       "layout": {
         "x": 0,
-        "y": 14,
+        "y": 24,
         "width": 12,
-        "height": 7
+        "height": 9
       },
       "queryRef": {
         "kind": "query",
@@ -681,7 +688,11 @@
         "crossFilterDisabled": false,
         "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": []
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
       }
     },
     {
@@ -691,9 +702,9 @@
       "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
       "layout": {
         "x": 12,
-        "y": 14,
+        "y": 24,
         "width": 12,
-        "height": 7
+        "height": 9
       },
       "queryRef": {
         "kind": "query",
@@ -728,13 +739,13 @@
     {
       "id": "87fc1555-2ad2-4f72-be0b-52ede00780e9",
       "title": "Capacity Utilization %",
-      "visualType": "area",
+      "visualType": "line",
       "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
       "layout": {
         "x": 0,
-        "y": 0,
+        "y": 4,
         "width": 24,
-        "height": 8
+        "height": 13
       },
       "queryRef": {
         "kind": "query",
@@ -771,22 +782,37 @@
         ],
         "xAxisScale": "linear",
         "verticalLine": "",
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "capacityId",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
         "crossFilterDisabled": false,
         "drillthroughDisabled": false,
-        "crossFilter": [],
-        "drillthrough": []
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": true,
+          "limit": 5
+        }
       }
     },
     {
       "id": "09ba739b-6bea-48fe-8e88-2cfcb09ef07c",
-      "title": "Unsmoothed CU´s Utilization by Operation End",
+      "title": "Unsmoothed CU´s Utilization by Window Start",
       "visualType": "anomalychart",
       "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
       "layout": {
         "x": 0,
-        "y": 21,
-        "width": 12,
-        "height": 8
+        "y": 17,
+        "width": 24,
+        "height": 7
       },
       "queryRef": {
         "kind": "query",
@@ -818,19 +844,23 @@
         "drillthroughDisabled": false,
         "anomalyColumns": [],
         "crossFilter": [],
-        "drillthrough": []
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
       }
     },
     {
       "id": "b24f42a0-8b8a-47d8-9601-ecc21f6d72ca",
-      "title": "Operations by Start Time",
+      "title": "# Operations by Start Time",
       "visualType": "anomalychart",
       "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
       "layout": {
-        "x": 12,
-        "y": 21,
+        "x": 0,
+        "y": 33,
         "width": 12,
-        "height": 8
+        "height": 9
       },
       "queryRef": {
         "kind": "query",
@@ -868,7 +898,7 @@
     {
       "id": "2f8141f2-99ce-4140-8523-af89658a8dd7",
       "title": "Gateways and Number of Nodes",
-      "visualType": "bar",
+      "visualType": "pie",
       "pageId": "e5e21d78-33e3-471d-8e8b-57df0c3695fb",
       "layout": {
         "x": 3,
@@ -881,32 +911,29 @@
         "queryId": "e248ec4c-593c-4242-b994-ec2ee54f2e85"
       },
       "visualOptions": {
-        "multipleYAxes": {
-          "base": {
-            "id": "-1",
-            "label": "",
-            "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "yAxisScale": "linear",
-            "horizontalLines": []
-          },
-          "additional": [],
-          "showMultiplePanels": false
-        },
         "hideLegend": true,
         "legendLocation": "bottom",
-        "xColumnTitle": "",
-        "xColumn": "Gateway Name",
+        "xColumn": "Status",
         "yColumns": [
-          "numberOfMemebers",
-          "Number of Nodes"
+          "Jobs"
         ],
         "seriesColumns": null,
-        "xAxisScale": "linear",
-        "verticalLine": "",
         "crossFilterDisabled": false,
         "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "donut",
+        "pie__topNSlices": null,
         "crossFilter": [
           {
             "interaction": "column",
@@ -915,23 +942,19 @@
             "disabled": false
           }
         ],
-        "drillthrough": [],
-        "dataPointsTooltip": {
-          "all": true,
-          "limit": 5
-        }
+        "drillthrough": []
       }
     },
     {
       "id": "801c3839-161a-406f-8f96-5ec82f4d1103",
-      "title": "New tile",
+      "title": "Gateways Status",
       "visualType": "table",
       "pageId": "e5e21d78-33e3-471d-8e8b-57df0c3695fb",
       "layout": {
         "x": 0,
         "y": 9,
         "width": 24,
-        "height": 7
+        "height": 6
       },
       "queryRef": {
         "kind": "query",
@@ -1080,18 +1103,115 @@
     },
     {
       "id": "c2b7a1f5-c7db-42fe-ba9c-91e679953d51",
-      "title": "New tile",
+      "title": "Jobs Summary",
       "visualType": "table",
       "pageId": "e5e21d78-33e3-471d-8e8b-57df0c3695fb",
       "layout": {
         "x": 13,
         "y": 0,
-        "width": 9,
-        "height": 7
+        "width": 11,
+        "height": 9
       },
       "queryRef": {
         "kind": "query",
         "queryId": "1f96b0c8-572a-4c32-9306-83fa24f85ccf"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": [
+          {
+            "id": "d32f98a5-f9fb-4804-94c2-a5c9dd5b478e",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": true,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "Status",
+                "values": [
+                  "Success"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "green",
+            "tag": "",
+            "icon": "completed",
+            "ruleName": "",
+            "visualType": "table"
+          },
+          {
+            "id": "7e661e41-2338-423c-8e6d-4cf7639a0982",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": true,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "Status",
+                "values": [
+                  "Failed"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": "warning",
+            "ruleName": "",
+            "visualType": "table"
+          },
+          {
+            "id": "65c6f90c-70fd-411d-9be8-c11015f0f4c5",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": true,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "Status",
+                "values": [
+                  "In Progress"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "blue",
+            "tag": "",
+            "icon": "contrast",
+            "ruleName": "",
+            "visualType": "table"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bbdc0011-f6a3-46b1-b829-ad19b8ea65de",
+      "title": "Tenant Settings",
+      "visualType": "table",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 5,
+        "y": 0,
+        "width": 19,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "719e4955-58b1-450d-bf42-82a007d181b5"
       },
       "visualOptions": {
         "table__enableRenderLinks": true,
@@ -1102,6 +1222,355 @@
         "crossFilter": [],
         "drillthrough": [],
         "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "4d27bdad-eaa7-460c-88ed-e63c6a1da9f0",
+      "title": "Tenant Settings Status",
+      "visualType": "pie",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "width": 5,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "71f1e5cf-6f4b-4279-ad25-d5f6cbb59f49"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "Enabled",
+            "parameterId": "325d6c8c-af01-422b-981e-5e158f99b29b",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "4d1389bd-8e77-46c7-96a8-761745b0ab02",
+      "title": "Workspace Delegated Settings",
+      "visualType": "card",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 0,
+        "y": 16,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "9c159e0e-3009-4bc1-818f-5743fd3bf21b"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "286fcc07-339f-481c-8f37-f0d7752c8436",
+      "title": "Capacities Deletages Settings",
+      "visualType": "column",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 5,
+        "y": 16,
+        "width": 19,
+        "height": 6
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "867e916a-1493-4e2e-a3a5-c5a6bad67f98"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Capacity Name",
+        "yColumns": [
+          "Settings Changed"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "1ef04b86-b0f1-40f6-a2af-9c0a0a67cae3",
+      "title": "Domain Delegated Settings",
+      "visualType": "card",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 0,
+        "y": 19,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b8c58d2b-76a2-41d7-ac52-09b4c242ba7d"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "64db27dc-9183-4c35-abe2-12c4b228bb68",
+      "title": "Tenant Settings",
+      "visualType": "card",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "cf5690e2-b5b5-4bc1-b69b-7c614f9696ea"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "6a148b3f-4610-4a20-9908-1615335c8199",
+      "title": "Tenant Setting History",
+      "visualType": "table",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 5,
+        "y": 8,
+        "width": 19,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "e37731ac-8504-46df-b9f8-dfd7e9d8e0e1"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "80677a2a-a1f4-4beb-962f-c6831c287c0c",
+      "title": "Tenant Settings History",
+      "visualType": "card",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 0,
+        "y": 8,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "f22570bb-1b98-4b8c-9132-f9a8702503c7"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "f83ec3a9-653a-41ec-bcb6-522ea8ade50b",
+      "title": "Tenant Setting History Status",
+      "visualType": "pie",
+      "pageId": "1de25296-8923-4f37-a572-d81d3a261f5a",
+      "layout": {
+        "x": 0,
+        "y": 11,
+        "width": 5,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "a591a13f-20f4-4403-a8fc-2ef4532cf164"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "e0e63cc9-bee3-4885-ba36-222de5cac2cf",
+      "title": "Capacities",
+      "visualType": "stacked100column",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 18,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b8248bc8-f848-49cb-b32a-eee75c32def1"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "CapacityId",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "6ca0735a-95fd-4097-961f-28439c664ab7",
+      "title": "Workspaces in Capacity",
+      "visualType": "card",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 3,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "60cffd00-6eb2-4f93-abae-abadc5ba3ab1"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "7c736b3d-bfcd-4e26-b6d6-257a67e7cd99",
+      "title": "Average Capacity Usage",
+      "visualType": "card",
+      "pageId": "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "bf262f6b-8c5e-4eb9-954e-c7b479fa5093"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
         "colorRules": []
       }
     }
@@ -1141,6 +1610,11 @@
       "id": "32792e80-2721-4880-9724-3d31840cfbc2",
       "queryId": "86ee3ae4-8d95-42a4-ac43-aab89680d5ed",
       "variableName": "_queriesBase"
+    },
+    {
+      "id": "0f580744-5476-4d92-9952-d068418a95d4",
+      "queryId": "a40a67d4-afa7-4899-b173-7e8658adb90c",
+      "variableName": "_tenantSettingBase"
     }
   ],
   "parameters": [
@@ -1374,7 +1848,13 @@
         "unit": "hours"
       },
       "showOnPages": {
-        "kind": "all"
+        "kind": "selection",
+        "pageIds": [
+          "e5e21d78-33e3-471d-8e8b-57df0c3695fb",
+          "a1c59cad-7d9d-435a-b176-0a4cbaed8244",
+          "1c4f2529-4172-40aa-9d15-0847f70d4224",
+          "18e30e2b-75d2-4a6a-96af-33afe350a391"
+        ]
       }
     },
     {
@@ -1437,6 +1917,91 @@
         ]
       },
       "allIsNull": false
+    },
+    {
+      "kind": "bool",
+      "id": "325d6c8c-af01-422b-981e-5e158f99b29b",
+      "displayName": "Tenant Setting State",
+      "description": "",
+      "variableName": "_tenantSettingEnabled",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "static",
+        "values": [
+          {
+            "value": true
+          },
+          {
+            "value": false
+          }
+        ]
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "1de25296-8923-4f37-a572-d81d3a261f5a"
+        ]
+      },
+      "allIsNull": false
+    },
+    {
+      "kind": "datetime",
+      "id": "3346818d-6cc9-4d5a-b49a-f200723c9627",
+      "displayName": "Date",
+      "description": "",
+      "variableName": "_date",
+      "selectionType": "scalar",
+      "includeAllOption": false,
+      "defaultValue": {
+        "kind": "query-result"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "scanTime"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "b85f210a-0218-4b3d-af67-255b5fe65f64"
+        }
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "1de25296-8923-4f37-a572-d81d3a261f5a"
+        ]
+      }
+    },
+    {
+      "kind": "string",
+      "id": "34e75136-fe42-4819-bbed-a38401e18a0a",
+      "displayName": "Item Type",
+      "description": "",
+      "variableName": "_itemType",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "itemType"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "0541e32c-be34-4891-b047-18f7def8410b"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "all"
+      },
+      "allIsNull": false
     }
   ],
   "dataSources": [
@@ -1466,6 +2031,10 @@
     {
       "name": "Gateway Summary",
       "id": "e5e21d78-33e3-471d-8e8b-57df0c3695fb"
+    },
+    {
+      "name": "Tenant Settings Overview",
+      "id": "1de25296-8923-4f37-a572-d81d3a261f5a"
     }
   ],
   "queries": [
@@ -1496,9 +2065,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "Items\n| join kind=inner _workspaceQuery on $left.workspaceId == $right.id\n| summarize ItemsCount=count() by itemType",
+      "text": "Items\n| join kind=inner _workspaceQuery on $left.workspaceId == $right.id\n| where itemType in (_itemType)\n| summarize ItemsCount=count() by itemType",
       "id": "10394ab4-ea9c-4048-a125-e985c6361ad1",
       "usedVariables": [
+        "_itemType",
         "_workspaceQuery"
       ]
     },
@@ -1553,9 +2123,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "_workspaceQuery\n| lookup Capacities on $left.capacityId == $right.CapacityId\n| project [\"Workspace Name\"]=name, Description=description, [\"Capacity Name\"] = CapacityName\n| take 1000",
+      "text": "let _itemCount = Items | where itemType in (_itemType) | summarize Items=count() by workspaceId;\n_workspaceQuery\n| lookup Capacities on $left.capacityId == $right.CapacityId\n| lookup _itemCount on $left.id == $right.workspaceId\n| project [\"Workspace Name\"]=name, Description=description, [\"Capacity Name\"] = CapacityName, Items\n| top 1000 by Items",
       "id": "42391191-a0cf-482a-87eb-6feaab70c471",
       "usedVariables": [
+        "_itemType",
         "_workspaceQuery"
       ]
     },
@@ -1575,10 +2146,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let workspaces_count = Workspaces | summarize Workspaces=count() by capacityId;\n_capacityBase\n| lookup workspaces_count on $left.CapacityId ==  $right.capacityId\n| project CapacityName,CapacityId, Sku, Region, State, Workspaces\n| order by Workspaces desc ",
+      "text": "let workspaces_count = Workspaces | summarize Workspaces=count() by capacityId;\n_capacitySummary\n| project TimepointConsumption= capacityUnitSecond/timepointCapacityUnits, capacityId, CapacityName, Sku, Region, State\n| summarize ['Capacity Usage %'] = round(avg(TimepointConsumption)*100,2) by capacityId,CapacityName, Sku, Region, State\n| extend  ['Capacity Usage %'] = strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")\n| lookup workspaces_count on $left.capacityId ==  $right.capacityId\n| project ['Capacity Name']=CapacityName, ['Capacity Id']=capacityId, Sku, Region, State, Workspaces, ['Capacity Usage %']\n| order by Workspaces desc ",
       "id": "2209ebd8-b492-4547-aa5e-1ce9e404a29d",
       "usedVariables": [
-        "_capacityBase"
+        "_capacitySummary"
       ]
     },
     {
@@ -1656,7 +2227,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "_capacityOperations\n| summarize CU=sum(capacityUnitMs)/1000 by ['Workspace Name']=workspaceName, capacityName\n| top 100 by CU",
+      "text": "_capacityOperations\n| summarize CU=sum(capacityUnitMs)/1000 by ['Workspace Name']=workspaceName, ['Capacity Name']=CapacityName\n| top 10 by CU",
       "id": "542b8c5c-f8a5-4465-b2fc-8270dc6c2ed5",
       "usedVariables": [
         "_capacityOperations"
@@ -1678,7 +2249,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacitySummary\n| project ['Capacity Name']=['capacityName'], ['Capacity Useage %'] = round((capacityUnitSecond/timepointCapacityUnits)*100, 2), ['Window Time']=windowStartTime\n| make-series ['Capacity Useage %']=avg(['Capacity Useage %']) on ['Window Time'] from _startTime to _endTime step _timespan by ['Capacity Name']",
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacitySummary\n| project ['Capacity Name']=CapacityName, ['Capacity Useage %'] = round((capacityUnitSecond/timepointCapacityUnits)*100, 2), ['Window Time']=windowStartTime, capacityId\n| make-series ['Capacity Useage %']=avg(['Capacity Useage %']) on ['Window Time'] from _startTime to _endTime step _timespan by ['Capacity Name'], capacityId",
       "id": "0f025ecf-84f2-4d4b-a178-28cdc7c16260",
       "usedVariables": [
         "_capacitySummary",
@@ -1691,7 +2262,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(5m)\n);\n_capacityOperations\n| extend ['CU´s']=capacityUnitMs/1000, ['Capacity Name']=capacityName, ['End Time']=operationEndTime\n| make-series ['CU´s']=sum(['CU´s']) on ['End Time'] step _timespan by ['Capacity Name']\n| extend anomalie = series_decompose_anomalies(['CU´s'])",
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacityOperations\n| extend ['CU´s']=capacityUnitMs/1000, ['Capacity Name']=CapacityName, ['Start Time']=windowStartTime\n| make-series ['CU´s']=sum(['CU´s']) on ['Start Time'] step _timespan by ['Capacity Name']\n// | extend anomalie = series_decompose_anomalies(['CU´s'])",
       "id": "4cf37353-354b-4667-9676-bd799a038ee0",
       "usedVariables": [
         "_capacityOperations",
@@ -1704,7 +2275,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(5m)\n);\n_capacityOperations\n// | summarize Operations=count() by ['Capacity Name']=capacityName, Type=utilizationType, ['Start Time']=bin(operationStartTime,_timespan)\n// | summarize ['CU´s']=sum(capacityUnitMs)/1000 by ['Capacity Name']=capacityName, ['End Time']=bin(operationEndTime,_timespan)\n| extend  ['Capacity Name']=capacityName, ['Start Time']=operationStartTime\n| make-series ['Operations']=count() on ['Start Time'] step _timespan by ['Capacity Name']\n| extend anomalie = series_decompose_anomalies(Operations)",
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacityOperations\n// | summarize Operations=count() by ['Capacity Name']=capacityName, Type=utilizationType, ['Start Time']=bin(operationStartTime,_timespan)\n// | summarize ['CU´s']=sum(capacityUnitMs)/1000 by ['Capacity Name']=capacityName, ['End Time']=bin(operationEndTime,_timespan)\n| extend  ['Capacity Name']=CapacityName, ['Start Time']=operationStartTime\n| make-series ['Operations']=count() on ['Start Time'] step _timespan by ['Capacity Name']\n// | extend anomalie = series_decompose_anomalies(Operations)",
       "id": "1bf77edd-975b-48d1-a3d7-bdb4f5174c5d",
       "usedVariables": [
         "_capacityOperations",
@@ -1717,10 +2288,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "_gatewayNodesBase\n| summarize ['Number of Nodes']=count() by ['Gateway Name']=gatewayName, gatewayId\n| order by ['Number of Nodes']",
+      "text": "_queriesBase\n| extend Status = case(\n    Success == \"Y\", \"Success\",\n    Success == \"N\", \"Failed\",\n    \"In Progress\"\n)\n| summarize Jobs=count() by Status\n| order by Jobs",
       "id": "e248ec4c-593c-4242-b994-ec2ee54f2e85",
       "usedVariables": [
-        "_gatewayNodesBase"
+        "_queriesBase"
       ]
     },
     {
@@ -1772,10 +2343,141 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "_queriesBase\n| where ItemId == \"33b97040-b6b6-4c67-8ff7-9a2127ea60f8\"\n| lookup GatewayMembers on $left.GatewayObjectId == $right.memberId\n| summarize min(QueryExecutionStartTimeUTC), max(QueryExecutionEndTimeUTC), Progress=countif(isempty(Success)),count(), count_distinct(Success), max(Success),min(Success) by RequestId\n| project ['Start Time']=min_QueryExecutionStartTimeUTC,\n['End Time']=iff(Progress > 0, datetime(null), max_QueryExecutionEndTimeUTC),\n['Duration']=totimespan(max_QueryExecutionEndTimeUTC - min_QueryExecutionStartTimeUTC),\nStatus = case(\n    Progress > 0, \"In Progress\",\n    max_Success==min_Success and max_Success == \"Y\", \"Success\",\n    \"Failed\"\n),\nmax_Success,min_Success, count_,Progress",
+      "text": "_queriesBase\n| summarize min(QueryExecutionStartTimeUTC), max(QueryExecutionEndTimeUTC), Progress=countif(isempty(Success)),count(), Successes=countif(Success == \"Y\") by RequestId\n| project ['Start Time']=min_QueryExecutionStartTimeUTC,\n['End Time']=iff(Progress > 0, datetime(null), max_QueryExecutionEndTimeUTC),\n['Duration']=totimespan(max_QueryExecutionEndTimeUTC - min_QueryExecutionStartTimeUTC),\nStatus = case(\n    Progress > 0, \"In Progress\",\n    Successes==count_, \"Success\",\n    \"Failed\"\n)\n| order by ['Start Time']",
       "id": "1f96b0c8-572a-4c32-9306-83fa24f85ccf",
       "usedVariables": [
         "_queriesBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_tenantSettingBase\n| project TenantSettingGroup,Title, Enabled, CanSpecifySecurityGroups,EnabledSecurityGroups\n| order by TenantSettingGroup asc ",
+      "id": "719e4955-58b1-450d-bf42-82a007d181b5",
+      "usedVariables": [
+        "_tenantSettingBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_tenantSettingBase\n| summarize Settings=count() by Enabled",
+      "id": "71f1e5cf-6f4b-4279-ad25-d5f6cbb59f49",
+      "usedVariables": [
+        "_tenantSettingBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "WorkspaceDelegatedSettings\n| count ",
+      "id": "9c159e0e-3009-4bc1-818f-5743fd3bf21b",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "CapacityDelegatedSettings\n| summarize count() by CapacityId\n| lookup Capacities on CapacityId\n| project ['Settings Changed']=count_, ['Capacity Name']=CapacityName\n| order by ['Settings Changed']",
+      "id": "867e916a-1493-4e2e-a3a5-c5a6bad67f98",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "DomainDelegatedSettings\n| count",
+      "id": "b8c58d2b-76a2-41d7-ac52-09b4c242ba7d",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_tenantSettingBase\n| count ",
+      "id": "cf5690e2-b5b5-4bc1-b69b-7c614f9696ea",
+      "usedVariables": [
+        "_tenantSettingBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "TenantSettingsHistory\n| where scanTime between (datetime_add('second',-1,_date) .. datetime_add('second',+1,_date))\n| where Enabled in (_tenantSettingEnabled)",
+      "id": "e37731ac-8504-46df-b9f8-dfd7e9d8e0e1",
+      "usedVariables": [
+        "_date",
+        "_tenantSettingEnabled"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "TenantSettingsHistory\n| where scanTime between (datetime_add('second',-1,_date) .. datetime_add('second',+1,_date))\n| where Enabled in (_tenantSettingEnabled)\n| count ",
+      "id": "f22570bb-1b98-4b8c-9132-f9a8702503c7",
+      "usedVariables": [
+        "_date",
+        "_tenantSettingEnabled"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "TenantSettingsHistory\n| where scanTime between (datetime_add('second',-1,_date) .. datetime_add('second',+1,_date))\n| where Enabled in (_tenantSettingEnabled)\n| summarize Settings=count() by Enabled",
+      "id": "a591a13f-20f4-4403-a8fc-2ef4532cf164",
+      "usedVariables": [
+        "_date",
+        "_tenantSettingEnabled"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacityBase\n| project CapacityName,CapacityId, Capacity=1",
+      "id": "b8248bc8-f848-49cb-b32a-eee75c32def1",
+      "usedVariables": [
+        "_capacityBase"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let workspaces_count = Workspaces | where type in (_type) and state in (_state) | summarize Workspaces=count() by capacityId;\n_capacityBase\n| lookup workspaces_count on $left.CapacityId ==  $right.capacityId\n| summarize Workspaces=sum(Workspaces)",
+      "id": "60cffd00-6eb2-4f93-abae-abadc5ba3ab1",
+      "usedVariables": [
+        "_capacityBase",
+        "_state",
+        "_type"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacitySummary\n| project TimepointConsumption= capacityUnitSecond/timepointCapacityUnits\n| summarize ['Capacity Usage %'] = round(avg(TimepointConsumption)*100,2)\n| project strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")",
+      "id": "bf262f6b-8c5e-4eb9-954e-c7b479fa5093",
+      "usedVariables": [
+        "_capacitySummary"
       ]
     },
     {
@@ -1796,10 +2498,11 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "Workspaces\n| where isOnDedicatedCapacity in (_isOnCapacity)\n    and type in (_type)\n    and name contains _workspaceName\n    and state in (_state)\n    and case(\n        isnotempty(_workspaceName) and isnotempty(_workspaceNameExact), id in (_workspaceNameExact),\n        true\n    )\n| where iff(\n    false in (_isOnCapacity),\n    isempty(capacityId) or capacityId in (_capacities),\n    capacityId in (_capacities)\n    )",
+      "text": "let _wsId = Items | where itemType in (_itemType) | summarize by workspaceId;\nWorkspaces\n| where id in (_wsId)\n| where isOnDedicatedCapacity in (_isOnCapacity)\n    and type in (_type)\n    and name contains _workspaceName\n    and state in (_state)\n    and case(\n        isnotempty(_workspaceName) and isnotempty(_workspaceNameExact), id in (_workspaceNameExact),\n        true\n    )\n| where iff(\n    false in (_isOnCapacity),\n    isempty(capacityId) or capacityId in (_capacities),\n    capacityId in (_capacities)\n    )",
       "usedVariables": [
         "_capacities",
         "_isOnCapacity",
+        "_itemType",
         "_state",
         "_type",
         "_workspaceName",
@@ -1812,8 +2515,9 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacitySummary\n| where ['time'] between (_startTime .. _endTime)\n// | where capacityId in (_capacities)",
+      "text": "CapacitySummary\n| where windowStartTime between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| lookup Capacities on $left.capacityId == $right.CapacityId",
       "usedVariables": [
+        "_capacities",
         "_endTime",
         "_startTime"
       ]
@@ -1824,8 +2528,9 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacityOperations\n| where operationStartTime between (_startTime .. _endTime)\n// | where capacityId in (_capacities)",
+      "text": "CapacityOperations\n| where windowStartTime  between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| lookup Capacities on $left.capacityId == $right.CapacityId",
       "usedVariables": [
+        "_capacities",
         "_endTime",
         "_startTime"
       ]
@@ -1858,11 +2563,22 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "QueryStartReport\n| where QueryExecutionStartTimeUTC between (_startTime .. _endTime) and GatewayObjectId in (_gatewayNodes)\n| join kind=leftouter  QueryExecutionReport on QueryTrackingId\n| project GatewayObjectId, RequestId, QueryTrackingId, QueryExecutionStartTimeUTC, QueryExecutionEndTimeUTC, QueryExecutionDuration_ms_, OperationType, ServiceName, CurrentActivityId, ItemId, QueryType, RootActivityId, WorkspaceId,Success, ErrorMessage",
+      "text": "let _queryExecutionReport = QueryExecutionReport | where QueryExecutionEndTimeUTC > _startTime and GatewayObjectId in (_gatewayNodes) | project RequestId,QueryTrackingId,QueryExecutionEndTimeUTC,QueryExecutionDuration_ms_,Success,ErrorMessage,QueryType, GatewayObjectId;\nQueryStartReport\n| where QueryExecutionStartTimeUTC between (_startTime .. _endTime) and GatewayObjectId in (_gatewayNodes)\n| project GatewayObjectId,QueryTrackingId,OperationType,ServiceName,CurrentActivityId,ItemId,RootActivityId,WorkspaceId,QueryExecutionStartTimeUTC,RequestId\n| join kind=leftouter hint.strategy=shuffle hint.shufflekey=RequestId hint.num_partitions=6 _queryExecutionReport on QueryTrackingId and GatewayObjectId and RequestId\n| lookup GatewayMembers on $left.GatewayObjectId == $right.memberId\n| lookup Gateways on $left.gatewayId == $right.gatewayId\n| project NodeId=GatewayObjectId, RequestId, QueryTrackingId, QueryExecutionStartTimeUTC, QueryExecutionEndTimeUTC, QueryExecutionDuration_ms_, OperationType, ServiceName, CurrentActivityId, ItemId, QueryType, RootActivityId, WorkspaceId,Success, ErrorMessage, memberName,gatewayName, gatewayId",
       "usedVariables": [
         "_endTime",
         "_gatewayNodes",
         "_startTime"
+      ]
+    },
+    {
+      "id": "a40a67d4-afa7-4899-b173-7e8658adb90c",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "TenantSettings\n| where Enabled in (_tenantSettingEnabled)",
+      "usedVariables": [
+        "_tenantSettingEnabled"
       ]
     },
     {
@@ -1915,6 +2631,24 @@
       "usedVariables": [
         "_gatewayBase"
       ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "TenantSettingsHistory\n| summarize by scanTime\n| order by scanTime desc ",
+      "id": "b85f210a-0218-4b3d-af67-255b5fe65f64",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "Items\n| summarize by itemType",
+      "id": "0541e32c-be34-4891-b047-18f7def8410b",
+      "usedVariables": []
     }
   ]
 }

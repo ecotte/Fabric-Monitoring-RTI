@@ -88,5 +88,9 @@
     {
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91"
+    },
+    {
+        "name": "Capacity Monitoring.KQLDashboard",
+        "id": "297e6a7e-2f76-8797-4b8e-d55141156547"
     }
 ]
