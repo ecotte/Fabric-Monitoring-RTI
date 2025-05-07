@@ -90,6 +90,7 @@ To implement this solution, we have some step to follow. This steps will cover t
    - [Enhance admin APIs responses with DAX and mashup expressions](https://learn.microsoft.com/en-us/fabric/admin/tenant-settings-index#admin-api-settings)
    - [Member Role over the workspace to use](https://learn.microsoft.com/en-us/fabric/fundamentals/roles-workspaces)
    - [Admin Role over the On-Premise Data Gateways to monitor](https://learn.microsoft.com/en-us/data-integration/gateway/manage-security-roles)
+- Frabic Workspace with the Security Group added to the Workspace
 - Microsoft Fabric Capacity of F8 or higher, recommended F16 (the capacity size needed will depend on the amount of logs sent and processed by the system)
 
 
