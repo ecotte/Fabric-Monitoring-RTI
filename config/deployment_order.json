@@ -1,0 +1,96 @@
+[
+    {
+        "name": "Microsoft Fabric Platform Monitoring",
+        "id": "63b564e3-bc45-46b0-aa00-31e28a727076"
+    },
+    {
+        "name": "FabricCapacity",
+        "id": "31998247-b1ac-4a64-b855-b58555596473"
+    },
+    {
+        "name": "Platform and Audit DB.Eventhouse",
+        "id": "569fc432-6c1c-b12c-4955-5bc489624da3"
+    },
+    {
+        "name": "Platform and Audit DB.KQLDatabase",
+        "id": "3952ada3-75b7-84cd-411f-7d1aaf376871"
+    },
+    {
+        "name": "CapacityUtilizationEvents.Eventstream",
+        "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4"
+    },
+    {
+        "name": "GatewayMonitoringHeartbeat.Eventstream",
+        "id": "cfe1aab3-5375-b47d-4d90-14218c85299d"
+    },
+    {
+        "name": "GatewayMonitoringReports.Eventstream",
+        "id": "83273f3e-80b8-97e9-47e0-f5174d357deb"
+    },
+    {
+        "name": "Monitoring Audit Logs.Notebook",
+        "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
+        "schedule": {
+            "configuration": {
+                "type": "Cron",
+                "startDateTime": "2025-03-01T00:00:00",
+                "endDateTime": "2030-12-31T23:59:59",
+                "localTimeZoneId": "GMT Standard Time",
+                "interval": 5
+              },
+            "enabled": true
+        }
+    },
+    {
+        "name": "Monitoring Extraction Inventory.Notebook",
+        "id": "505b4c37-0557-a70e-404c-02d18abdd261",
+        "schedule": {
+            "configuration": {
+                "type": "Daily",
+                "startDateTime": "2025-04-21T00:00:00",
+                "endDateTime": "2030-12-31T23:59:00",
+                "localTimeZoneId": "GMT Standard Time",
+                "times": [
+                  "01:00"
+                ]
+              },
+            "enabled": true
+        }
+    },
+    {
+        "name": "Monitoring Extraction Scanner.Notebook",
+        "id": "a09748a4-ab11-9a40-4567-bffd9c19595e",
+        "schedule": {
+            "configuration": {
+                "type": "Cron",
+                "startDateTime": "2025-03-01T00:00:00",
+                "endDateTime": "2030-12-31T23:59:59",
+                "localTimeZoneId": "GMT Standard Time",
+                "interval": 30
+              },
+            "enabled": true
+        }
+    },
+    {
+        "name": "Monitoring Extraction Refreshables.Notebook",
+        "id": "754f754a-4d28-8d57-48b5-705db14578f8",
+        "schedule": {
+            "configuration": {
+                "type": "Cron",
+                "startDateTime": "2025-03-01T00:00:00",
+                "endDateTime": "2030-12-31T23:59:59",
+                "localTimeZoneId": "GMT Standard Time",
+                "interval": 5
+              },
+            "enabled": true
+        }
+    },
+    {
+        "name": "Platform Monitoring.KQLDashboard",
+        "id": "95ac7fd2-7032-88aa-413d-f195f8397f91"
+    },
+    {
+        "name": "Capacity Monitoring.KQLDashboard",
+        "id": "297e6a7e-2f76-8797-4b8e-d55141156547"
+    }
+]
