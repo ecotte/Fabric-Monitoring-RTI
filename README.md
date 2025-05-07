@@ -23,8 +23,6 @@ Benefits include faster incident response, improved health analytics, and stream
 
 The following Fabric items are deployed and used:
 - Eventstreams:
-   - CapacityUtilizationEvents
-      - For the RTH Capacity Events
    - GatewayMonitoringHeartbeat
       - To receive the gateway heartbeat
    - GatewayMonitoringReports
