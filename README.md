@@ -101,10 +101,6 @@ If you change the variable "FIRST_RUN" to "False" the script will update the Eve
 > [!CAUTION]
 > No change are made to any additional item in the workspace or eventhouse. But if you customize the default ones (Notebook, Policies, Tables, Functions, etc), the change could be reverted back or the update could fail.
 
-## Eventstream changes
-
-## Notebook scheduling
-
 ## Real-Time Dashboard configuration
 
 ## Script deployment and setup in the gateway nodes (Optional)
