@@ -16,6 +16,10 @@
         "id": "3952ada3-75b7-84cd-411f-7d1aaf376871"
     },
     {
+        "name": "CapacityUtilizationEvents.Eventstream",
+        "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4"
+    },
+    {
         "name": "GatewayMonitoringHeartbeat.Eventstream",
         "id": "cfe1aab3-5375-b47d-4d90-14218c85299d"
     },
