@@ -37,7 +37,7 @@ cluster_ingest = "{kusto_ingest_uri}"
 cluster_query = "{kusto_query_uri}"
 database_name = "{kusto_db_name}"
 
-key_vault_uri = f"h{key_vault_uri}"
+key_vault_uri = f"{key_vault_uri}"
 key_vault_tenant_id = f"{key_vault_tenant_id}"
 key_vault_client_id = f"{key_vault_client_id}"
 key_vault_client_secret = f"{key_vault_client_secret}"
