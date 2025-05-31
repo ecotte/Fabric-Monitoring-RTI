@@ -85,22 +85,22 @@
             "enabled": true
         }
     },
-    {
-        "name": "Platform Monitoring.VariableLibrary",
-        "id": "c33a7ab0-51c2-b7f5-442a-3b7180051688"
-    },
-    {
-        "name": "Refresh Inventory.DataPipeline",
-        "id": "c769baa6-1bdf-8ab5-4902-9ccd2aa4e257"
-    },
-    {
-        "name": "Refresh Log and Refreshables.DataPipeline",
-        "id": "c86cea31-e199-90b0-4878-ff97449030a6"
-    },
-    {
-        "name": "Refresh Scanner API.DataPipeline",
-        "id": "58736594-839f-aa8c-45e7-db9b01bda786"
-    },
+    // {
+    //     "name": "Platform Monitoring.VariableLibrary",
+    //     "id": "c33a7ab0-51c2-b7f5-442a-3b7180051688"
+    // },
+    // {
+    //     "name": "Refresh Inventory.DataPipeline",
+    //     "id": "c769baa6-1bdf-8ab5-4902-9ccd2aa4e257"
+    // },
+    // {
+    //     "name": "Refresh Log and Refreshables.DataPipeline",
+    //     "id": "c86cea31-e199-90b0-4878-ff97449030a6"
+    // },
+    // {
+    //     "name": "Refresh Scanner API.DataPipeline",
+    //     "id": "58736594-839f-aa8c-45e7-db9b01bda786"
+    // },
     {
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91"
