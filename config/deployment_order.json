@@ -1,6 +1,6 @@
 [
     {
-        "name": "Microsoft Fabric Platform Monitoring",
+        "name": "Workspace.src",
         "id": "63b564e3-bc45-46b0-aa00-31e28a727076"
     },
     {
@@ -14,10 +14,6 @@
     {
         "name": "Platform and Audit DB.KQLDatabase",
         "id": "3952ada3-75b7-84cd-411f-7d1aaf376871"
-    },
-    {
-        "name": "CapacityUtilizationEvents.Eventstream",
-        "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4"
     },
     {
         "name": "GatewayMonitoringHeartbeat.Eventstream",
@@ -84,6 +80,22 @@
               },
             "enabled": true
         }
+    },
+    {
+        "name": "Platform Monitoring.VariableLibrary",
+        "id": "c33a7ab0-51c2-b7f5-442a-3b7180051688"
+    },
+    {
+        "name": "Refresh Inventory.DataPipeline",
+        "id": "c769baa6-1bdf-8ab5-4902-9ccd2aa4e257"
+    },
+    {
+        "name": "Refresh Log and Refreshables.DataPipeline",
+        "id": "c86cea31-e199-90b0-4878-ff97449030a6"
+    },
+    {
+        "name": "Refresh Scanner API.DataPipeline",
+        "id": "58736594-839f-aa8c-45e7-db9b01bda786"
     },
     {
         "name": "Platform Monitoring.KQLDashboard",

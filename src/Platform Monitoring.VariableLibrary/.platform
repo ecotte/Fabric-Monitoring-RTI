@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "KQLDatabase",
-    "displayName": "Platform and Audit DB",
-    "description": "Platform and Audit DB"
+    "type": "VariableLibrary",
+    "displayName": "Platform Monitoring",
+    "description": ""
   },
   "config": {
     "version": "2.0",
-    "logicalId": "3952ada3-75b7-84cd-411f-7d1aaf376871"
+    "logicalId": "c33a7ab0-51c2-b7f5-442a-3b7180051688"
   }
 }

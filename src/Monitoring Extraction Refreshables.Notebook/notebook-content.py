@@ -29,16 +29,14 @@
 
 # CELL ********************
 
-cluster_ingest = "{kusto_ingest_uri}"
-cluster_query = "{kusto_query_uri}"
-database_name = '{kusto_db_name}'
+# cluster_ingest = "https://ingest-trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com"
+# cluster_query = "https://trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com"
+# database_name = 'Platform and Audit DB'
 
-key_vault_uri = f"{key_vault_uri}"
-key_vault_tenant_id = f"{key_vault_tenant_id}"
-key_vault_client_id = f"{key_vault_client_id}"
-key_vault_client_secret = f"{key_vault_client_secret}"
-
-WAIT_TIME = 2
+# key_vault_uri = f"https://mrtacatkeyvault.vault.azure.net/"
+# key_vault_tenant_id = f"tenant-id"
+# key_vault_client_id = f"fabric-admin-api-sp-id"
+# key_vault_client_secret = f"fabric-admin-api-sp-secret"
 
 # METADATA ********************
 
@@ -67,6 +65,8 @@ from azure.kusto.ingest import (
     IngestionProperties,
     IngestionStatus,
 )
+
+WAIT_TIME = 2
 
 # METADATA ********************
 
@@ -181,6 +181,17 @@ def refreshables_process(connection_info:dict,all:bool=False):
 # CELL ********************
 
 refreshables = refreshables_process(connection_info=connection_info,all=True)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "jupyter_python"
+# META }
+
+# CELL ********************
+
+refreshables
 
 # METADATA ********************
 

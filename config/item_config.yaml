@@ -5,7 +5,6 @@ workspace:
 items:
   - Platform and Audit DB.Eventhouse
   - Platform and Audit DB.KQLDatabase
-  - CapacityUtilizationEvents.Eventstream
   - GatewayMonitoringHeartbeat.Eventstream
   - GatewayMonitoringReports.Eventstream
   - Monitoring Audit Logs.Notebook
@@ -13,7 +12,6 @@ items:
   - Monitoring Extraction Scanner.Notebook
   - Monitoring Extraction Refreshables.Notebook
   - Platform Monitoring.KQLDashboard
-  - Capacity Monitoring.KQLDashboard
 
 capacity:
   name: FabricCapacity

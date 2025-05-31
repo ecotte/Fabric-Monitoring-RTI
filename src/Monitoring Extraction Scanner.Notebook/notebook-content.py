@@ -37,17 +37,14 @@
 
 # CELL ********************
 
-cluster_ingest = "{kusto_ingest_uri}"
-cluster_query = "{kusto_query_uri}"
-database_name = '{kusto_db_name}'
+cluster_ingest = "https://ingest-trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com"
+cluster_query = "https://trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com"
+database_name = 'Platform and Audit DB'
 
-key_vault_uri = f"{key_vault_uri}"
-key_vault_tenant_id = f"{key_vault_tenant_id}"
-key_vault_client_id = f"{key_vault_client_id}"
-key_vault_client_secret = f"{key_vault_client_secret}"
-
-WAIT_TIME = 2
-
+key_vault_uri = f"https://mrtacatkeyvault.vault.azure.net/"
+key_vault_tenant_id = f"tenant-id"
+key_vault_client_id = f"fabric-admin-api-sp-id"
+key_vault_client_secret = f"fabric-admin-api-sp-secret"
 
 # METADATA ********************
 
@@ -77,6 +74,8 @@ import time
 import numpy as np
 import json
 import concurrent.futures
+
+WAIT_TIME = 2
 
 # METADATA ********************
 
@@ -415,7 +414,9 @@ def cleanup_kql(connection_info):
 
 # META {
 # META   "language": "python",
-# META   "language_group": "jupyter_python"
+# META   "language_group": "jupyter_python",
+# META   "frozen": false,
+# META   "editable": true
 # META }
 
 # CELL ********************
@@ -428,9 +429,19 @@ def missing_workspaces(connection_info):
         | distinct WorkspaceId
         """
 
+    query_deleted_workspaces = f"""
+        WorkspacesHistory
+        | where state == "Deleted"
+        | project WorkspaceId= id
+        | where not(isempty( WorkspaceId))
+        | distinct WorkspaceId
+        """
+
     response_workspaces = kusto_query(query=query_workspaces,connection_info=connection_info)
+    response_deleted_workspaces = kusto_query(query=query_deleted_workspaces,connection_info=connection_info)
 
     existing_ws = []
+    deleted_ws = []
 
     with labs.service_principal_authentication(
         key_vault_uri=connection_info['key_vault_uri'], 
@@ -438,13 +449,17 @@ def missing_workspaces(connection_info):
         key_vault_client_id=connection_info['key_vault_client_id'],
         key_vault_client_secret=connection_info['key_vault_client_secret']):
         modified_workspaces = labs.admin.list_modified_workspaces()["Workspace Id"].tolist()
+        deleted_workspaces = labs.admin.list_workspaces(workspace_state="Deleted")["Id"].tolist()
 
     for w in response_workspaces.primary_results[0]:
         existing_ws.append(w['WorkspaceId'])
 
-    len(existing_ws)
+    for w in response_deleted_workspaces.primary_results[0]:
+        deleted_ws.append(w['WorkspaceId'])
 
     result = list(set(modified_workspaces) - set(existing_ws))
+    deleted_workspaces = list(set(deleted_workspaces) - set(deleted_ws))
+    result = list(set(result) | set(deleted_workspaces))
 
     return result
 
@@ -756,11 +771,11 @@ def scanner_process(
         last_scan_time = response_last_scan_time.primary_results[0][0]['scanTime'].strftime('%Y-%m-%d %H:%M:%S')
 
     with labs.service_principal_authentication(
-                key_vault_uri=connection_info['key_vault_uri'], 
-                key_vault_tenant_id=connection_info['key_vault_tenant_id'],
-                key_vault_client_id=connection_info['key_vault_client_id'],
-                key_vault_client_secret=connection_info['key_vault_client_secret']):
-            workspace_ids = labs.admin.list_modified_workspaces(modified_since=last_scan_time)
+            key_vault_uri=connection_info['key_vault_uri'], 
+            key_vault_tenant_id=connection_info['key_vault_tenant_id'],
+            key_vault_client_id=connection_info['key_vault_client_id'],
+            key_vault_client_secret=connection_info['key_vault_client_secret']):
+        workspace_ids = labs.admin.list_modified_workspaces(modified_since=last_scan_time)
 
     if len(workspace_ids) > 0:
         workspace_ids = list(set(workspace_ids["Workspace Id"].tolist()) | set(missing_workspaces(connection_info=connection_info)))
