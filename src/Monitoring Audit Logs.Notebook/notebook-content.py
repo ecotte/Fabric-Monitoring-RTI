@@ -46,8 +46,8 @@ key_vault_tenant_id = f"{key_vault_tenant_id}"
 key_vault_client_id = f"{key_vault_client_id}"
 key_vault_client_secret = f"{key_vault_client_secret}"
 
-# DAILY = False
-# specific_date = None
+DAILY = False
+specific_date = None
 
 # METADATA ********************
 
