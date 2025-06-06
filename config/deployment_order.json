@@ -1,35 +1,43 @@
 [
     {
         "name": "Workspace.src",
-        "id": "63b564e3-bc45-46b0-aa00-31e28a727076"
+        "id": "63b564e3-bc45-46b0-aa00-31e28a727076",
+        "type": "Core"
     },
     {
         "name": "FabricCapacity",
-        "id": "31998247-b1ac-4a64-b855-b58555596473"
+        "id": "31998247-b1ac-4a64-b855-b58555596473",
+        "type": "Core"
     },
     {
         "name": "Platform and Audit DB.Eventhouse",
-        "id": "569fc432-6c1c-b12c-4955-5bc489624da3"
+        "id": "569fc432-6c1c-b12c-4955-5bc489624da3",
+        "type": "Core"
     },
     {
         "name": "Platform and Audit DB.KQLDatabase",
-        "id": "3952ada3-75b7-84cd-411f-7d1aaf376871"
+        "id": "3952ada3-75b7-84cd-411f-7d1aaf376871",
+        "type": "Core"
     },
     {
         "name": "CapacityUtilizationEvents.Eventstream",
-        "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4"
+        "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4",
+        "type": "Capacity"
     },
     {
         "name": "GatewayMonitoringHeartbeat.Eventstream",
-        "id": "cfe1aab3-5375-b47d-4d90-14218c85299d"
+        "id": "cfe1aab3-5375-b47d-4d90-14218c85299d",
+        "type": "Gateway"
     },
     {
         "name": "GatewayMonitoringReports.Eventstream",
-        "id": "83273f3e-80b8-97e9-47e0-f5174d357deb"
+        "id": "83273f3e-80b8-97e9-47e0-f5174d357deb",
+        "type": "Gateway"
     },
     {
         "name": "Monitoring Audit Logs.Notebook",
         "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
+        "type": "Audit",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -44,6 +52,7 @@
     {
         "name": "Monitoring Extraction Inventory.Notebook",
         "id": "505b4c37-0557-a70e-404c-02d18abdd261",
+        "type": "Inventory",
         "schedule": {
             "configuration": {
                 "type": "Daily",
@@ -60,6 +69,7 @@
     {
         "name": "Monitoring Extraction Scanner.Notebook",
         "id": "a09748a4-ab11-9a40-4567-bffd9c19595e",
+        "type": "Inventory",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -74,6 +84,7 @@
     {
         "name": "Monitoring Extraction Refreshables.Notebook",
         "id": "754f754a-4d28-8d57-48b5-705db14578f8",
+        "type": "Inventory",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -87,10 +98,12 @@
     },
     {
         "name": "Platform Monitoring.KQLDashboard",
-        "id": "95ac7fd2-7032-88aa-413d-f195f8397f91"
+        "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
+        "type": "Inventory"
     },
     {
         "name": "Capacity Monitoring.KQLDashboard",
-        "id": "297e6a7e-2f76-8797-4b8e-d55141156547"
+        "id": "297e6a7e-2f76-8797-4b8e-d55141156547",
+        "type": "Capacity"
     }
 ]
