@@ -853,19 +853,20 @@ CapacityEventsRaw
     stateChangeReason,
     data
 }
-.create-or-alter function with (folder = "Platform/Events", skipvalidation = "true") TimepointConsumption(Timepoint:datetime, CapacityId:string="", AddWorkspace:bool=true, AddItemKind:bool=true, AddItem:bool=true, AddOperation:bool=true) {
+.create-or-alter function with (folder = "Platform/Events", skipvalidation = "true") TimepointConsumption(Timepoint:datetime, CapacityId:string="", Workspace:string="", ItemKind:string="", AddWorkspace:bool=true, AddItemKind:bool=true, AddItem:bool=true, AddOperation:bool=true) {
 let _allCapacities = isempty(CapacityId);
 let _workspaces = iff(not(AddWorkspace), dynamic(['Workspace Name', 'Workspace Id']), dynamic([""]));
 let _items = iff(not(AddItem), dynamic(['Item Name', 'Item Id']), dynamic([""]));
 let _itemKind = iff(not(AddItemKind), dynamic(['Item Kind']), dynamic([""]));
 let _operations = iff(not(AddOperation), dynamic(['Operation Name']), dynamic([""]));
 let _summary = CapacitySummary
-    | where capacityId == CapacityId or _allCapacities
+    | where _allCapacities or capacityId == CapacityId
     | where windowStartTime == Timepoint
-    | take 1
     | project ['Capacity Id']=capacityId, ['Total Consumed Timepoint CU']=capacityUnitSecond, ['Capacity Timepoint CU']=timepointCapacityUnits;
 CapacityOperations
-| where capacityId == CapacityId or _allCapacities
+| where _allCapacities or capacityId == CapacityId
+| where isempty(Workspace) or workspaceId == Workspace or workspaceName == Workspace
+| where isempty(ItemKind) or itemKind == ItemKind
 | where windowStartTime <= Timepoint and windowEndTime >= Timepoint
 | project
     ['Capacity Name'] = capacityName,
