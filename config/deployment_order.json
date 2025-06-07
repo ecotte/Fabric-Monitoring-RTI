@@ -37,7 +37,7 @@
     {
         "name": "Monitoring Audit Logs.Notebook",
         "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
-        "type": "Audit",
+        "type": "PlatformMonitoring",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -52,7 +52,7 @@
     {
         "name": "Monitoring Extraction Inventory.Notebook",
         "id": "505b4c37-0557-a70e-404c-02d18abdd261",
-        "type": "Inventory",
+        "type": "PlatformMonitoring",
         "schedule": {
             "configuration": {
                 "type": "Daily",
@@ -69,7 +69,7 @@
     {
         "name": "Monitoring Extraction Scanner.Notebook",
         "id": "a09748a4-ab11-9a40-4567-bffd9c19595e",
-        "type": "Inventory",
+        "type": "PlatformMonitoring",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -84,7 +84,7 @@
     {
         "name": "Monitoring Extraction Refreshables.Notebook",
         "id": "754f754a-4d28-8d57-48b5-705db14578f8",
-        "type": "Inventory",
+        "type": "PlatformMonitoring",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -99,7 +99,7 @@
     {
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
-        "type": "Inventory"
+        "type": "PlatformMonitoring"
     },
     {
         "name": "Capacity Monitoring.KQLDashboard",
