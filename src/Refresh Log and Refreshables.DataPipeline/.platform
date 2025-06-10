@@ -1,12 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "KQLDatabase",
-    "displayName": "Platform and Audit DB",
-    "description": "Platform and Audit DB"
+    "type": "DataPipeline",
+    "displayName": "Refresh Log and Refreshables"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "3952ada3-75b7-84cd-411f-7d1aaf376871"
+    "logicalId": "c86cea31-e199-90b0-4878-ff97449030a6"
   }
 }

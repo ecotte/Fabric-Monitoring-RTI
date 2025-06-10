@@ -35,20 +35,19 @@
 
 # ## Variables
 
-# CELL ********************
+# PARAMETERS CELL ********************
 
 cluster_ingest = "{kusto_ingest_uri}"
 cluster_query = "{kusto_query_uri}"
-database_name = '{kusto_db_name}'
+database_name = "{kusto_db_name}"
 
 key_vault_uri = f"{key_vault_uri}"
 key_vault_tenant_id = f"{key_vault_tenant_id}"
 key_vault_client_id = f"{key_vault_client_id}"
 key_vault_client_secret = f"{key_vault_client_secret}"
 
-WAIT_TIME = 2
-
 DAILY = False
+specific_date = None
 
 # METADATA ********************
 
@@ -76,6 +75,8 @@ from azure.kusto.ingest import (
     IngestionProperties,
     IngestionStatus,
 )
+
+WAIT_TIME = 2
 
 # METADATA ********************
 
@@ -260,7 +261,8 @@ def audit_process(daily,connection_info,specific_date=None):
 
 audit_process(
     daily=DAILY,
-    connection_info=connection_info
+    connection_info=connection_info,
+    specific_date=specific_date
 )
 
 # METADATA ********************
@@ -272,8 +274,8 @@ audit_process(
 
 # CELL ********************
 
-# for x in range(14,26):
-#     date = f"2025-03-{x:02}T00:00:00"
+# for x in range(18,26):
+#     date = f"2025-05-{x:02}T00:00:00"
 #     audit_process(
 #         daily=True,
 #         connection_info=connection_info,

@@ -853,6 +853,75 @@ CapacityEventsRaw
     stateChangeReason,
     data
 }
+.create-or-alter function with (folder = "Platform/Events", skipvalidation = "true") TimepointConsumption(Timepoint:datetime, CapacityId:string="", Workspace:string="", ItemKind:string="", AddWorkspace:bool=true, AddItemKind:bool=true, AddItem:bool=true, AddOperation:bool=true) {
+let _allCapacities = isempty(CapacityId);
+let _workspaces = iff(not(AddWorkspace), dynamic(['Workspace Name', 'Workspace Id']), dynamic([""]));
+let _items = iff(not(AddItem), dynamic(['Item Name', 'Item Id']), dynamic([""]));
+let _itemKind = iff(not(AddItemKind), dynamic(['Item Kind']), dynamic([""]));
+let _operations = iff(not(AddOperation), dynamic(['Operation Name']), dynamic([""]));
+let _summary = CapacitySummary
+    | where _allCapacities or capacityId == CapacityId
+    | where windowStartTime == Timepoint
+    | project ['Capacity Id']=capacityId, ['Total Consumed Timepoint CU']=capacityUnitSecond, ['Capacity Timepoint CU']=timepointCapacityUnits;
+CapacityOperations
+| where _allCapacities or capacityId == CapacityId
+| where isempty(Workspace) or workspaceId == Workspace or workspaceName == Workspace
+| where isempty(ItemKind) or itemKind == ItemKind
+| where windowStartTime <= Timepoint and windowEndTime >= Timepoint
+| project
+    ['Capacity Name'] = capacityName,
+    ['Capacity Id'] = capacityId,
+    ['Capacity Sku'] =capacitySku,
+    ['Workspace Name'] = workspaceName,
+    ['Workspace Id'] = workspaceId,
+    ['CU´s'] = capacityUnitMs / 1000.0,
+    ['Item Name'] = itemName,
+    ['Item Id'] = itemId,
+    ['Item Kind'] = itemKind,
+    ['Operation Name'] = operationName,
+    ['Window Start Time'] = windowStartTime,
+    ['Window End Time'] = windowEndTime,
+    ['Timepoints'] = (windowEndTime - windowStartTime) / 30s,
+    ['Timepoint CU'] = (capacityUnitMs / 1000.0) / ((windowEndTime - windowStartTime) / 30s),
+    ['Utilization Type']=utilizationType,
+    ['Releast Type']=releaseType
+| project
+    ['Capacity Name'],
+    ['Capacity Id'],
+    ['Capacity Sku'],
+    ['CU´s'],
+    Timepoints,
+    ['Timepoint CU'],
+    ['Utilization Type'],
+    ['Releast Type'],
+    columns=bag_pack_columns(
+                ['Workspace Name'],
+                ['Workspace Id'],
+                ['Item Name'],
+                ['Item Id'],
+                ['Item Kind'],
+                ['Operation Name']
+            )
+| extend columns=bag_remove_keys(columns, _items)
+| extend columns=bag_remove_keys(columns, _itemKind)
+| extend columns=bag_remove_keys(columns, _workspaces)
+| extend columns=bag_remove_keys(columns, _operations)
+| evaluate bag_unpack(columns)
+| summarize ['Consumed Timepoint CU']=sum(['Timepoint CU'])
+    by
+    ['Capacity Name'],
+    ['Capacity Id'],
+    ['Capacity Sku'],
+    ['Workspace Name']=column_ifexists("Workspace Name", ""),
+    ['Workspace Id']=column_ifexists("Workspace Id", ""),
+    ['Item Kind']=column_ifexists("Item Kind", ""),
+    ['Item Name']=column_ifexists("Item Name", ""),
+    ['Item Id']=column_ifexists('Item Id',""),
+    ['Operation Name']=column_ifexists('Operation Name',""),
+    ['Releast Type']
+| lookup _summary on ['Capacity Id']
+| extend ['% of Capacity'] = round(100*['Consumed Timepoint CU']/['Capacity Timepoint CU'],2), ['% Total Capacity Util']=round(100*['Total Consumed Timepoint CU']/['Capacity Timepoint CU'],2)
+}
 .create-or-alter materialized-view with (Folder = "Gateway/Information")  GatewayNodeInfo on table GatewayNodeInfoRaw { GatewayNodeInfoRaw | summarize arg_max(logDate, clusterId,clusterName,machine,cloudDatasourceRefresh,contactInformation,customConnectors,status,type,version,versionStatus,osName,osVersion,cores,logicalCores,memoryGb) by nodeId }
 .create-or-alter materialized-view with (Folder = "Gateway/Information")  GatewayNodeStatus on table GatewaysHeartbeat { GatewaysHeartbeat | project-rename nodeId = GatewayId, lastStatusDate = ServerTimestampUTC | summarize arg_max(lastStatusDate,FileVersion,Responding) by nodeId }
 .create-or-alter materialized-view with (Folder = "Platform/Events")  ItemsLastView on table ActivityEvents { ItemsViews()
@@ -982,4 +1051,3 @@ CapacityEventsRaw
 .alter table CapacityState policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityState policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityState policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsState()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
-
