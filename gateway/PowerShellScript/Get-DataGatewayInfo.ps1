@@ -52,7 +52,8 @@ try {
     Connect-AzAccount -ServicePrincipal -Credential $servicePrincipal -TenantId $tenantId
     Set-AzContext -Tenant $tenantId | Out-Null
     $resourceUrl = "https://api.fabric.microsoft.com"
-    $authToken = (Get-AzAccessToken -ResourceUrl $resourceUrl).Token
+    $accessTokenObject = (Get-AzAccessToken -ResourceUrl $resourceUrl -AsSecureString)
+    $authToken = "Bearer {0}" -f (ConvertFrom-SecureString -SecureString $accessTokenObject.Token -AsPlainText)
     $fabricHeaders = @{
         'Content-Type'  = "application/json; charset=utf-8"
         'Authorization' = "Bearer {0}" -f $authToken
