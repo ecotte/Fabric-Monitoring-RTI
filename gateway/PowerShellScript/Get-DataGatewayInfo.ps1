@@ -105,6 +105,6 @@ try {
 catch {    
     $ex = $_.Exception   
     $ErrorDate = [datetime]::UtcNow     
-    Write-Error "Error on UploadGatewayLogs - $ex" -ErrorAction Continue     
+    Write-Error "Error on Get-DataGatewayInfo - $ex" -ErrorAction Continue     
     Out-File  -FilePath "$($logFolder)GatewayMonitoring.log" -InputObject "[Error] $ErrorDate; $ex" -Force -Append
 }   
