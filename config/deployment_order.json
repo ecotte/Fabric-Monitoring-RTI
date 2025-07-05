@@ -20,7 +20,24 @@
     {
         "name": "CapacityUtilizationEvents.Eventstream",
         "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4",
-        "type": "Capacity"
+        "type": "Capacity",
+        "destinations": [
+            {
+                "name": "Eventhouse",
+                "itemName": "Capacity Utilization.KQLDatabase",
+                "type": "Eventhouse"
+            }
+        ]
+    },
+    {
+        "name": "Capacity Monitoring.KQLDashboard",
+        "id": "297e6a7e-2f76-8797-4b8e-d55141156547",
+        "type": "Capacity",
+        "datasources": [
+            {
+                "name": "Capacity Utilization.KQLDatabase"
+            }
+        ]
     },
     {
         "name": "GatewayMonitoringHeartbeat.Eventstream",
@@ -98,10 +115,5 @@
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
         "type": "Inventory"
-    },
-    {
-        "name": "Capacity Monitoring.KQLDashboard",
-        "id": "297e6a7e-2f76-8797-4b8e-d55141156547",
-        "type": "Capacity"
     }
 ]

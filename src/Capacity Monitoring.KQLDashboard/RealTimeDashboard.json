@@ -1387,7 +1387,7 @@
       "scopeId": "kusto-trident",
       "clusterUri": "",
       "database": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
-      "name": "PlatformMonitoring",
+      "name": "CapacityMonitoring",
       "id": "8a9a70d8-02b9-4236-85be-90fa83a60c8e",
       "workspace": "00000000-0000-0000-0000-000000000000"
     }
