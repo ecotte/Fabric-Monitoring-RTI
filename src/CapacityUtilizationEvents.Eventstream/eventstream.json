@@ -287,19 +287,7 @@
       "properties": {},
       "inputNodes": [
         {
-          "name": "DBT-Capacity"
-        },
-        {
-          "name": "EdgarCotte-Trial"
-        },
-        {
-          "name": "Luoana-Trial"
-        },
-        {
-          "name": "Monitoring-Trial"
-        },
-        {
-          "name": "Thierry-Trial"
+          "name": "CapacityUtilization"
         }
       ]
     }
