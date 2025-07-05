@@ -9,13 +9,13 @@
   ],
   "destinations": [
     {
-      "id": "76ab3aa6-648e-48e5-8824-c88293856a58",
-      "name": "HeartbeatEventhouse",
+      "id": "731a06ef-f755-45d4-87da-e0476904049c",
+      "name": "Eventhouse",
       "type": "Eventhouse",
       "properties": {
         "dataIngestionMode": "DirectIngestion",
         "workspaceId": "00000000-0000-0000-0000-000000000000",
-        "itemId": "3952ada3-75b7-84cd-411f-7d1aaf376871",
+        "itemId": "476e80c9-35ca-afd8-4b01-94875b5a2475",
         "tableName": "GatewaysHeartbeat",
         "connectionName": "GatewayMonitoringHeartbeat",
         "mappingRuleName": "GatewaysHeartbeat_mapping"

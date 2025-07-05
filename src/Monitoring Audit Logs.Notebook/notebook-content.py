@@ -37,14 +37,14 @@
 
 # PARAMETERS CELL ********************
 
-cluster_ingest = "{kusto_ingest_uri}"
-cluster_query = "{kusto_query_uri}"
-database_name = "{kusto_db_name}"
+cluster_ingest = "https://ingest-trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com"
+cluster_query = "https://trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com"
+database_name = "Platform and Audit DB"
 
-key_vault_uri = f"{key_vault_uri}"
-key_vault_tenant_id = f"{key_vault_tenant_id}"
-key_vault_client_id = f"{key_vault_client_id}"
-key_vault_client_secret = f"{key_vault_client_secret}"
+key_vault_uri = f"https://mrtacatkeyvault.vault.azure.net/"
+key_vault_tenant_id = f"tenant-id"
+key_vault_client_id = f"fabric-admin-api-sp-id"
+key_vault_client_secret = f"fabric-admin-api-sp-secret"
 
 DAILY = False
 specific_date = None
@@ -274,8 +274,8 @@ audit_process(
 
 # CELL ********************
 
-# for x in range(18,26):
-#     date = f"2025-05-{x:02}T00:00:00"
+# for x in range(1,12):
+#     date = f"2025-06-{x:02}T00:00:00"
 #     audit_process(
 #         daily=True,
 #         connection_info=connection_info,

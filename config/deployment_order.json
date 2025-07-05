@@ -5,19 +5,15 @@
         "type": "Core"
     },
     {
-        "name": "FabricCapacity",
-        "id": "31998247-b1ac-4a64-b855-b58555596473",
-        "type": "Core"
-    },
-    {
-        "name": "Platform and Audit DB.Eventhouse",
+        "name": "Fabric Platform Monitorin.Eventhouse",
         "id": "569fc432-6c1c-b12c-4955-5bc489624da3",
         "type": "Core"
     },
     {
-        "name": "Platform and Audit DB.KQLDatabase",
-        "id": "3952ada3-75b7-84cd-411f-7d1aaf376871",
-        "type": "Core"
+        "name": "Capacity Utilization.KQLDatabase",
+        "id": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
+        "type": "Capacity",
+        "parent": "Fabric Platform Monitorin.Eventhouse"
     },
     {
         "name": "CapacityUtilizationEvents.Eventstream",
@@ -37,7 +33,7 @@
     {
         "name": "Monitoring Audit Logs.Notebook",
         "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
-        "type": "PlatformMonitoring",
+        "type": "ActivityEvents",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -52,7 +48,7 @@
     {
         "name": "Monitoring Extraction Inventory.Notebook",
         "id": "505b4c37-0557-a70e-404c-02d18abdd261",
-        "type": "PlatformMonitoring",
+        "type": "Inventory",
         "schedule": {
             "configuration": {
                 "type": "Daily",
@@ -69,7 +65,7 @@
     {
         "name": "Monitoring Extraction Scanner.Notebook",
         "id": "a09748a4-ab11-9a40-4567-bffd9c19595e",
-        "type": "PlatformMonitoring",
+        "type": "Inventory",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -84,7 +80,7 @@
     {
         "name": "Monitoring Extraction Refreshables.Notebook",
         "id": "754f754a-4d28-8d57-48b5-705db14578f8",
-        "type": "PlatformMonitoring",
+        "type": "Inventory",
         "schedule": {
             "configuration": {
                 "type": "Cron",
@@ -99,7 +95,7 @@
     {
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
-        "type": "PlatformMonitoring"
+        "type": "Inventory"
     },
     {
         "name": "Capacity Monitoring.KQLDashboard",

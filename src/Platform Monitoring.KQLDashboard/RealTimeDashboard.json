@@ -747,9 +747,9 @@
         ],
         "xAxisScale": "linear",
         "verticalLine": "",
-        "crossFilter": [],
         "crossFilterDisabled": false,
         "drillthroughDisabled": false,
+        "crossFilter": [],
         "drillthrough": [],
         "selectedDataOnLoad": {
           "all": true,
@@ -1283,9 +1283,18 @@
       "kind": "kusto-trident",
       "scopeId": "kusto-trident",
       "clusterUri": "",
-      "database": "3952ada3-75b7-84cd-411f-7d1aaf376871",
-      "name": "PlatformMonitoring",
+      "database": "36fc7e5f-a842-baf4-41c2-fea04f878458",
+      "name": "Platform Inventory",
       "id": "8a9a70d8-02b9-4236-85be-90fa83a60c8e",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "bd6dc6be-ec5f-a6d8-4389-cabd6b73c509",
+      "name": "Activity Events",
+      "id": "dd58a502-08f8-44cb-848e-832d94d1de53",
       "workspace": "00000000-0000-0000-0000-000000000000"
     }
   ],
@@ -1343,7 +1352,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _workspaces = _workspaceQuery |project id;\nlet _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(1m)\n);\nItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| summarize Views=count() by ItemType,bin(CreationTime,_timespan)",
+      "text": "let _workspaces = _workspaceQuery |project id;\nlet _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(1m)\n);\ndatabase(\"Activity Events\").ItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| summarize Views=count() by ItemType,bin(CreationTime,_timespan)",
       "id": "9e298314-ba72-4b2c-80e3-fb7c09f3c7f4",
       "usedVariables": [
         "_endTime",
@@ -1401,7 +1410,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _workspaces = _workspaceQuery | project id;\nItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| project IPLocation=geo_info_from_ip_address(tostring(details.ClientIP)), ItemType\n| project latitude=toreal(IPLocation.latitude), longitude=toreal(IPLocation.longitude), ItemType\n| summarize Events=count() by latitude,longitude,ItemType\n| where isnotempty( latitude) or isnotempty(longitude)",
+      "text": "let _workspaces = _workspaceQuery | project id;\ndatabase(\"Activity Events\").ItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| project IPLocation=geo_info_from_ip_address(tostring(details.ClientIP)), ItemType\n| project latitude=toreal(IPLocation.latitude), longitude=toreal(IPLocation.longitude), ItemType\n| summarize Events=count() by latitude,longitude,ItemType\n| where isnotempty( latitude) or isnotempty(longitude)",
       "id": "a2987918-351a-4e83-9bb3-f4a88b23f3d6",
       "usedVariables": [
         "_endTime",
@@ -1508,7 +1517,7 @@
     {
       "dataSource": {
         "kind": "inline",
-        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+        "dataSourceId": "dd58a502-08f8-44cb-848e-832d94d1de53"
       },
       "text": "_activities\n| summarize Activities=count() by Activity\n| top 10 by Activities",
       "id": "133b91fc-0de4-444e-9be3-f3a5efe9783f",
@@ -1519,7 +1528,7 @@
     {
       "dataSource": {
         "kind": "inline",
-        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+        "dataSourceId": "dd58a502-08f8-44cb-848e-832d94d1de53"
       },
       "text": "// let _workspaces = _workspaceQuery |project id;\nlet _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(1d),\n    _endTime - _startTime >= timespan(14d), timespan(6h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(1m)\n);\n_activities\n// | summarize Acitivities=count() by bin(CreationTime,_timespan), Activity\n| make-series Acitivities=count() on CreationTime step _timespan by Activity\n| top 20 by array_length(Acitivities)",
       "id": "3ac5ba3a-ca1f-481d-a310-c35e3a11d9f9",
@@ -1534,7 +1543,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _workspaces = _workspaceQuery |project id;\nlet _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(1m)\n);\nItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| summarize Views=count() by ItemType,bin(CreationTime,_timespan)",
+      "text": "let _workspaces = _workspaceQuery |project id;\nlet _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(1m)\n);\ndatabase(\"Activity Events\").ItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| summarize Views=count() by ItemType,bin(CreationTime,_timespan)",
       "id": "77e8c991-078f-4258-b96d-5287d37af947",
       "usedVariables": [
         "_endTime",
@@ -1547,7 +1556,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let _workspaces = _workspaceQuery | project id;\nItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| project IPLocation=geo_info_from_ip_address(tostring(details.ClientIP)), ItemType\n| project latitude=toreal(IPLocation.latitude), longitude=toreal(IPLocation.longitude), ItemType\n| summarize Events=count() by latitude,longitude,ItemType\n| where isnotempty( latitude) or isnotempty(longitude)",
+      "text": "let _workspaces = _workspaceQuery | project id;\ndatabase(\"Activity Events\").ItemsViews(_endTime - _startTime)\n| where WorkspaceId in (_workspaces)\n| project IPLocation=geo_info_from_ip_address(tostring(details.ClientIP)), ItemType\n| project latitude=toreal(IPLocation.latitude), longitude=toreal(IPLocation.longitude), ItemType\n| summarize Events=count() by latitude,longitude,ItemType\n| where isnotempty( latitude) or isnotempty(longitude)",
       "id": "51ae83bc-ba06-486d-a6ca-b44b72948ef9",
       "usedVariables": [
         "_endTime",
@@ -1599,7 +1608,7 @@
       "id": "617ce60e-7bdd-4fe9-b35f-2bc3e06d5110",
       "dataSource": {
         "kind": "inline",
-        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+        "dataSourceId": "dd58a502-08f8-44cb-848e-832d94d1de53"
       },
       "text": "ActivityEvents\n| where CreationTime between (_startTime .. _endTime)\n| where Activity in (_activity)",
       "usedVariables": [
@@ -1680,7 +1689,7 @@
     {
       "dataSource": {
         "kind": "inline",
-        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+        "dataSourceId": "dd58a502-08f8-44cb-848e-832d94d1de53"
       },
       "text": "ActivityEvents\n| where CreationTime between (_startTime .. _endTime)\n| summarize by Activity\n| order by Activity asc ",
       "id": "59a08a4a-4b7d-41b8-8950-11058cf28772",

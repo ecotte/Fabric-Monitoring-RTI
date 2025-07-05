@@ -41,7 +41,13 @@
       "name": "kusto_db",
       "note": "",
       "type": "String",
-      "value": "Platform and Audit DB"
+      "value": "Platform Inventory"
+    },
+    {
+      "name": "activity_events_db",
+      "note": "",
+      "type": "String",
+      "value": "Activity Events"
     }
   ]
 }

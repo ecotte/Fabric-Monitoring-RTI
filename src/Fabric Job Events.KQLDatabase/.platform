@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDatabase",
+    "displayName": "Fabric Job Events",
+    "description": "FabricJobEvents"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3a48ec82-3886-a4b6-4e15-5d4ea4d7703f"
+  }
+}

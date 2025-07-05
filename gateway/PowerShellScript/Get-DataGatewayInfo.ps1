@@ -52,7 +52,8 @@ try {
     Connect-AzAccount -ServicePrincipal -Credential $servicePrincipal -TenantId $tenantId
     Set-AzContext -Tenant $tenantId | Out-Null
     $resourceUrl = "https://api.fabric.microsoft.com"
-    $authToken = (Get-AzAccessToken -ResourceUrl $resourceUrl).Token
+    $authTokenInfo = (Get-AzAccessToken -ResourceUrl $resourceUrl -AsSecureString)
+    $authToken = $authTokenInfo.Token | ConvertFrom-SecureString -AsPlainText
     $fabricHeaders = @{
         'Content-Type'  = "application/json; charset=utf-8"
         'Authorization' = "Bearer {0}" -f $authToken
@@ -105,6 +106,6 @@ try {
 catch {    
     $ex = $_.Exception   
     $ErrorDate = [datetime]::UtcNow     
-    Write-Error "Error on UploadGatewayLogs - $ex" -ErrorAction Continue     
+    Write-Error "Error on Get-DataGatewayInfo - $ex" -ErrorAction Continue     
     Out-File  -FilePath "$($logFolder)GatewayMonitoring.log" -InputObject "[Error] $ErrorDate; $ex" -Force -Append
 }   

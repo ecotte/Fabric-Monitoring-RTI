@@ -1,12 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "Eventhouse",
-    "displayName": "Platform and Audit DB",
-    "description": "Platform and Audit DB"
+    "type": "Report",
+    "displayName": "Gateway Monitor"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "569fc432-6c1c-b12c-4955-5bc489624da3"
+    "logicalId": "cffc4313-6aa8-805d-4a27-e8aeb4ffb74b"
   }
 }

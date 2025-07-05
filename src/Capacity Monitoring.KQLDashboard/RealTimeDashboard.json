@@ -15,7 +15,7 @@
         "x": 0,
         "y": 0,
         "width": 3,
-        "height": 4
+        "height": 3
       },
       "queryRef": {
         "kind": "query",
@@ -36,7 +36,7 @@
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
         "x": 0,
-        "y": 8,
+        "y": 19,
         "width": 24,
         "height": 8
       },
@@ -46,7 +46,7 @@
       },
       "visualOptions": {
         "table__enableRenderLinks": true,
-        "colorRulesDisabled": true,
+        "colorRulesDisabled": false,
         "colorStyle": "light",
         "crossFilterDisabled": false,
         "drillthroughDisabled": false,
@@ -73,7 +73,54 @@
           }
         ],
         "table__renderLinks": [],
-        "colorRules": []
+        "colorRules": [
+          {
+            "id": "cdef430b-2c38-4f0f-8bb9-0f435cc9ec89",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": "!=",
+                "column": "Capacity State",
+                "values": [
+                  "Active"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "yellow",
+            "tag": "",
+            "icon": "warning",
+            "ruleName": "Current State",
+            "visualType": "table"
+          },
+          {
+            "id": "9a589533-db21-4cd1-88f0-c0723472dd2d",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "Capacity State",
+                "values": [
+                  "Active"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "green",
+            "tag": "",
+            "icon": "completed",
+            "ruleName": "",
+            "visualType": "table"
+          }
+        ]
       }
     },
     {
@@ -82,8 +129,8 @@
       "visualType": "pie",
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
-        "x": 3,
-        "y": 0,
+        "x": 0,
+        "y": 11,
         "width": 7,
         "height": 8
       },
@@ -130,8 +177,8 @@
       "visualType": "column",
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
-        "x": 10,
-        "y": 0,
+        "x": 7,
+        "y": 11,
         "width": 7,
         "height": 8
       },
@@ -191,7 +238,7 @@
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
         "x": 0,
-        "y": 4,
+        "y": 7,
         "width": 3,
         "height": 4
       },
@@ -214,7 +261,7 @@
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
         "x": 0,
-        "y": 16,
+        "y": 27,
         "width": 24,
         "height": 10
       },
@@ -260,9 +307,9 @@
       "visualType": "column",
       "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
       "layout": {
-        "x": 17,
-        "y": 0,
-        "width": 7,
+        "x": 14,
+        "y": 11,
+        "width": 10,
         "height": 8
       },
       "queryRef": {
@@ -1059,6 +1106,92 @@
         "crossFilter": [],
         "drillthrough": []
       }
+    },
+    {
+      "id": "071962b8-6a84-4023-b7a1-8f537297d013",
+      "title": "Capacity Utilization %",
+      "visualType": "line",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 3,
+        "y": 0,
+        "width": 21,
+        "height": 11
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "8144073b-3f03-45c5-ae81-f6fc9656bd34"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": 150,
+            "yAxisMinimumValue": 0,
+            "yAxisScale": "linear",
+            "horizontalLines": [
+              {
+                "id": "9bb3c878-d5f7-47df-b327-2edcdbcc502d",
+                "value": 100
+              }
+            ]
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Window Time",
+        "yColumns": [
+          "Capacity Useage %"
+        ],
+        "seriesColumns": [
+          "Capacity Name"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "capacityId",
+            "parameterId": "606524c1-03d6-44c4-9646-c463f112007c",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": false,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "id": "79b784a2-28ac-4714-abb1-29990c640948",
+      "title": "Average Capacity Usage",
+      "visualType": "card",
+      "pageId": "1c4f2529-4172-40aa-9d15-0847f70d4224",
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "width": 3,
+        "height": 4
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "fe04bee8-a38a-4908-b8dc-43dbab4793a9"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
     }
   ],
   "baseQueries": [
@@ -1066,11 +1199,6 @@
       "id": "952f73d4-42f8-42f2-b69d-b6a0c5ebc51f",
       "queryId": "c09adb1c-1644-48da-af50-cced5a19cf25",
       "variableName": "_capacityBase"
-    },
-    {
-      "id": "9949ad0c-33d5-4601-a4c6-31b22b2b2146",
-      "queryId": "f0e17fe2-a3de-45e2-be40-7fe29d450ddb",
-      "variableName": "_workspaceQuery"
     },
     {
       "id": "6d9c96a4-2f14-4b18-83be-97d03aba25e5",
@@ -1083,14 +1211,9 @@
       "variableName": "_capacityOperations"
     },
     {
-      "id": "caaa1647-b364-49fa-b6ff-2bc1bae40573",
-      "queryId": "b0bb9bd0-8f26-476f-948a-6ef456dde672",
-      "variableName": "_capacityOperationsTimepoint"
-    },
-    {
-      "id": "67f67883-9272-4a44-a58f-4ef9b0578402",
-      "queryId": "a280da9d-d8fe-4d8d-8fb8-9ff9a4a8f594",
-      "variableName": "_capacityCalculatedSmoothing"
+      "id": "d9a6873f-dcca-46e6-b62e-d294b3d6d66a",
+      "queryId": "53be25f3-68da-4f60-986d-9de2745daeee",
+      "variableName": "_capacityLastSate"
     }
   ],
   "parameters": [
@@ -1263,7 +1386,7 @@
       "kind": "kusto-trident",
       "scopeId": "kusto-trident",
       "clusterUri": "",
-      "database": "3952ada3-75b7-84cd-411f-7d1aaf376871",
+      "database": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
       "name": "PlatformMonitoring",
       "id": "8a9a70d8-02b9-4236-85be-90fa83a60c8e",
       "workspace": "00000000-0000-0000-0000-000000000000"
@@ -1300,9 +1423,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "let workspaces_count = _capacityOperations | summarize Workspaces=count_distinct(['Workspace Id']) by ['Capacity Id'];\n_capacitySummary\n| project ['Consumption %'], ['Capacity Id'], ['Capacity Name'], ['Capacity Sku'], Region, State\n| summarize ['Capacity Usage %'] = round(avg(['Consumption %']),2) by ['Capacity Id'],['Capacity Name'], ['Capacity Sku'], Region, State\n| extend  ['Capacity Usage %'] = strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")\n| lookup workspaces_count on ['Capacity Id']\n| project ['Capacity Name'], ['Capacity Id'], ['Capacity Sku'], Region, State, Workspaces, ['Capacity Usage %']\n| where Workspaces > 0\n| order by Workspaces desc ",
+      "text": "let workspaces_count = _capacityOperations | summarize Workspaces=count_distinct(['Workspace Id']) by ['Capacity Id'];\n_capacitySummary\n| project ['Consumption %'], ['Capacity Id'], ['Capacity Name'], ['Capacity Sku']\n| summarize ['Capacity Usage %'] = round(avg(['Consumption %']),2) by ['Capacity Id'],['Capacity Name'], ['Capacity Sku']\n| extend  ['Capacity Usage %'] = strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")\n| lookup workspaces_count on ['Capacity Id']\n| lookup _capacityLastSate on $left.['Capacity Id']== $right.capacityId\n| project ['Capacity Name'], ['Capacity Id'], ['Capacity Sku'], Workspaces, ['Capacity Usage %'], [\"Capacity State\"]=iff(isempty( capacityState),\"Active\",capacityState), [\"State Change Reason\"]=stateChangeReason\n| where Workspaces > 0\n| order by Workspaces desc ",
       "id": "2209ebd8-b492-4547-aa5e-1ce9e404a29d",
       "usedVariables": [
+        "_capacityLastSate",
         "_capacityOperations",
         "_capacitySummary"
       ]
@@ -1572,32 +1696,39 @@
       ]
     },
     {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "let _timespan = case(\n    _endTime - _startTime >= timespan(730d), timespan(1d),\n    _endTime - _startTime >= timespan(365d), timespan(1d),\n    _endTime - _startTime >= timespan(60d), timespan(6h),\n    _endTime - _startTime >= timespan(14d), timespan(1h),\n    _endTime - _startTime >= timespan(1d), timespan(30m),\n    timespan(30s)\n);\n_capacitySummary\n| project ['Capacity Name'], ['Capacity Useage %'] = round((['Consumption %']), 2), ['Window Time']=['Window Start Time'], ['Capacity Id']\n| make-series ['Capacity Useage %']=avg(['Capacity Useage %']) on ['Window Time'] step _timespan by ['Capacity Name'], ['Capacity Id']",
+      "id": "8144073b-3f03-45c5-ae81-f6fc9656bd34",
+      "usedVariables": [
+        "_capacitySummary",
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
+      },
+      "text": "_capacitySummary\n| project ['Consumption %']\n| summarize ['Capacity Usage %'] = round(avg(['Consumption %']),2)\n| project strcat(tostring(iff(isnan(['Capacity Usage %']),0.0,['Capacity Usage %'])),\"%\")",
+      "id": "fe04bee8-a38a-4908-b8dc-43dbab4793a9",
+      "usedVariables": [
+        "_capacitySummary"
+      ]
+    },
+    {
       "id": "c09adb1c-1644-48da-af50-cced5a19cf25",
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "Capacities\n| where CapacityId in (_capacities)\n| where Sku in (_capacityType)",
+      "text": "CapacitySummary\n| where capacityId in (_capacities)\n| where capacitySku in (_capacityType)\n| distinct CapacityId=capacityId,CapacityName=capacityName,Sku=capacitySku",
       "usedVariables": [
         "_capacities",
         "_capacityType"
-      ]
-    },
-    {
-      "id": "f0e17fe2-a3de-45e2-be40-7fe29d450ddb",
-      "dataSource": {
-        "kind": "inline",
-        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
-      },
-      "text": "let _wsId = Items | where itemType in (_itemType) | summarize by workspaceId;\nWorkspaces\n| where id in (_wsId)\n| where isOnDedicatedCapacity in (_isOnCapacity)\n    and type in (_type)\n    and name contains _workspaceName\n    and state in (_state)\n    and case(\n        isnotempty(_workspaceName) and isnotempty(_workspaceNameExact), id in (_workspaceNameExact),\n        true\n    )\n| where iff(\n    false in (_isOnCapacity),\n    isempty(capacityId) or capacityId in (_capacities),\n    capacityId in (_capacities)\n    )",
-      "usedVariables": [
-        "_capacities",
-        "_isOnCapacity",
-        "_itemType",
-        "_state",
-        "_type",
-        "_workspaceName",
-        "_workspaceNameExact"
       ]
     },
     {
@@ -1606,7 +1737,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacitySummary\n| where windowStartTime between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| lookup Capacities on $left.capacityId == $right.CapacityId\n| project ['Capacity Id'] = capacityId,\n['Capacity Name'] = CapacityName,\n['Capacity Sku'] = capacitySku,\nRegion,\nState,\n['CU´s'] = capacityUnitMs/1000.0,\n['Consumption %'] = 100*(capacityUnitMs/1000.0)/timepointCapacityUnits,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoint Base CU']=timepointCapacityUnits,\n['Base CU']=baseCapacityUnits",
+      "text": "CapacitySummary\n| where windowStartTime between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| project ['Capacity Id'] = capacityId,\n['Capacity Name'] = capacityName,\n['Capacity Sku'] = capacitySku,\n['CU´s'] = capacityUnitMs/1000.0,\n['Consumption %'] = 100*(capacityUnitMs/1000.0)/timepointCapacityUnits,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoint Base CU']=timepointCapacityUnits,\n['Base CU']=baseCapacityUnits",
       "usedVariables": [
         "_capacities",
         "_endTime",
@@ -1619,7 +1750,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacityOperations\n| where windowStartTime  between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| lookup Capacities on $left.capacityId == $right.CapacityId\n| project ['Capacity Name'] = CapacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Time']=['time'],\n['Operation Name'] = operationName,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Timepoint CU'] = (capacityUnitMs/1000.0)/((windowEndTime - windowStartTime)/30s),\n['Utilization Type']=utilizationType,\n['Operation Start Time'] = operationStartTime,\n['Duration Ms'] = durationMs",
+      "text": "CapacityOperations\n| where windowStartTime  between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| project ['Capacity Name'] = capacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Time']=['time'],\n['Operation Name'] = operationName,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Timepoint CU'] = (capacityUnitMs/1000.0)/((windowEndTime - windowStartTime)/30s),\n['Utilization Type']=utilizationType,\n['Operation Start Time'] = operationStartTime,\n['Duration Ms'] = durationMs",
       "usedVariables": [
         "_capacities",
         "_endTime",
@@ -1629,33 +1760,13 @@
       ]
     },
     {
-      "id": "b0bb9bd0-8f26-476f-948a-6ef456dde672",
+      "id": "53be25f3-68da-4f60-986d-9de2745daeee",
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacityOperations\n| where windowStartTime  between (datetime_add('day',-1,_startTime) .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| project \n['Id'] = id,\n['Capacity Name'] = capacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Operation Name'] = operationName,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Utilization Type']=utilizationType\n| extend \n['Timepoint CU'] = ['CU´s']/Timepoints\n| extend times = pack_array(['Window Start Time'],datetime_add('second',-30, ['Window End Time']))\n| mv-expand times\n| extend times=todatetime(times)\n| make-series ['Timepoint CU']=sum(['Timepoint CU']) default = \"\" on times step 30s by ['Capacity Id'], ['Capacity Sku'],\n ['Domain Id'],  ['Parent Domain Id'], ['Workspace Id'],['Item Id'], ['Utilization Type'], Timepoints, wst=['Window Start Time']\n| extend  ['Timepoint CU']=series_fill_forward(['Timepoint CU'])\n| mv-expand ['Timepoint CU'] to typeof(real), times to typeof(datetime)\n| project-away wst\n| project-rename ['Window Start Time'] = times\n\n\n\n// let _operations=_capacityOperationsTimepoint | summarize sum(['Timepoint CU']) by ['Capacity Id'], ['Window Start Time'];\n// let _summary=_capacitySummary;\n// _summary\n// | join _operations on ['Capacity Id'],['Window Start Time']",
-      "usedVariables": [
-        "_capacities",
-        "_endTime",
-        "_item",
-        "_startTime",
-        "_workspaceNameExact"
-      ]
-    },
-    {
-      "id": "a280da9d-d8fe-4d8d-8fb8-9ff9a4a8f594",
-      "dataSource": {
-        "kind": "inline",
-        "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
-      },
-      "text": "let _timespan = case(\n    _endTime - _startTime > timespan(1d), timespan(0s),\n    timespan(30s)\n);\nlet _timepoints = _capacitySummary\n| project ['Timepoint Base CU']=['Base CU'] * (_timespan/1s), ['Window Start Time'], ['Capacity Id'];\nlet _operations = _capacityOperationsTimepoint\n| project ['Capacity Id'], ['Window Start Time'],['Window End Time'],['Utilization Type'],['Timepoints'] = (['Window End Time'] - ['Window Start Time']) /_timespan,\n['Timepoint CU'] = (['CU´s'])/((['Window End Time'] - ['Window Start Time'])/_timespan);\n_timepoints\n| join kind=fullouter _operations on ['Capacity Id']\n| where ['Window Start Time'] >= ['Window Start Time1'] and ['Window Start Time'] <= ['Window End Time']\n| summarize sum(['Timepoint CU']), max(['Timepoint Base CU']) by ['Window Start Time'], ['Capacity Id']\n| extend ['Capacity %'] = 100*['sum_Timepoint CU']/['max_Timepoint Base CU']\n| summarize strcat(round(avg(['Capacity %']),2),\"%\")",
-      "usedVariables": [
-        "_capacityOperationsTimepoint",
-        "_capacitySummary",
-        "_endTime",
-        "_startTime"
-      ]
+      "text": "CapacityState\n| summarize arg_max(transitionTime,capacityState,stateChangeReason) by capacityId",
+      "usedVariables": []
     },
     {
       "dataSource": {
@@ -1671,7 +1782,7 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "Capacities\n| where Sku in (_capacityType)\n| distinct CapacityId,CapacityName",
+      "text": "CapacitySummary\n| where capacitySku in (_capacityType)\n| distinct CapacityId=capacityId,CapacityName=capacityName",
       "id": "83eb2ef4-88ac-4ba3-8e10-19327bcd5a3d",
       "usedVariables": [
         "_capacityType"

@@ -1,12 +1,72 @@
 {
   "sources": [
     {
-      "id": "78993b94-f985-4cb2-8edc-86ed504d9c82",
-      "name": "FabricCapacity",
+      "id": "1085cf42-8896-4f14-9ebe-48b7d94cf0d5",
+      "name": "EdgarCotte-Trial",
       "type": "FabricCapacityUtilizationEvents",
       "properties": {
         "eventScope": "Capacity",
-        "capacityId": "31998247-b1ac-4a64-b855-b58555596473",
+        "capacityId": "082cf953-c237-481e-b523-4a2b3221163f",
+        "includedEventTypes": [
+          "Microsoft.Fabric.Capacity.Operation",
+          "Microsoft.Fabric.Capacity.State",
+          "Microsoft.Fabric.Capacity.Summary"
+        ],
+        "filters": []
+      }
+    },
+    {
+      "id": "40a424ed-a83f-44e0-b0b6-4c41b4af8403",
+      "name": "Luoana-Trial",
+      "type": "FabricCapacityUtilizationEvents",
+      "properties": {
+        "eventScope": "Capacity",
+        "capacityId": "e729a442-a2b7-48df-995c-374d9da005af",
+        "includedEventTypes": [
+          "Microsoft.Fabric.Capacity.Operation",
+          "Microsoft.Fabric.Capacity.State",
+          "Microsoft.Fabric.Capacity.Summary"
+        ],
+        "filters": []
+      }
+    },
+    {
+      "id": "54b92856-3b89-4c99-8890-702c0a3f4e28",
+      "name": "Thierry-Trial",
+      "type": "FabricCapacityUtilizationEvents",
+      "properties": {
+        "eventScope": "Capacity",
+        "capacityId": "d05a4231-a0a2-4b57-bd4b-22dc0221198b",
+        "includedEventTypes": [
+          "Microsoft.Fabric.Capacity.Operation",
+          "Microsoft.Fabric.Capacity.State",
+          "Microsoft.Fabric.Capacity.Summary"
+        ],
+        "filters": []
+      }
+    },
+    {
+      "id": "7021637c-ab68-4f87-a8fe-6b29d3eb8f7d",
+      "name": "DBT-Capacity",
+      "type": "FabricCapacityUtilizationEvents",
+      "properties": {
+        "eventScope": "Capacity",
+        "capacityId": "6b38f70f-3e2f-4963-899e-6313bad194ab",
+        "includedEventTypes": [
+          "Microsoft.Fabric.Capacity.Operation",
+          "Microsoft.Fabric.Capacity.State",
+          "Microsoft.Fabric.Capacity.Summary"
+        ],
+        "filters": []
+      }
+    },
+    {
+      "id": "a3990ee0-4649-4560-924c-edc46ca7c20d",
+      "name": "Monitoring-Trial",
+      "type": "FabricCapacityUtilizationEvents",
+      "properties": {
+        "eventScope": "Capacity",
+        "capacityId": "9fe0adef-90e3-4f26-8417-b9a19f040fa5",
         "includedEventTypes": [
           "Microsoft.Fabric.Capacity.Operation",
           "Microsoft.Fabric.Capacity.State",
@@ -18,17 +78,10 @@
   ],
   "destinations": [
     {
-      "id": "b9b655ca-c23a-4551-98cd-f6ac5a56420a",
-      "name": "PlatformMonitoringEventhouse",
-      "type": "Eventhouse",
-      "properties": {
-        "dataIngestionMode": "DirectIngestion",
-        "workspaceId": "00000000-0000-0000-0000-000000000000",
-        "itemId": "3952ada3-75b7-84cd-411f-7d1aaf376871",
-        "tableName": "CapacityEventsRaw",
-        "connectionName": "CapacityUtilizationEvents",
-        "mappingRuleName": "CapacityEventsRaw_mapping"
-      },
+      "id": "4ffaf708-517e-4b73-9d39-5bd2d11ad2fc",
+      "name": "CustomOutput",
+      "type": "CustomEndpoint",
+      "properties": {},
       "inputNodes": [
         {
           "name": "CapacityUtilizationEvents-stream"
@@ -234,6 +287,12 @@
                     "type": "Nvarchar(max)",
                     "fields": null,
                     "items": null
+                  },
+                  {
+                    "name": "consumptionStartTime",
+                    "type": "DateTime",
+                    "fields": null,
+                    "items": null
                   }
                 ],
                 "items": null
@@ -260,6 +319,24 @@
           }
         }
       ]
+    },
+    {
+      "id": "69e4b617-3596-4ca2-a7af-d3947bc7a9cc",
+      "name": "Eventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
+        "tableName": "CapacityEventsRaw",
+        "connectionName": "CapacityUtilizationEvents",
+        "mappingRuleName": "CapacityEventsRaw_mapping"
+      },
+      "inputNodes": [
+        {
+          "name": "CapacityUtilizationEvents-stream"
+        }
+      ]
     }
   ],
   "streams": [
@@ -270,10 +347,19 @@
       "properties": {},
       "inputNodes": [
         {
-          "name": "EdgarCotte-Trial-Capacity"
+          "name": "DBT-Capacity"
         },
         {
-          "name": "new-source"
+          "name": "EdgarCotte-Trial"
+        },
+        {
+          "name": "Luoana-Trial"
+        },
+        {
+          "name": "Monitoring-Trial"
+        },
+        {
+          "name": "Thierry-Trial"
         }
       ]
     }
