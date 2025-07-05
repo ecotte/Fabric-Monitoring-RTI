@@ -35,7 +35,8 @@
         "type": "Capacity",
         "datasources": [
             {
-                "name": "Capacity Utilization.KQLDatabase"
+                "name": "CapacityMonitoring",
+                "itemName": "Capacity Utilization.KQLDatabase"
             }
         ]
     },
