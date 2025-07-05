@@ -7,7 +7,9 @@
     {
         "name": "Fabric Platform Monitorin.Eventhouse",
         "id": "569fc432-6c1c-b12c-4955-5bc489624da3",
-        "type": "Core"
+        "type": "Core",
+        "kustoQueryUri": "kusto_query_uri",
+        "kustoIngestUri": "kusto_ingest_uri"
     },
     {
         "name": "Capacity Utilization.KQLDatabase",
