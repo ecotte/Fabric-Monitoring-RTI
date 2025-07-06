@@ -1,5 +1,5 @@
 /// URL od the Eventhouse Cluster
-expression KustoURL = "https://trd-uu4zdj3cr1r15y4vxc.z2.kusto.fabric.microsoft.com" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression KustoURL = "kusto_query_uri" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 69a90fe3-c582-4c20-a98b-0b4930d995c4
 	queryGroup: Parameters
 
