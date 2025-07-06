@@ -118,6 +118,12 @@
         ]
     },
     {
+        "name": "Platform Inventory.KQLDatabase",
+        "id": "36fc7e5f-a842-baf4-41c2-fea04f878458",
+        "type": "Inventory",
+        "parent": "Fabric Platform Monitoring.Eventhouse"
+    },
+    {
         "name": "Monitoring Extraction Inventory.Notebook",
         "id": "505b4c37-0557-a70e-404c-02d18abdd261",
         "type": "Inventory",
@@ -167,6 +173,27 @@
     {
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
-        "type": "Inventory"
+        "type": "Inventory",
+        "datasources": [
+            {
+                "name": "Activity Events",
+                "itemName": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "Platform Inventory",
+                "itemName": "Platform Inventory.KQLDatabase"
+            }
+        ]
+    },
+    {
+        "name": "Platform Inventory.KQLDashboard",
+        "id": "36fc7e5f-a842-baf4-41c2-fea04f878458",
+        "type": "Inventory",
+        "datasources": [
+            {
+                "name": "Platform Inventory",
+                "itemName": "Platform Inventory.KQLDatabase"
+            }
+        ]
     }
 ]
