@@ -81,6 +81,12 @@
         "type": "Gateway"
     },
     {
+        "name": "Activity Events.KQLDatabase",
+        "id": "476e80c9-35ca-afd8-4b01-94875b5a2475",
+        "type": "ActivityEvents",
+        "parent": "Fabric Platform Monitoring.Eventhouse"
+    },
+    {
         "name": "Monitoring Audit Logs.Notebook",
         "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
         "type": "ActivityEvents",
@@ -94,6 +100,22 @@
               },
             "enabled": true
         }
+    },
+    {
+        "name": "Refresh Activity Events.DataPipeline",
+        "id": "52101d8a-14aa-89e4-4826-f722b61817b9",
+        "type": "ActivityEvents"
+    },
+    {
+        "name": "Platform Activities.KQLDashboard",
+        "id": "4d12c5a4-cdae-9c30-48a6-2e792ab5119b",
+        "type": "ActivityEvents",
+        "datasources": [
+            {
+                "name": "Activity Events",
+                "itemName": "Activity Events.KQLDatabase"
+            }
+        ]
     },
     {
         "name": "Monitoring Extraction Inventory.Notebook",
