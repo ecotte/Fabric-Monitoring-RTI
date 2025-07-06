@@ -42,7 +42,7 @@
     },
     {
         "name": "Gateway Monitoring.KQLDatabase",
-        "id": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
+        "id": "476e80c9-35ca-afd8-4b01-94875b5a2475",
         "type": "Gateway",
         "parent": "Fabric Platform Monitoring.Eventhouse"
     },
@@ -146,9 +146,5 @@
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
         "type": "Inventory"
-    },
-    {
-        "name": "Platform Monitoring.VariableLibrary",
-        "type": "Core"
     }
 ]
