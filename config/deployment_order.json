@@ -43,7 +43,7 @@
     {
         "name": "Gateway Monitoring.KQLDatabase",
         "id": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
-        "type": "Capacity",
+        "type": "Gateway",
         "parent": "Fabric Platform Monitoring.Eventhouse"
     },
     {
