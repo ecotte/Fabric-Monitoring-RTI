@@ -171,6 +171,21 @@
         }
     },
     {
+        "name": "Refresh Inventory.DataPipeline",
+        "id": "c769baa6-1bdf-8ab5-4902-9ccd2aa4e257",
+        "type": "Inventory"
+    },
+    {
+        "name": "Refresh Refreshables.DataPipeline",
+        "id": "c86cea31-e199-90b0-4878-ff97449030a6",
+        "type": "Inventory"
+    },
+    {
+        "name": "Refresh Scanner API.DataPipeline",
+        "id": "58736594-839f-aa8c-45e7-db9b01bda786",
+        "type": "Inventory"
+    },
+    {
         "name": "Platform Monitoring.KQLDashboard",
         "id": "95ac7fd2-7032-88aa-413d-f195f8397f91",
         "type": "Inventory",
@@ -179,17 +194,6 @@
                 "name": "Activity Events",
                 "itemName": "Activity Events.KQLDatabase"
             },
-            {
-                "name": "Platform Inventory",
-                "itemName": "Platform Inventory.KQLDatabase"
-            }
-        ]
-    },
-    {
-        "name": "Platform Inventory.KQLDashboard",
-        "id": "36fc7e5f-a842-baf4-41c2-fea04f878458",
-        "type": "Inventory",
-        "datasources": [
             {
                 "name": "Platform Inventory",
                 "itemName": "Platform Inventory.KQLDatabase"
