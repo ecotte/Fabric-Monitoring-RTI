@@ -41,13 +41,43 @@
         ]
     },
     {
+        "name": "Gateway Monitoring.KQLDatabase",
+        "id": "efe0982e-e191-beef-4eb1-a7d34c90d39a",
+        "type": "Capacity",
+        "parent": "Fabric Platform Monitoring.Eventhouse"
+    },
+    {
         "name": "GatewayMonitoringHeartbeat.Eventstream",
         "id": "cfe1aab3-5375-b47d-4d90-14218c85299d",
-        "type": "Gateway"
+        "type": "Gateway",
+        "destinations": [
+            {
+                "name": "Eventhouse",
+                "itemName": "Gateway Monitoring.KQLDatabase",
+                "type": "Eventhouse"
+            }
+        ]
     },
     {
         "name": "GatewayMonitoringReports.Eventstream",
         "id": "83273f3e-80b8-97e9-47e0-f5174d357deb",
+        "type": "Gateway",
+        "destinations": [
+            {
+                "name": "Eventhouse",
+                "itemName": "Gateway Monitoring.KQLDatabase",
+                "type": "Eventhouse"
+            }
+        ]
+    },
+    {
+        "name": "Gateway Monitoring.SemanticModel",
+        "id": "b391ddbe-a2ac-aece-4d20-6801657d3a6a",
+        "type": "Gateway"
+    },
+    {
+        "name": "Gateway Monitoring.Report",
+        "id": "cffc4313-6aa8-805d-4a27-e8aeb4ffb74b",
         "type": "Gateway"
     },
     {
