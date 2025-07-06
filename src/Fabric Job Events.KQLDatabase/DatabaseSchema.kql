@@ -1,9 +1,0 @@
-// KQL script
-// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
-
-
-.create-merge table JobEventsRaw (id:guid, datacontenttype:string, specversion:real, source:guid, ['time']:datetime, subject:string, dataschemaversion:real, type:string, data:dynamic) 
-.create-or-alter table JobEventsRaw ingestion json mapping 'JobEventsRaw_mapping'
-```
-[{"Properties":{"Path":"$['id']"},"column":"id","datatype":""},{"Properties":{"Path":"$['datacontenttype']"},"column":"datacontenttype","datatype":""},{"Properties":{"Path":"$['specversion']"},"column":"specversion","datatype":""},{"Properties":{"Path":"$['source']"},"column":"source","datatype":""},{"Properties":{"Path":"$['time']"},"column":"time","datatype":""},{"Properties":{"Path":"$['subject']"},"column":"subject","datatype":""},{"Properties":{"Path":"$['dataschemaversion']"},"column":"dataschemaversion","datatype":""},{"Properties":{"Path":"$['type']"},"column":"type","datatype":""},{"Properties":{"Path":"$['data']"},"column":"data","datatype":""}]
-```
