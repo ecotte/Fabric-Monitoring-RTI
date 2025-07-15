@@ -68,7 +68,7 @@ CapacityOperations
 | extend columns=bag_remove_keys(columns, _workspaces)
 | extend columns=bag_remove_keys(columns, _operations)
 | evaluate bag_unpack(columns)
-| summarize ['Consumed Timepoint CU']=sum(['Timepoint CU']), ['Last Operation Window Start Time']=max(['Window Start Time']),['Last Operation Window End Time']=max(['Window End Time']), ['Operation Start Time']=min(['Operation Start Time'])
+| summarize ['Last Operation Window Start Time']=max(['Window Start Time']),['Last Operation Window End Time']=max(['Window End Time']), ['Operation Start Time']=min(['Operation Start Time']), ['Consumed Timepoint CU']=sum(['Timepoint CU'])
     by
     ['Capacity Name'],
     ['Capacity Id'],
@@ -128,7 +128,7 @@ CapacityEventsRaw
     itemId=toguid(data.itemId),
     itemKind=tostring(data.itemKind),
     itemName=tostring(data.itemName),
-    operationId= iff(isempty(data.operationId), tostring(new_guid()), tostring(data.operationId)),
+    operationId= tostring(data.operationId),
     operationName=tostring(data.operationName),
     operationStartTime=todatetime(data.operationStartTime),
     releaseType=tostring(data.releaseType),
@@ -202,6 +202,37 @@ CapacityEventsRaw
     capacityState,
     stateChangeReason
 }
+.create-or-alter materialized-view  CapacityUtilizationDaily on table CapacityOperations { CapacityOperations
+| project ['Capacity Id']=capacityId,
+    ['Capacity Name'] = capacityName,
+    ['Workspace Id'] = workspaceId,
+    ['Workspace Name'] = workspaceName,
+    ['Item Id'] = itemId,
+    ['Item Name'] = itemName,
+    ['Item Kind'] = itemKind,
+    ['Operation Name'] = operationName,
+    ['Utilization Type'] = utilizationType,
+    ['Release Type'] = releaseType,
+    ['CU´ms'] = capacityUnitMs,
+    windowStartTime,
+    windowEndTime,
+    timepoints = (windowEndTime - windowStartTime) / 30s, 
+    ['Date UTC'] = range(bin(windowStartTime, 1day), bin(windowEndTime,1day), 1day)
+| mv-expand ['Date UTC'] to typeof(datetime)
+| extend usedTimepoints =  (min_of(windowEndTime, (['Date UTC'] + 1days)) - max_of(windowStartTime, ['Date UTC'])) / 30s
+| extend ['Timepoint CU (ms)'] = usedTimepoints*(['CU´ms']/timepoints/1000.0)
+| summarize ['CU'] = sum(['Timepoint CU (ms)']) by 
+    ['Capacity Id'],
+    ['Capacity Name'],
+    ['Workspace Id'],
+    ['Workspace Name'],
+    ['Item Id'],
+    ['Item Name'],
+    ['Item Kind'],
+    ['Operation Name'],
+    ['Utilization Type'],
+    ['Release Type'],
+    ['Date UTC'] }
 .alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"01:00:00","Recoverability":"Disabled"}'
 .alter table CapacityEventsRaw policy caching hotdata = time(1.00:00:00) hotindex = time(1.00:00:00)
 .alter table CapacitySummary policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
@@ -210,6 +241,7 @@ CapacityEventsRaw
 .alter table CapacityOperations policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityOperations policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityOperations policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsOperation()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter column CapacityOperations.['operationStartTime'] policy encoding type = 'EmbeddedPresenceLZ4'
 .alter table CapacityState policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityState policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityState policy update "[{\"IsEnabled\":true,\"Source\":\"CapacityEventsRaw\",\"Query\":\"parse_CapacityEventsState()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
