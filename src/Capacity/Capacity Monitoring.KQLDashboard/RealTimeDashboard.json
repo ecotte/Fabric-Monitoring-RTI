@@ -1725,9 +1725,8 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacitySummary\n| where capacityId in (_capacities)\n| where capacitySku in (_capacityType)\n| distinct CapacityId=capacityId,CapacityName=capacityName,Sku=capacitySku",
+      "text": "CapacitySummary\n| where capacitySku in (_capacityType)\n| distinct CapacityId=capacityId,CapacityName=capacityName,Sku=capacitySku\n| project CapacityId, CapacityName, Sku",
       "usedVariables": [
-        "_capacities",
         "_capacityType"
       ]
     },
@@ -1737,9 +1736,9 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacitySummary\n| where windowStartTime between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| project ['Capacity Id'] = capacityId,\n['Capacity Name'] = capacityName,\n['Capacity Sku'] = capacitySku,\n['CU´s'] = capacityUnitMs/1000.0,\n['Consumption %'] = 100*(capacityUnitMs/1000.0)/timepointCapacityUnits,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoint Base CU']=timepointCapacityUnits,\n['Base CU']=baseCapacityUnits",
+      "text": "CapacitySummary\n| where windowStartTime between (_startTime .. _endTime)\n| where capacityId in (_capacityBase)\n| lookup _capacityBase on  $left.capacityId ==  $right.CapacityId\n| project ['Capacity Id'] = capacityId,\n['Capacity Name'] = CapacityName,\n['Capacity Sku'] = capacitySku,\n['CU´s'] = capacityUnitMs/1000.0,\n['Consumption %'] = 100*(capacityUnitMs/1000.0)/timepointCapacityUnits,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Timepoint Base CU']=timepointCapacityUnits,\n['Base CU']=baseCapacityUnits",
       "usedVariables": [
-        "_capacities",
+        "_capacityBase",
         "_endTime",
         "_startTime"
       ]
@@ -1750,9 +1749,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacityOperations\n| where windowStartTime  between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| project ['Capacity Name'] = capacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Time']=['time'],\n['Operation Name'] = operationName,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Timepoint CU'] = (capacityUnitMs/1000.0)/((windowEndTime - windowStartTime)/30s),\n['Utilization Type']=utilizationType,\n['Operation Start Time'] = operationStartTime,\n['Duration Ms'] = durationMs",
+      "text": "CapacityOperations\n| where ['time'] between (_startTime .. _endTime)\n| where capacityId in (_capacities)\n| where workspaceId in (_workspaceNameExact)\n| where itemId in (_item)\n| lookup _capacityBase on $left.capacityId == $right.CapacityId\n| project ['Capacity Name'] = CapacityName,\n['Capacity Id'] = capacityId,\n['Capacity Sku'] =capacitySku,\n['Workspace Name'] = workspaceName,\n['Workspace Id'] = workspaceId,\n['CU´s'] = capacityUnitMs/1000.0,\n['Domain'] = workspaceDomain,\n['Domain Id'] = workspaceDomainId,\n['Parent Domain'] = workspaceParentDomain,\n['Parent Domain Id'] = workspaceParentDomainId,\n['Window Start Time'] = windowStartTime,\n['Window End Time'] = windowEndTime,\n['Time']=['time'],\n['Operation Name'] = operationName,\n['Item Name'] = itemName,\n['Item Id'] = itemId,\n['Item Kind'] = itemKind,\n['Timepoints'] = (windowEndTime - windowStartTime) /30s,\n['Timepoint CU'] = (capacityUnitMs/1000.0)/((windowEndTime - windowStartTime)/30s),\n['Utilization Type']=utilizationType,\n['Operation Start Time'] = operationStartTime,\n['Duration Ms'] = durationMs",
       "usedVariables": [
         "_capacities",
+        "_capacityBase",
         "_endTime",
         "_item",
         "_startTime",
@@ -1782,10 +1782,10 @@
         "kind": "inline",
         "dataSourceId": "8a9a70d8-02b9-4236-85be-90fa83a60c8e"
       },
-      "text": "CapacitySummary\n| where capacitySku in (_capacityType)\n| distinct CapacityId=capacityId,CapacityName=capacityName",
+      "text": "_capacityBase\n| project CapacityId, CapacityName",
       "id": "83eb2ef4-88ac-4ba3-8e10-19327bcd5a3d",
       "usedVariables": [
-        "_capacityType"
+        "_capacityBase"
       ]
     },
     {
