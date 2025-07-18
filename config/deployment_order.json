@@ -129,23 +129,23 @@
             },
             {
                 "name": "key_vault_uri",
-                "type": "key_vault_uri",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_uri"
             },
             {
                 "name": "key_vault_tenant_id",
-                "type": "key_vault_tenant_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_tenant_id"
             },
             {
                 "name": "key_vault_client_id",
-                "type": "key_vault_client_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_id"
             },
             {
                 "name": "key_vault_client_secret",
-                "type": "key_vault_client_secret",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_secret"
             }
         ],
         "acitivities": [
@@ -242,23 +242,23 @@
             },
             {
                 "name": "key_vault_uri",
-                "type": "key_vault_uri",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_uri"
             },
             {
                 "name": "key_vault_tenant_id",
-                "type": "key_vault_tenant_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_tenant_id"
             },
             {
                 "name": "key_vault_client_id",
-                "type": "key_vault_client_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_id"
             },
             {
                 "name": "key_vault_client_secret",
-                "type": "key_vault_client_secret",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_secret"
             }
         ],
         "acitivities": [
@@ -291,23 +291,23 @@
             },
             {
                 "name": "key_vault_uri",
-                "type": "key_vault_uri",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_uri"
             },
             {
                 "name": "key_vault_tenant_id",
-                "type": "key_vault_tenant_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_tenant_id"
             },
             {
                 "name": "key_vault_client_id",
-                "type": "key_vault_client_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_id"
             },
             {
                 "name": "key_vault_client_secret",
-                "type": "key_vault_client_secret",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_secret"
             }
         ],
         "acitivities": [
@@ -340,23 +340,23 @@
             },
             {
                 "name": "key_vault_uri",
-                "type": "key_vault_uri",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_uri"
             },
             {
                 "name": "key_vault_tenant_id",
-                "type": "key_vault_tenant_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_tenant_id"
             },
             {
                 "name": "key_vault_client_id",
-                "type": "key_vault_client_id",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_id"
             },
             {
                 "name": "key_vault_client_secret",
-                "type": "key_vault_client_secret",
-                "source": "variable"
+                "type": "variable",
+                "source": "key_vault_client_secret"
             }
         ],
         "acitivities": [
