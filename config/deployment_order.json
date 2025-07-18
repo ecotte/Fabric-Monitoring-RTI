@@ -110,7 +110,51 @@
     {
         "name": "Refresh Activity Events.DataPipeline",
         "id": "52101d8a-14aa-89e4-4826-f722b61817b9",
-        "type": "ActivityEvents"
+        "type": "ActivityEvents",
+        "parameters": [
+            {
+                "name": "kusto_query_uri",
+                "type": "kusto_query_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_ingest_uri",
+                "type": "kusto_ingest_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_db",
+                "type": "kusto_database",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_uri",
+                "type": "key_vault_uri",
+                "source": "variable Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_tenant_id",
+                "type": "key_vault_tenant_id",
+                "source": "variable Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_client_id",
+                "type": "key_vault_client_id",
+                "source": "variable Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_client_secret",
+                "type": "key_vault_client_secret",
+                "source": "variable Events.KQLDatabase"
+            }
+        ],
+        "acitivities": [
+            {
+                "name": "SparkLens",
+                "type": "TridentNotebook",
+                "itemName": "Audit Logs"
+            }
+        ]
     },
     {
         "name": "Platform Activities.KQLDashboard",
