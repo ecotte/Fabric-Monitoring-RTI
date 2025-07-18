@@ -130,22 +130,22 @@
             {
                 "name": "key_vault_uri",
                 "type": "key_vault_uri",
-                "source": "variable Events.KQLDatabase"
+                "source": "variable"
             },
             {
                 "name": "key_vault_tenant_id",
                 "type": "key_vault_tenant_id",
-                "source": "variable Events.KQLDatabase"
+                "source": "variable"
             },
             {
                 "name": "key_vault_client_id",
                 "type": "key_vault_client_id",
-                "source": "variable Events.KQLDatabase"
+                "source": "variable"
             },
             {
                 "name": "key_vault_client_secret",
                 "type": "key_vault_client_secret",
-                "source": "variable Events.KQLDatabase"
+                "source": "variable"
             }
         ],
         "acitivities": [
