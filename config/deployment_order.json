@@ -73,17 +73,18 @@
     {
         "name": "Gateway Monitoring.SemanticModel",
         "id": "b391ddbe-a2ac-aece-4d20-6801657d3a6a",
-        "type": "Gateway"
+        "type": "Gateway",
+        "datasources": [
+            {
+                "itemName": "Gateway Monitoring.KQLDatabase"
+            }
+        ]
     },
     {
         "name": "Gateway Monitoring.Report",
         "id": "cffc4313-6aa8-805d-4a27-e8aeb4ffb74b",
         "type": "Gateway",
-        "datasources": [
-            {
-                "itemName": "Gateway Monitoring.SemanticModel"
-            }
-        ]
+        "datasource":  "Gateway Monitoring.SemanticModel"
     },
     {
         "name": "Activity Events.KQLDatabase",
