@@ -4,3 +4,6 @@ PowerShell Script/configs/
 PowerShell Script/logs/
 PowerShell Script/examples/
 on-premises data gateway installer/conf_uid
+gateway/PowerShellScript/configs/
+gateway/PowerShellScript/logs/
+gateway/PowerShellScript/examples/
