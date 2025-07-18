@@ -150,7 +150,7 @@
         ],
         "acitivities": [
             {
-                "name": "Audit Log",
+                "name": "Audit Logs",
                 "type": "TridentNotebook",
                 "itemName": "Monitoring Audit Logs.Notebook"
             }
