@@ -223,17 +223,149 @@
     {
         "name": "Refresh Inventory.DataPipeline",
         "id": "c769baa6-1bdf-8ab5-4902-9ccd2aa4e257",
-        "type": "Inventory"
+        "type": "Inventory",
+        "parameters": [
+            {
+                "name": "kusto_query_uri",
+                "type": "kusto_query_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_ingest_uri",
+                "type": "kusto_ingest_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_db",
+                "type": "kusto_database",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_uri",
+                "type": "key_vault_uri",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_tenant_id",
+                "type": "key_vault_tenant_id",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_client_id",
+                "type": "key_vault_client_id",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_client_secret",
+                "type": "key_vault_client_secret",
+                "source": "variable"
+            }
+        ],
+        "acitivities": [
+            {
+                "name": "Inventory",
+                "type": "TridentNotebook",
+                "itemName": "Monitoring Extraction Inventory.Notebook"
+            }
+        ]
     },
     {
         "name": "Refresh Refreshables.DataPipeline",
         "id": "c86cea31-e199-90b0-4878-ff97449030a6",
-        "type": "Inventory"
+        "type": "Inventory",
+        "parameters": [
+            {
+                "name": "kusto_query_uri",
+                "type": "kusto_query_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_ingest_uri",
+                "type": "kusto_ingest_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_db",
+                "type": "kusto_database",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_uri",
+                "type": "key_vault_uri",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_tenant_id",
+                "type": "key_vault_tenant_id",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_client_id",
+                "type": "key_vault_client_id",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_client_secret",
+                "type": "key_vault_client_secret",
+                "source": "variable"
+            }
+        ],
+        "acitivities": [
+            {
+                "name": "Refreshables",
+                "type": "TridentNotebook",
+                "itemName": "Monitoring Extraction Refreshables.Notebook"
+            }
+        ]
     },
     {
         "name": "Refresh Scanner API.DataPipeline",
         "id": "58736594-839f-aa8c-45e7-db9b01bda786",
-        "type": "Inventory"
+        "type": "Inventory",
+        "parameters": [
+            {
+                "name": "kusto_query_uri",
+                "type": "kusto_query_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_ingest_uri",
+                "type": "kusto_ingest_uri",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "kusto_db",
+                "type": "kusto_database",
+                "source": "Activity Events.KQLDatabase"
+            },
+            {
+                "name": "key_vault_uri",
+                "type": "key_vault_uri",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_tenant_id",
+                "type": "key_vault_tenant_id",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_client_id",
+                "type": "key_vault_client_id",
+                "source": "variable"
+            },
+            {
+                "name": "key_vault_client_secret",
+                "type": "key_vault_client_secret",
+                "source": "variable"
+            }
+        ],
+        "acitivities": [
+            {
+                "name": "Scanner API",
+                "type": "TridentNotebook",
+                "itemName": "Monitoring Extraction Scanner.Notebook"
+            }
+        ]
     },
     {
         "name": "Platform Monitoring.KQLDashboard",
