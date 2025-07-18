@@ -150,9 +150,9 @@
         ],
         "acitivities": [
             {
-                "name": "SparkLens",
+                "name": "Audit Log",
                 "type": "TridentNotebook",
-                "itemName": "Audit Logs"
+                "itemName": "Monitoring Audit Logs.Notebook"
             }
         ]
     },
