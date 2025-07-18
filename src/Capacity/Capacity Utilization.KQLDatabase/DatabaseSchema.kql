@@ -24,7 +24,8 @@ CapacityOperations
 | where _allCapacities or capacityId == CapacityId
 | where isempty(Workspace) or workspaceId == Workspace or workspaceName == Workspace
 | where isempty(ItemKind) or itemKind == ItemKind
-| where windowStartTime <= Timepoint and windowEndTime >= Timepoint
+| where windowStartTime <= Timepoint and windowEndTime > Timepoint
+| where isempty(workloadAutoscaleCapacityUnitsLimit) or workloadAutoscaleCapacityUnitsLimit == 0
 | project
     ['Capacity Name'] = capacityName,
     ['Capacity Id'] = capacityId,
@@ -217,7 +218,9 @@ CapacityEventsRaw
     windowStartTime,
     windowEndTime,
     timepoints = (windowEndTime - windowStartTime) / 30s, 
-    ['Date UTC'] = range(bin(windowStartTime, 1day), bin(windowEndTime,1day), 1day)
+    ['Date UTC'] = range(bin(windowStartTime, 1day), bin(windowEndTime,1day), 1day),
+    workloadAutoscaleCapacityUnitsLimit
+| where isempty( workloadAutoscaleCapacityUnitsLimit) or workloadAutoscaleCapacityUnitsLimit == 0
 | mv-expand ['Date UTC'] to typeof(datetime)
 | extend usedTimepoints =  (min_of(windowEndTime, (['Date UTC'] + 1days)) - max_of(windowStartTime, ['Date UTC'])) / 30s
 | extend ['Timepoint CU (ms)'] = usedTimepoints*(['CU´ms']/timepoints/1000.0)
