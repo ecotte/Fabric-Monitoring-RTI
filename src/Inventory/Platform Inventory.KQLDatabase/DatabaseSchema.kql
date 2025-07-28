@@ -205,5 +205,5 @@ RefreshablesRaw
 .alter table RefreshablesRaw policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
 .alter table ItemRefreshes policy retention @'{"SoftDeletePeriod":"750.00:00:00","Recoverability":"Disabled"}'
 .alter table ItemRefreshes policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
-.alter table ItemRefreshes policy update "[{\"IsEnabled\":true,\"Source\":\"RefreshablesRaw\",\"Query\":\"parse_ItemRefreshes()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
 .alter table GitConnectionsHistory policy retention @'{"SoftDeletePeriod":"750.00:00:00","Recoverability":"Disabled"}'
+.alter table ItemRefreshes policy update "[{\"IsEnabled\":true,\"Source\":\"RefreshablesRaw\",\"Query\":\"parse_ItemRefreshes()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"

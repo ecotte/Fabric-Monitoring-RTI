@@ -245,6 +245,8 @@ CapacityEventsRaw
     ['Utilization Type'],
     ['Release Type'],
     ['Date UTC'] }
+.alter materialized-view CapacityUtilizationDaily policy caching hotdata=time(730.00:00:00) hotindex=time(730.00:00:00)
+.alter materialized-view CapacityUtilizationDaily policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"01:00:00","Recoverability":"Disabled"}'
 .alter table CapacityEventsRaw policy caching hotdata = time(1.00:00:00) hotindex = time(1.00:00:00)
 .alter table CapacitySummary policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
