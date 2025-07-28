@@ -139,5 +139,5 @@
 .alter table ActivityEventsRaw policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
 .alter table ActivityEvents policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table ActivityEvents policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
-.alter table ActivityEvents policy update "[{\"IsEnabled\":true,\"Source\":\"ActivityEventsRaw\",\"Query\":\"parse_AcitivityEvents()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
 .alter table ActivityEvents policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
+.alter table ActivityEvents policy update "[{\"IsEnabled\":true,\"Source\":\"ActivityEventsRaw\",\"Query\":\"parse_AcitivityEvents()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
