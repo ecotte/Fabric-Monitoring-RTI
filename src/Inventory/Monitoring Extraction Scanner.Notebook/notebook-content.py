@@ -35,11 +35,11 @@
 
 # ## Variables
 
-# CELL ********************
+# PARAMETERS CELL ********************
 
 cluster_ingest = ""
 cluster_query = ""
-database_name = ''
+database_name = ""
 
 key_vault_uri = f""
 key_vault_tenant_id = f""
