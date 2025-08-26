@@ -10,80 +10,89 @@
 .create-merge table CapacitySummary (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, baseCapacityUnits:long, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:real, timepointCapacityUnits:long, capacityUnitSecond:real, windowStartTime:datetime, windowEndTime:datetime, interactiveDelayThresholdPercentage:real, interactiveRejectionDelayThresholdPercentage:real, backgroundRejectionDelayThresholdPercentage:real, overageTotalCuMs:real, overageAddCuMs:real, overageBurndownCuMs:real, utilizationBackground:real, utilizationInteractive:real, utilizationBackgroundPreview:real, utilizationInteractivePreview:real) 
 .create-merge table CapacityOperations (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:long, durationMs:long, isVirtualArtifactName:bool, isVirtualWorkspaceName:bool, itemId:guid, itemKind:string, itemName:string, operationId:string, operationName:string, operationStartTime:datetime, releaseType:string, status:string, throttlingDelayMs:long, utilizationType:string, windowStartTime:datetime, windowEndTime:datetime, workloadAutoscaleCapacityUnitsLimit:long, workspaceId:guid, workspaceName:string, workspaceDomainId:string, workspaceDomain:string, workspaceParentDomainId:string, workspaceParentDomain:string) 
 .create-merge table CapacityState (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, transitionTime:datetime, capacityState:string, stateChangeReason:string) 
-.create-or-alter function with (skipvalidation = "true") TimepointConsumption(Timepoint:datetime, CapacityId:string="", Workspace:string="", ItemKind:string="", AddWorkspace:bool=true, AddItemKind:bool=true, AddItem:bool=true, AddOperation:bool=true) {
-let _allCapacities = isempty(CapacityId);
-let _workspaces = iff(not(AddWorkspace), dynamic(['Workspace Name', 'Workspace Id']), dynamic([""]));
-let _items = iff(not(AddItem), dynamic(['Item Name', 'Item Id']), dynamic([""]));
-let _itemKind = iff(not(AddItemKind), dynamic(['Item Kind']), dynamic([""]));
-let _operations = iff(not(AddOperation), dynamic(['Operation Name']), dynamic([""]));
-let _summary = CapacitySummary
-    | where _allCapacities or capacityId == CapacityId
-    | where windowStartTime == Timepoint
-    | project ['Capacity Id']=capacityId, ['Total Consumed Timepoint CU']=capacityUnitSecond, ['Capacity Timepoint CU']=timepointCapacityUnits;
-CapacityOperations
-| where _allCapacities or capacityId == CapacityId
-| where isempty(Workspace) or workspaceId == Workspace or workspaceName == Workspace
-| where isempty(ItemKind) or itemKind == ItemKind
-| where windowStartTime <= Timepoint and windowEndTime > Timepoint
-| where isempty(workloadAutoscaleCapacityUnitsLimit) or workloadAutoscaleCapacityUnitsLimit == 0
-| project
-    ['Capacity Name'] = capacityName,
-    ['Capacity Id'] = capacityId,
-    ['Capacity Sku'] =capacitySku,
-    ['Workspace Name'] = workspaceName,
-    ['Workspace Id'] = workspaceId,
-    ['CU´s'] = capacityUnitMs / 1000.0,
-    ['Item Name'] = itemName,
-    ['Item Id'] = itemId,
-    ['Item Kind'] = itemKind,
-    ['Operation Name'] = operationName,
-    ['Window Start Time'] = windowStartTime,
-    ['Window End Time'] = windowEndTime,
-    ['Timepoints'] = (windowEndTime - windowStartTime) / 30s,
-    ['Timepoint CU'] = (capacityUnitMs / 1000.0) / ((windowEndTime - windowStartTime) / 30s),
-    ['Utilization Type']=utilizationType,
-    ['Releast Type']=releaseType,
-    ['Operation Start Time']=operationStartTime
-| project
-    ['Capacity Name'],
-    ['Capacity Id'],
-    ['Capacity Sku'],
-    ['CU´s'],
-    Timepoints,
-    ['Timepoint CU'],
-    ['Utilization Type'],
-    ['Releast Type'],
-    ['Window End Time'],
-    ['Window Start Time'],
-    ['Operation Start Time'],
-    columns=bag_pack_columns(
-                ['Workspace Name'],
-                ['Workspace Id'],
-                ['Item Name'],
-                ['Item Id'],
-                ['Item Kind'],
-                ['Operation Name']
-            )
-| extend columns=bag_remove_keys(columns, _items)
-| extend columns=bag_remove_keys(columns, _itemKind)
-| extend columns=bag_remove_keys(columns, _workspaces)
-| extend columns=bag_remove_keys(columns, _operations)
-| evaluate bag_unpack(columns)
-| summarize ['Last Operation Window Start Time']=max(['Window Start Time']),['Last Operation Window End Time']=max(['Window End Time']), ['Operation Start Time']=min(['Operation Start Time']), ['Consumed Timepoint CU']=sum(['Timepoint CU'])
-    by
-    ['Capacity Name'],
-    ['Capacity Id'],
-    ['Capacity Sku'],
-    ['Workspace Name']=column_ifexists("Workspace Name", ""),
-    ['Workspace Id']=column_ifexists("Workspace Id", ""),
-    ['Item Kind']=column_ifexists("Item Kind", ""),
-    ['Item Name']=column_ifexists("Item Name", ""),
-    ['Item Id']=column_ifexists('Item Id',""),
-    ['Operation Name']=column_ifexists('Operation Name',""),
-    ['Releast Type']
-| lookup _summary on ['Capacity Id']
-| extend ['% of Capacity'] = round(100*['Consumed Timepoint CU']/['Capacity Timepoint CU'],2), ['% Total Capacity Util']=round(100*['Total Consumed Timepoint CU']/['Capacity Timepoint CU'],2)
-}
+.create-or-alter function with (skipvalidation = "true") TimepointConsumption(Timepoint:datetime, Capacity:string="", Workspace:string="", Item:string="", ItemKind:string="", AddWorkspace:bool=true, AddItem:bool=true, AddOperation:bool=true, AddPreview:bool=false) {
+     let _workspaces = iff(not(AddWorkspace), dynamic(['Workspace Name', 'Workspace Id']), dynamic([""]));
+     let _items = iff(not(AddItem), dynamic(['Item Name', 'Item Id', 'Item Kind']), dynamic([""]));
+     let _operations = iff(not(AddOperation), dynamic(['Operation Name']), dynamic([""]));
+     let _preview = iff(AddPreview,dynamic(['Public','Preview']),dynamic(['Public']));
+     let _summary = CapacitySummary
+        | where isempty(Capacity) or capacityId == Capacity or capacityName == Capacity
+        | where windowStartTime == Timepoint
+        | project
+            ['Capacity Id']=capacityId,
+            ['Total Consumed Timepoint CU']=capacityUnitSecond,
+            ['Capacity Timepoint CU']=timepointCapacityUnits;
+     CapacityOperations
+    | where isempty(Capacity) or capacityId == Capacity or capacityName == Capacity
+    | where isempty(Workspace) or workspaceId == Workspace or workspaceName == Workspace
+    | where isempty(Item) or itemId == Item or itemName == Item
+    | where isempty(ItemKind) or itemKind == ItemKind
+    | where windowStartTime <= Timepoint and windowEndTime > Timepoint
+    | where isempty(workloadAutoscaleCapacityUnitsLimit) or workloadAutoscaleCapacityUnitsLimit == 0
+    | where releaseType in (_preview)
+    | project
+        ['Capacity Name'] = capacityName,
+        ['Capacity Id'] = capacityId,
+        ['Capacity Sku'] =capacitySku,
+        ['Workspace Name'] = workspaceName,
+        ['Workspace Id'] = workspaceId,
+        ['CU´s'] = capacityUnitMs / 1000.0,
+        ['Item Name'] = itemName,
+        ['Item Id'] = itemId,
+        ['Item Kind'] = itemKind,
+        ['Operation Name'] = operationName,
+        ['Window Start Time'] = windowStartTime,
+        ['Window End Time'] = windowEndTime,
+        ['Timepoints'] = (windowEndTime - windowStartTime) / 30s,
+        ['Timepoint CU'] = (capacityUnitMs / 1000.0) / ((windowEndTime - windowStartTime) / 30s),
+        ['Utilization Type']=utilizationType,
+        ['Releast Type']=releaseType,
+        ['Operation Start Time']=operationStartTime
+    | project
+        ['Capacity Name'],
+        ['Capacity Id'],
+        ['Capacity Sku'],
+        ['CU´s'],
+        Timepoints,
+        ['Timepoint CU'],
+        ['Utilization Type'],
+        ['Releast Type'],
+        ['Window End Time'],
+        ['Window Start Time'],
+        ['Operation Start Time'],
+        columns=bag_pack_columns(
+            ['Workspace Name'],
+            ['Workspace Id'],
+            ['Item Name'],
+            ['Item Id'],
+            ['Item Kind'],
+            ['Operation Name']
+        )
+    | extend columns=bag_remove_keys(columns, _items)
+    | extend columns=bag_remove_keys(columns, _workspaces)
+    | extend columns=bag_remove_keys(columns, _operations)
+    | evaluate bag_unpack(columns)
+    | summarize
+        ['Last Operation Window Start Time']=max(['Window Start Time']),
+        ['Last Operation Window End Time']=max(['Window End Time']),
+        ['Operation Start Time']=min(['Operation Start Time']),
+        ['Consumed Timepoint CU']=sum(['Timepoint CU'])
+        by
+        ['Capacity Name'],
+        ['Capacity Id'],
+        ['Capacity Sku'],
+        ['Workspace Name']=column_ifexists("Workspace Name", ""),
+        ['Workspace Id']=column_ifexists("Workspace Id", ""),
+        ['Item Kind']=column_ifexists("Item Kind", ""),
+        ['Item Name']=column_ifexists("Item Name", ""),
+        ['Item Id']=column_ifexists('Item Id', ""),
+        ['Operation Name']=column_ifexists('Operation Name', ""),
+        ['Releast Type']
+    | lookup _summary on ['Capacity Id']
+    | extend
+        ['% of Capacity'] = round(100 * ['Consumed Timepoint CU'] / ['Capacity Timepoint CU'], 2),
+        ['% Total Capacity Util']=round(100 * ['Total Consumed Timepoint CU'] / ['Capacity Timepoint CU'], 2)
+ }
 .create-or-alter function with (folder = "UpdatePolicyFunctions", skipvalidation = "true") parse_CapacityEventsSummary() {
      CapacityEventsRaw
     | where ["type"] == "Microsoft.Fabric.Capacity.Summary"
