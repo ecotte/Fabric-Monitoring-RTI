@@ -34,8 +34,6 @@
 .create-merge table WorkspaceDelegatedSettings (WorkspaceId:guid, SettingName:string, Title:string, Enabled:bool, CanSpecifySecurityGroups:bool, EnabledSecurityGroups:dynamic, TenantSettingGroup:string, DelegatedFrom:string, scanTime:datetime) with (folder = "Inventory") 
 .create-merge table AppsHistory (AppName:string, AppId:guid, Description:string, PublishedBy:string, LastUpdate:datetime, scanTime:datetime) with (folder = "History/Inventory") 
 .create-merge table Apps (AppName:string, AppId:guid, Description:string, PublishedBy:string, LastUpdate:datetime, scanTime:datetime) with (folder = "Inventory") 
-.create-merge table CapacityRegions (Continent:string, FabricRegion:string, Latitude:real, Longitude:real, Location:string) with (folder = "Auxiliar") 
-.create-merge table SemanticModelContentTypes (ContentProviderType:string, MappedName:string, IsIncludedInOptimizationModule:bool, IsDefaultSemanticModel:bool) with (folder = "Auxiliar") 
 .create-merge table RefreshablesRaw (['Workspace Id']:guid, ['Workspace Name']:string, ['Item Id']:guid, ['Item Name']:string, ['Item Kind']:string, ['Capacity Id']:guid, ['Capacity Name']:string, ['Capacity SKU']:string, ['Refresh Count']:int, ['Refresh Failures']:int, ['Average Duration']:decimal, ['Median Duration']:decimal, ['Refreshes Per Day']:int, ['Refresh Type']:string, ['Start Time']:string, ['End Time']:string, Status:string, ['Request Id']:guid, ['Service Exception Json']:string, ['Extended Status']:dynamic, ['Refresh Attempts']:dynamic, ['Refresh Schedule Days']:dynamic, ['Refresh Schedule Times']:dynamic, ['Refresh Schedule Enabled']:bool, ['Refresh Schedule Local Timezone Id']:string, ['Refresh Schedule Notify Option']:string, ['Configured By']:dynamic) with (folder = "History/Inventory") 
 .create-merge table ItemRefreshes (['Request Id']:guid, IngestionTime:datetime, ['Workspace Id']:guid, ['Workspace Name']:string, ['Item Id']:guid, ['Item Name']:string, ['Item Kind']:string, ['Capacity Id']:guid, ['Capacity Name']:string, ['Capacity SKU']:string, ['Refresh Type']:string, ['Start Time']:datetime, ['End Time']:datetime, Status:string, ['Service Exception Json']:string, ['Extended Status']:dynamic, ['Refresh Attempts']:dynamic, Duration:timespan, DurationMs:real) with (folder = "Events") 
 .create-merge table GitConnectionsHistory (['Workspace Id']:guid, ['Workspace Name']:string, ['Organization Name']:string, ['Owner Name']:string, ['Project Name']:string, ['Git Provider Type']:string, ['Repository Name']:string, ['Branch Name']:string, ['Directory Name']:string, scanTime:datetime) with (folder = "History/Inventory") 
@@ -158,6 +156,79 @@ RefreshablesRaw
 | extend DurationMs=round(tolong(Duration)/10000,0)
 | join kind=leftanti ItemRefreshes on ['Start Time'] and ['Request Id']
 }
+.create-or-alter function with (folder = "Auxtiliar", skipvalidation = "true") Calendar(DaysBack:timespan=time(730.00:00:00), Precision:timespan=time(1.00:00:00)) {
+     let _startDate = startofday(ago(DaysBack));
+     let _endDate = startofday(now());
+     range Date from _startDate to _endDate step Precision
+    | extend
+        ["Year"]=getyear(["Date"]),
+        ["Month"]=getmonth(["Date"]),
+        ["Week of Year"]=week_of_year(["Date"]),
+        ["Week of Month"]=(dayofmonth(["Date"]) / 7) + 1,
+        ["Day"]=datepart('day', ["Date"])
+ }
+.create-or-alter function with (folder = "Auxiliar", skipvalidation = "true") CapacityRegions() {
+    datatable(Continent:string,
+        FabricRegion:string,
+        Latitude:real ,
+        Longitude:real,	
+        Location:string )[
+    "Asia Pacific", "Australia East", 31.2532, 146.9211, "New South Wales",
+    "Asia Pacific", "Australia Southeast", 36.9848, 143.3906, "Victoria",
+    "Asia Pacific", "Central India", 18.5204, 73.8567, "Pune",
+    "Asia Pacific", "East Asia", 22.3193, 114.1694, "Hong Kong",
+    "Asia Pacific", "Japan East", 35.6764, 139.65, "Tokyo",
+    "Asia Pacific", "Korea Central", 37.5519, 126.9918, "Seoul",
+    "Asia Pacific", "Southeast Asia", 1.3521, 103.8198, "Singapore",
+    "Asia Pacific", "South India", 13.0827, 80.2707, "Chennai",
+    "Europe", "North Europe", 53.7798, 7.3055, "Ireland",
+    "Europe", "West Europe", 52.1326, 5.2913, "Netherlands",
+    "Europe", "France Central", 48.8566, 2.3522, "Paris",
+    "Europe", "Germany West Central", 50.1109, 8.6821, "Frankfurt am Main",
+    "Europe", "Norway East", 59.9139, 10.7522, "Oslo",
+    "Europe", "Sweden Central", 60.6749, 17.1413, "Gävle",
+    "Europe", "Switzerland North", 47.3769, 8.5417, "Zürich",
+    "Europe", "Switzerland West", 46.2044, 6.1432, "Geneva",
+    "Europe", "UK South", 51.5072, -0.1276, "London",
+    "Europe", "UK West", 51.4837, -3.1681, "Cardiff",
+    "Americas", "Brazil South", -23.5558, -46.6396, "São Paulo State",
+    "Americas", "Canada Central", 43.6532, -79.3832, "Toronto",
+    "Americas", "Canada East", 46.8131, -71.2075, "Quebec City",
+    "Americas", "East US", 37.4316, -78.6569, "Virginia",
+    "Americas", "East US 2", 37.4316, -78.6569, "Virginia",
+    "Americas", "North Central US", 40.6331, -89.3985, "Illinois",
+    "Americas", "South Central US", 31.9686, -99.9018, "Texas",
+    "Americas", "West US", 36.7783, -119.4179, "California",
+    "Americas", "West US 2", 47.7511, -120.7401, "Washington",
+    "Americas", "West US 3", 34.0489, -111.0937, "Arizona",
+    "Middle East and Africa", "South Africa North", -26.2056, 28.0337, "Johannesburg",
+    "Middle East and Africa", "UAE North", 25.2048, 55.2708, "Dubai"
+    ]
+}
+.create-or-alter function with (folder = "Auxiliar", skipvalidation = "true") SemanticModelContentTypes() {
+    datatable(
+    ContentProviderType:string,
+    MappedName:string,
+    IsIncludedInOptimizationModule:bool,
+    IsDefaultSemanticModel:bool
+    )
+ [
+    "InCompositeMode",             "Composite Mode",           false, true,
+    "InDirectQueryMode",           "DirectQuery Mode",         false, true,
+    "InImportMode",                "Import Mode",              false, true,
+    "PbixInCompositeMode",         "Composite Mode",           true,  false,
+    "PbixInDirectQueryMode",       "DirectQuery Mode",         true,  false,
+    "PbixInImportMode",            "Import Mode",              true,  false,
+    "PbixInLiveConnectionMode",    "Live Connection Mode",     false, false,
+    "RealTimeInPushMode",          "Push Mode",                false, false,
+    "RealTimeInStreamingMode",     "Streaming Mode",           false, false,
+    "Unknown",                     "Semantic Model in App",    false, false,
+    "UsageMetricsUserReport",      "Usage Metrics",            false, false,
+    "UsageMetricsUserDashboard",   "Usage Metrics",            false, false,
+    "CSV",                         "CSV",                      false, false,
+    "Excel",                       "Excel",                    false, false,
+]
+}
 .create-or-alter materialized-view with (Folder = "Inventory")  Refreshables on table RefreshablesRaw { RefreshablesRaw
 | project-away ['Refresh Type'], ['Start Time'], ['End Time'], Status, ['Request Id'],['Service Exception Json'], ['Extended Status'], ['Refresh Attempts']
 | extend IngestionTime = ingestion_time()
@@ -205,5 +276,5 @@ RefreshablesRaw
 .alter table RefreshablesRaw policy streamingingestion "{\"IsEnabled\":false,\"HintAllocatedRate\":null,\"NumberOfRowStores\":null,\"SealIntervalLimit\":null,\"SealThresholdBytes\":null,\"UsageTags\":[],\"IsMaintenanceActive\":false}"
 .alter table ItemRefreshes policy retention @'{"SoftDeletePeriod":"750.00:00:00","Recoverability":"Disabled"}'
 .alter table ItemRefreshes policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
-.alter table ItemRefreshes policy update "[{\"IsEnabled\":true,\"Source\":\"RefreshablesRaw\",\"Query\":\"parse_ItemRefreshes()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
 .alter table GitConnectionsHistory policy retention @'{"SoftDeletePeriod":"750.00:00:00","Recoverability":"Disabled"}'
+.alter table ItemRefreshes policy update "[{\"IsEnabled\":true,\"Source\":\"RefreshablesRaw\",\"Query\":\"parse_ItemRefreshes()\",\"IsTransactional\":true,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
