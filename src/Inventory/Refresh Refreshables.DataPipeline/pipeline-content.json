@@ -89,7 +89,8 @@
         "type": "String"
       },
       "kusto_db": {
-        "type": "String"
+        "type": "String",
+        "defaultValue": "Platform Inventory"
       }
     }
   }

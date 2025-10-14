@@ -110,7 +110,8 @@
         "type": "String"
       },
       "kusto_db": {
-        "type": "String"
+        "type": "String",
+        "defaultValue": "Activity Events"
       }
     }
   }

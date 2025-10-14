@@ -228,17 +228,17 @@
             {
                 "name": "kusto_query_uri",
                 "type": "kusto_query_uri",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "kusto_ingest_uri",
                 "type": "kusto_ingest_uri",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "kusto_db",
                 "type": "kusto_database",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "key_vault_uri",
@@ -277,17 +277,17 @@
             {
                 "name": "kusto_query_uri",
                 "type": "kusto_query_uri",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "kusto_ingest_uri",
                 "type": "kusto_ingest_uri",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "kusto_db",
                 "type": "kusto_database",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "key_vault_uri",
@@ -326,17 +326,17 @@
             {
                 "name": "kusto_query_uri",
                 "type": "kusto_query_uri",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "kusto_ingest_uri",
                 "type": "kusto_ingest_uri",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "kusto_db",
                 "type": "kusto_database",
-                "source": "Activity Events.KQLDatabase"
+                "source": "Platform Inventory.KQLDatabase"
             },
             {
                 "name": "key_vault_uri",
