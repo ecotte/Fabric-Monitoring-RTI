@@ -7,7 +7,7 @@
 ```
 [{"Properties":{"Path":"$['specversion']"},"column":"specversion","datatype":""},{"Properties":{"Path":"$['source']"},"column":"source","datatype":""},{"Properties":{"Path":"$['time']"},"column":"time","datatype":""},{"Properties":{"Path":"$['id']"},"column":"id","datatype":""},{"Properties":{"Path":"$['subject']"},"column":"subject","datatype":""},{"Properties":{"Path":"$['type']"},"column":"type","datatype":""},{"Properties":{"Path":"$['data']"},"column":"data","datatype":""}]
 ```
-.create-merge table CapacitySummary (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, baseCapacityUnits:long, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:real, timepointCapacityUnits:long, capacityUnitSecond:real, windowStartTime:datetime, windowEndTime:datetime, interactiveDelayThresholdPercentage:real, interactiveRejectionDelayThresholdPercentage:real, backgroundRejectionDelayThresholdPercentage:real, overageTotalCuMs:real, overageAddCuMs:real, overageBurndownCuMs:real, utilizationBackground:real, utilizationInteractive:real, utilizationBackgroundPreview:real, utilizationInteractivePreview:real) 
+.create-merge table CapacitySummary (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, baseCapacityUnits:long, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:real, timepointCapacityUnits:long, capacityUnitSecond:real, windowStartTime:datetime, windowEndTime:datetime, interactiveDelayThresholdPercentage:real, interactiveRejectionThresholdPercentage:real, backgroundRejectionThresholdPercentage:real, overageTotalCuMs:real, overageAddCuMs:real, overageBurndownCuMs:real, utilizationBackground:real, utilizationInteractive:real, utilizationBackgroundPreview:real, utilizationInteractivePreview:real) 
 .create-merge table CapacityOperations (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, capacityUnitMs:long, durationMs:long, isVirtualArtifactName:bool, isVirtualWorkspaceName:bool, itemId:guid, itemKind:string, itemName:string, operationId:string, operationName:string, operationStartTime:datetime, releaseType:string, status:string, throttlingDelayMs:long, utilizationType:string, windowStartTime:datetime, windowEndTime:datetime, workloadAutoscaleCapacityUnitsLimit:long, workspaceId:guid, workspaceName:string, workspaceDomainId:string, workspaceDomain:string, workspaceParentDomainId:string, workspaceParentDomain:string) 
 .create-merge table CapacityState (id:guid, specversion:real, source:guid, ['time']:datetime, subject:string, type:string, capacityId:guid, capacityName:string, capacitySku:string, transitionTime:datetime, capacityState:string, stateChangeReason:string) 
 .create-or-alter function with (skipvalidation = "true") TimepointConsumption(Timepoint:datetime, Capacity:string="", Workspace:string="", Item:string="", ItemKind:string="", AddWorkspace:bool=true, AddItem:bool=true, AddOperation:bool=true, AddPreview:bool=false) {
@@ -105,8 +105,8 @@
         windowEndTime=todatetime(data.windowEndTime),
         windowStartTime=todatetime(data.windowStartTime),
         interactiveDelayThresholdPercentage=toreal(data.interactiveDelayThresholdPercentage),
-        interactiveRejectionDelayThresholdPercentage=toreal(data.interactiveRejectionDelayThresholdPercentage),
-        backgroundRejectionDelayThresholdPercentage=toreal(data.backgroundRejectionDelayThresholdPercentage),
+        interactiveRejectionThresholdPercentage=toreal(data.interactiveRejectionDelayThresholdPercentage),
+        backgroundRejectionThresholdPercentage=toreal(data.backgroundRejectionDelayThresholdPercentage),
         overageTotalCuMs=toreal(data.overageTotalCuMs),
         overageAddCuMs=toreal(data.overageAddCuMs),
         overageBurndownCuMs=toreal(data.overageBurndownCuMs),
@@ -134,8 +134,8 @@
         windowStartTime,
         windowEndTime,
         interactiveDelayThresholdPercentage,
-        interactiveRejectionDelayThresholdPercentage,
-        backgroundRejectionDelayThresholdPercentage,
+        interactiveRejectionThresholdPercentage,
+        backgroundRejectionThresholdPercentage,
         overageTotalCuMs,
         overageAddCuMs,
         overageBurndownCuMs,
@@ -232,6 +232,101 @@ CapacityEventsRaw
     capacityState,
     stateChangeReason
 }
+.create-or-alter function with (skipvalidation = "true") TimepointFutureConsumption(Capacity:string, Timepoint:datetime) {
+     let _selectedTimeWindow = Timepoint;
+     let _endOfSelectedTimeWindow = _selectedTimeWindow + 1d;
+     let _summaryInfoOnSelectedTimeWindow =
+        CapacitySummary
+        | where capacityId == Capacity or capacityName == Capacity
+        | where windowEndTime == _selectedTimeWindow 
+        | project
+            windowStartTime=windowStartTime,
+            windowEndTime,
+            capacityId,
+            capacitySku,
+            baseCapacityUnits,
+            timepointCapacityUnits,
+            capacityUnitMs,
+            overageTotalCuMs,
+            overageBurndownCuMs,
+            overageAddCuMs,
+            interactiveDelayThresholdPercentage,
+            interactiveRejectionThresholdPercentage,
+            backgroundRejectionThresholdPercentage;
+     let _summarisedOperationsWithinWindow =
+        CapacityOperations
+        | where windowStartTime <= _selectedTimeWindow and windowEndTime > _selectedTimeWindow
+        | where capacityId == Capacity or capacityName == Capacity
+        | where isempty(workloadAutoscaleCapacityUnitsLimit) or workloadAutoscaleCapacityUnitsLimit == 0
+        | where releaseType == "Public"
+        | summarize TotalCU = sum(capacityUnitMs)
+            by
+            windowStartTime,
+            windowEndTime,
+            capacityId,
+            utilizationType,
+            capacityName,
+            releaseType
+        | extend 
+            countOf30SecondWindowsInRange = (windowEndTime - windowStartTime) / 30s,
+            windowsToSmoothOver = range(windowStartTime, windowEndTime - 30s, 30s)
+        | extend CUPerWindow = TotalCU / countOf30SecondWindowsInRange
+        | project
+            capacityId,
+            utilizationType,
+            windowsToSmoothOver,
+            CUPerWindow,
+            capacityName,
+            releaseType
+        | mv-expand windowsToSmoothOver
+        | extend WindowStartTime = todatetime(windowsToSmoothOver)
+        | where WindowStartTime between (_selectedTimeWindow .. _endOfSelectedTimeWindow)
+        | summarize
+            totalCuSec=sum(CUPerWindow) / 1000,
+            totalBackgroundCuSec = sumif(CUPerWindow, utilizationType == "Background" and releaseType == "Public") / 1000,
+            totalInteractiveCuSec = sumif(CUPerWindow, utilizationType == "Interactive" and releaseType == "Public") / 1000,
+            totalBackgroundPreviewCuSec = sumif(CUPerWindow, utilizationType == "Background" and releaseType == "Preview") / 1000,
+            totalInteractivePreviewCuSec = sumif(CUPerWindow, utilizationType == "Interactive" and releaseType == "Preview") / 1000
+            by WindowStartTime, capacityId, capacityName
+        | lookup (_summaryInfoOnSelectedTimeWindow
+            | project capacityId, timepointCapacityUnits, overageTotalCuMs)
+            on capacityId
+        | project
+            capacityId,
+            windowTime=WindowStartTime,
+            timepointCapacityUnits,
+            overageTotalCuMs=iff(WindowStartTime == _selectedTimeWindow, overageTotalCuMs / 1000, 0.0),
+            totalInteractiveCuSec,
+            totalBackgroundCuSec,
+            totalInteractivePreviewCuSec,
+            totalBackgroundPreviewCuSec,
+            capacityName,
+            totalCuSec
+        | extend
+            overageAddCapacityUnitsMs = iff((totalCuSec - timepointCapacityUnits) > 0, (totalCuSec - timepointCapacityUnits), 0.0),
+            overageBurndownCapacityUnitsMs = abs(iff((totalCuSec - timepointCapacityUnits) < 0, (totalCuSec - timepointCapacityUnits), 0.0))
+        | extend overageTotalCapacityUnitsMs = iff(overageAddCapacityUnitsMs > 0, overageTotalCuMs + overageAddCapacityUnitsMs, overageTotalCuMs - overageBurndownCapacityUnitsMs)
+        | serialize
+        | extend overageTotalCapacityUnitsMs = iff(row_cumsum(overageTotalCapacityUnitsMs) > 0, row_cumsum(overageTotalCapacityUnitsMs), 0.0);
+     _summarisedOperationsWithinWindow
+    | project
+        ["Window Time"]=windowTime,
+        ["Capacity Id"] = capacityId,
+        ["Capacity Name"] = capacityName,
+        ["Timepoint Capacity Units"] = timepointCapacityUnits,
+        ["Total Capacity CU´s"]=totalCuSec,
+        ["Total Interactive Capacity CU´s"]=totalInteractiveCuSec,
+        ["Total Background Capacity CU´s"]=totalBackgroundCuSec,
+        ["Total Interactive Preview Capacity CU´s"]=totalInteractivePreviewCuSec,
+        ["Total Background Preview Capacity CU´s"]=totalBackgroundPreviewCuSec,
+        ["% of Capacity Units"] = 100 * totalCuSec / iff(isempty(timepointCapacityUnits),0, timepointCapacityUnits),
+        ["% of Interactive Capacity Units"] = 100 * totalInteractiveCuSec / iff(isempty(timepointCapacityUnits),0, timepointCapacityUnits),
+        ["% of Background Capacity Units"] = 100 * totalBackgroundCuSec / iff(isempty(timepointCapacityUnits),0, timepointCapacityUnits),
+        ["% of Interactive Preview Capacity Units"] = 100 * totalInteractivePreviewCuSec / iff(isempty(timepointCapacityUnits),0, timepointCapacityUnits),
+        ["% of Background Preview Capacity Units"] = 100 * totalBackgroundPreviewCuSec / iff(isempty(timepointCapacityUnits),0, timepointCapacityUnits),
+        ["% of Overage Capacity Units"] = 100 * overageTotalCapacityUnitsMs / iff(isempty(timepointCapacityUnits),0, timepointCapacityUnits),
+        ["Capacity Limit"] = 100
+ }
 .create-or-alter materialized-view  CapacityUtilizationDaily on table CapacityOperations { CapacityOperations
 | project ['Capacity Id']=capacityId,
     ['Capacity Name'] = capacityName,
@@ -266,13 +361,13 @@ CapacityEventsRaw
     ['Release Type'],
     ['Date UTC'] }
 .alter materialized-view CapacityUtilizationDaily policy caching hotdata=time(730.00:00:00) hotindex=time(730.00:00:00)
-.alter materialized-view CapacityUtilizationDaily policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityEventsRaw policy retention @'{"SoftDeletePeriod":"01:00:00","Recoverability":"Disabled"}'
 .alter table CapacityEventsRaw policy caching hotdata = time(1.00:00:00) hotindex = time(1.00:00:00)
 .alter table CapacitySummary policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacitySummary policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
 .alter table CapacityOperations policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityOperations policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
+.alter column CapacityOperations.['operationId'] policy encoding type = 'Identifier'
 .alter column CapacityOperations.['operationStartTime'] policy encoding type = 'EmbeddedPresenceLZ4'
 .alter table CapacityState policy retention @'{"SoftDeletePeriod":"730.00:00:00","Recoverability":"Disabled"}'
 .alter table CapacityState policy caching hotdata = time(90.00:00:00) hotindex = time(90.00:00:00)
