@@ -129,6 +129,18 @@
          )
     | summarize arg_max(CreationTime, *) by ItemId
  }
+.create-or-alter function with (skipvalidation = "true") WorkspaceCreation(daysToFilter:timespan=time(14.00:00:00)) {
+     ActivityEvents
+    | where CreationTime > ago(daysToFilter)
+    | where Activity == "CreateFolder"
+    | extend
+        WorkspaceId = toguid(details.WorkspaceId),
+        WorkspaceName = tostring(details.WorkSpaceName),
+        CapacityId = toguid(details.CapacityId),
+        ClientIP = tostring(details.ClientIP),
+        IsSuccess = tobool(details.IsSuccess)
+    | extend Location = geo_info_from_ip_address(ClientIP)
+ }
 .create-or-alter materialized-view  ItemsLastView on table ActivityEvents { ItemsViews()
     | summarize arg_max(CreationTime,Id,UserId) by ItemId }
 .create-or-alter materialized-view  ActivitiesByWorkspaceUserDay on table ActivityEvents { ActivityEvents
