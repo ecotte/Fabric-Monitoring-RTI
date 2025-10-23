@@ -37,10 +37,10 @@ cluster_ingest = ""
 cluster_query = ""
 database_name = ""
 
-key_vault_uri = f""
-key_vault_tenant_id = f""
-key_vault_client_id = f""
-key_vault_client_secret = f""
+key_vault_uri = f"https://mrtacatkeyvault.vault.azure.net/"
+key_vault_tenant_id = f"tenant-id"
+key_vault_client_id = f"fabric-admin-api-sp-id"
+key_vault_client_secret = f"fabric-admin-api-sp-secret"
 
 # METADATA ********************
 
@@ -174,8 +174,8 @@ def capacities_process(connection_info):
                 | project scanTime
                 | summarize scantime=iff(isempty(max(scanTime)), datetime('2020-01-01'), max(scanTime))
             )
-        | summarize arg_max(scanTime, CapacityName, Sku, Region, State, Admins) by CapacityId
-        | project-reorder CapacityId, CapacityName, Sku, Region, State, Admins, scanTime
+        | summarize arg_max(scanTime, CapacityName, Sku, Region, State, Users, Admins) by CapacityId
+        | project-reorder CapacityId, CapacityName, Sku, Region, State, Admins, Users, scanTime
     """
 
     scan_time = pd.Timestamp.now()
@@ -189,9 +189,10 @@ def capacities_process(connection_info):
     df["Admins"]=df["Admins"].apply(json.dumps)
     df['scanTime'] = pd.Timestamp(scan_time)
 
+    df = df[['Capacity Id', 'Capacity Name', 'Sku', 'Region', 'State', 'Admins', 'Users', 'scanTime']]
+
     if len(df.index) > 0:
         kusto_ingest_process(df=df,table_name='CapacitiesHistory',connection_info=connection_info)
-
         response_cp = kusto_query(query=query_capacities,connection_info=connection_info)
 
 def apps_process(connection_info):
