@@ -37,10 +37,10 @@ cluster_ingest = ""
 cluster_query = ""
 database_name = ""
 
-key_vault_uri = f"https://mrtacatkeyvault.vault.azure.net/"
-key_vault_tenant_id = f"tenant-id"
-key_vault_client_id = f"fabric-admin-api-sp-id"
-key_vault_client_secret = f"fabric-admin-api-sp-secret"
+key_vault_uri = f""
+key_vault_tenant_id = f""
+key_vault_client_id = f""
+key_vault_client_secret = f""
 
 # METADATA ********************
 
