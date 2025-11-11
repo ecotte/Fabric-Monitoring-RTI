@@ -14,6 +14,13 @@ C:\Windows\ServiceProfiles\PBIEgwService\AppData\Local\Microsoft\On-premises dat
 
 #requires -Version 7
 
+param(
+    [string]
+    $configFilePath = ".\configs\Config.json",
+    [string]
+    $logFolder = ".\logs\"
+)
+
 $ErrorActionPreference = "Stop"
 
 Write-Host "*******************************************************************"
@@ -39,13 +46,6 @@ if ((Read-Host "Install PowerShell Module MicrosoftPowerBIMgmt? Needed only for 
 
 Write-Host "*******************************************************************"
 Write-Host "*******************************************************************"
-
-param(
-    [string]
-    $configFilePath = ".\configs\Config.json",
-    [string]
-    $logFolder = ".\logs\"
-)
 
 $ErrorActionPreference = "Stop"
 
