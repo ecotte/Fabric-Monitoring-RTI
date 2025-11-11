@@ -42,7 +42,7 @@ else {
 
 try {
 
-    $secureClientSecret = $config.ServicePrincipal.SecretText  | ConvertTo-SecureString
+    $secureClientSecret = (ConvertFrom-SecureWithMachineKey  $config.ServicePrincipal.SecretText) | ConvertTo-SecureString -AsPlainText -Force
     $memberId = $config.GatewayId
     $tenantId  = $config.ServicePrincipal.TennatId
     $appId = $Config.ServicePrincipal.AppId

@@ -14,6 +14,13 @@ C:\Windows\ServiceProfiles\PBIEgwService\AppData\Local\Microsoft\On-premises dat
 
 #requires -Version 7
 
+param(
+    [string]
+    $configFilePath = ".\configs\Config.json",
+    [string]
+    $logFolder = ".\logs\"
+)
+
 $ErrorActionPreference = "Stop"
 
 Write-Host "*******************************************************************"
@@ -40,18 +47,23 @@ if ((Read-Host "Install PowerShell Module MicrosoftPowerBIMgmt? Needed only for 
 Write-Host "*******************************************************************"
 Write-Host "*******************************************************************"
 
-param(
-    [string]
-    $configFilePath = ".\configs\Config.json",
-    [string]
-    $logFolder = ".\logs\"
-)
-
 $ErrorActionPreference = "Stop"
+
+Write-Host "Loading modules"
 
 $currentPath = (Split-Path $MyInvocation.MyCommand.Definition -Parent)
 
 Set-Location $currentPath
+
+#import the powershell functions to run the rest of the script
+$modulesFolder = "$currentPath\Modules"
+Get-Childitem $modulesFolder -Name -Filter "*.psm1" `
+| Sort-Object -Property @{ Expression = { if ($_ -eq "Utils.psm1") { " " }else { $_ } } } `
+| ForEach-Object {
+    $modulePath = "$modulesFolder\$_"
+    Unblock-File $modulePath
+    Import-Module $modulePath -Force
+}
 
 if (Test-Path $configFilePath) {
 
@@ -109,7 +121,7 @@ Write-Host "*******************************************************************"
 
 #Configure Service Principal
 
-$config.ServicePrincipal.SecretText = ConvertFrom-SecureString -SecureString (Read-Host "Set the Service Principal Secret Text" -AsSecureString)
+$config.ServicePrincipal.SecretText = ConvertTo-SecureWithMachineKey (Read-Host "Set the Service Principal Secret Text" -MaskInput)
 
 Write-Host "*******************************************************************"
 Write-Host "*******************************************************************"

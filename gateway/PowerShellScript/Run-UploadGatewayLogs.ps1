@@ -53,7 +53,7 @@ if (Test-Path $configFilePath) {
     }
     
     if ($config.ServicePrincipal.SecretText) {
-        $config.ServicePrincipal.SecretText = $config.ServicePrincipal.SecretText  | ConvertTo-SecureString
+        $config.ServicePrincipal.SecretText = (ConvertFrom-SecureWithMachineKey  $config.ServicePrincipal.SecretText) | ConvertTo-SecureString -AsPlainText -Force
     }
 
 
