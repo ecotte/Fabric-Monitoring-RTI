@@ -412,3 +412,20 @@ function Remove-OldReportFiles {
 
 
 }
+Function ConvertTo-SecureWithMachineKey($s) {
+    Add-Type -AssemblyName System.Security
+
+    $bytes = [System.Text.Encoding]::Unicode.GetBytes($s)
+    $SecureStr = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::LocalMachine)
+    $SecureStrBase64 = [System.Convert]::ToBase64String($SecureStr)
+    return $SecureStrBase64
+}
+
+Function ConvertFrom-SecureWithMachineKey($s) {
+    Add-Type -AssemblyName System.Security
+
+    $SecureStr = [System.Convert]::FromBase64String($s)
+    $bytes = [Security.Cryptography.ProtectedData]::Unprotect($SecureStr, $null, [Security.Cryptography.DataProtectionScope]::LocalMachine)
+    $Password = [System.Text.Encoding]::Unicode.GetString($bytes)
+    return $Password
+}

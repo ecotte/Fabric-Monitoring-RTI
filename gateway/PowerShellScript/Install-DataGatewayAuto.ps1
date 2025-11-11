@@ -2,10 +2,13 @@
 
 # Before begining to install and register a gateway, for connecting to the gateway service, you would need to use the # Connect-DataGatewayServiceAccount. More information documented in the help page of that cmdlet.
 
-Param(
-    # Documented on the Install-DataGateway help page
+#requires -Version 7 -Modules Az.Accounts
+
+param(
     [string]
-    $configFilePath = ".\configs\config.json"
+    $configFilePath = ".\configs\Config.json",
+    [string]
+    $logFolder = ".\logs\"
 )
 
 $ErrorActionPreference = "stop"
@@ -37,11 +40,72 @@ else {
     throw "Cannot find config file '$configFilePath'"
 }
 
-$secureClientSecret =  $config.ServicePrincipal.SecretText | ConvertTo-SecureString
-Connect-DataGatewayServiceAccount -ApplicationId $config.ServicePrincipal.AppId -ClientSecret $secureClientSecret -Tenant $config.ServicePrincipal.TennatId
+try {
 
-# Thrown an error if not logged in
-Get-DataGatewayAccessToken | Out-Null
+    $secureClientSecret = (ConvertFrom-SecureWithMachineKey  $config.ServicePrincipal.SecretText) | ConvertTo-SecureString -AsPlainText -Force
+    $memberId = $config.GatewayId
+    $tenantId  = $config.ServicePrincipal.TennatId
+    $appId = $Config.ServicePrincipal.AppId
+    $servicePrincipal = New-Object PSCredential -ArgumentList $appId, $secureClientSecret
+    
 
-# Run the gateway installer on the local computer
-Install-DataGateway -AcceptConditions
+    Connect-AzAccount -ServicePrincipal -Credential $servicePrincipal -TenantId $tenantId
+    Set-AzContext -Tenant $tenantId | Out-Null
+    $resourceUrl = "https://api.fabric.microsoft.com"
+    $authTokenInfo = (Get-AzAccessToken -ResourceUrl $resourceUrl -AsSecureString)
+    $authToken = $authTokenInfo.Token | ConvertFrom-SecureString -AsPlainText
+    $fabricHeaders = @{
+        'Content-Type'  = "application/json; charset=utf-8"
+        'Authorization' = "Bearer {0}" -f $authToken
+    }
+
+    $gateways = (Invoke-WebRequest -Headers $fabricHeaders -Method Get -Uri "$resourceUrl/v1/gateways/").Content | ConvertFrom-Json
+
+    foreach ($gateway in $gateways.value) {
+        $member = ((Invoke-WebRequest -Headers $fabricHeaders -Method Get -Uri "$resourceUrl/v1/gateways/$($gateway.id)/members").Content | ConvertFrom-Json).value | Where-Object {$_.id -eq $memberId}
+        if ($member) 
+        {
+            break
+        }
+    }
+
+    $computerInfor = Get-ComputerInfo 
+
+    $gatewayObject = @{
+        clusterId = $gateway.id
+        clusterName = $gateway.displayName
+        nodeId = $member.id
+        machine = $member.displayName
+        cloudDatasourceRefresh = $gateway.allowCloudConnectionRefresh
+        contactInformation = ""
+        customConnectors = $gateway.allowCustomConnectors
+        status = "Installed"
+        type = $gateway.type
+        version = $member.version
+        versionStatus = ""
+        osName = $computerInfor.OsName
+        osVersion = $computerInfor.OsVersion
+        cores = $computerInfor.CsNumberOfProcessors
+        logicalCores = $computerInfor.CsNumberOfLogicalProcessors
+        memoryGb = ($computerInfor.CsTotalPhysicalMemory / 1Gb)
+    }
+
+    $eventStreamConnection = ($config.EventHubs.ConnectionStrings | Where-Object { $_.Report -eq "Reports" }).EventHubConnectionString
+
+    if ($eventStreamConnection){
+        $body = @{
+            logType = "GatewayNodeInfo"
+            log     = @($gatewayObject)
+            logDate = [datetime]::UtcNow
+        } | ConvertTo-Json -Depth 5
+
+        Add-MsgEventHub -connectionString $eventStreamConnection -msg $body -connectionProperties $config.ConnectionProperties
+    }
+
+}
+catch {    
+    $ex = $_.Exception   
+    $ErrorDate = [datetime]::UtcNow     
+    Write-Error "Error on Get-DataGatewayInfo - $ex" -ErrorAction Continue     
+    Out-File  -FilePath "$($logFolder)GatewayMonitoring.log" -InputObject "[Error] $ErrorDate; $ex" -Force -Append
+}   

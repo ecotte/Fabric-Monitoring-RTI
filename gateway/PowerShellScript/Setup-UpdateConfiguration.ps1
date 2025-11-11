@@ -49,9 +49,21 @@ Write-Host "*******************************************************************"
 
 $ErrorActionPreference = "Stop"
 
+Write-Host "Loading modules"
+
 $currentPath = (Split-Path $MyInvocation.MyCommand.Definition -Parent)
 
 Set-Location $currentPath
+
+#import the powershell functions to run the rest of the script
+$modulesFolder = "$currentPath\Modules"
+Get-Childitem $modulesFolder -Name -Filter "*.psm1" `
+| Sort-Object -Property @{ Expression = { if ($_ -eq "Utils.psm1") { " " }else { $_ } } } `
+| ForEach-Object {
+    $modulePath = "$modulesFolder\$_"
+    Unblock-File $modulePath
+    Import-Module $modulePath -Force
+}
 
 if (Test-Path $configFilePath) {
 
@@ -109,7 +121,7 @@ Write-Host "*******************************************************************"
 
 #Configure Service Principal
 
-$config.ServicePrincipal.SecretText = ConvertFrom-SecureString -SecureString (Read-Host "Set the Service Principal Secret Text" -AsSecureString)
+$config.ServicePrincipal.SecretText = ConvertTo-SecureWithMachineKey (Read-Host "Set the Service Principal Secret Text" -MaskInput)
 
 Write-Host "*******************************************************************"
 Write-Host "*******************************************************************"
