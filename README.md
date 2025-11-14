@@ -1,7 +1,7 @@
-# Introduction 
-
 > [!CAUTION]
 > This solution accelerator is not an official Microsoft product! It is a solution accelerator, which can help you implement a monitoring solution within Fabric. As such there is no offical support available and there is a risk that things might break.
+
+# Introduction 
 
 Platform administrators face the challenge of observing the activities within the entire platform. There are multiple sources that provide information, such as capacity events, gateway locks, audit logs, and the platform inventory itself. Additionally, there is a need to obtain this data quickly to observe and react to events automatically.
 
@@ -22,7 +22,7 @@ Benefits include faster incident response, improved health analytics, and stream
 
 The solution is divided in several modules that can be used independtly or together.
 
-The modules included in this solution are:
+# Modules included with the Fabric Platform Monitoring 
 
 - Capacity Utilization
    - Uses the Capacity Events to get the information of the capacity in real-time.
