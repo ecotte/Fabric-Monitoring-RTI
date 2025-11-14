@@ -1,5 +1,8 @@
 # Introduction 
 
+> [!CAUTION]
+> This solution accelerator is not an official Microsoft product! It is a solution accelerator, which can help you implement a monitoring solution within Fabric. As such there is no offical support available and there is a risk that things might break.
+
 Platform administrators face the challenge of observing the activities within the entire platform. There are multiple sources that provide information, such as capacity events, gateway locks, audit logs, and the platform inventory itself. Additionally, there is a need to obtain this data quickly to observe and react to events automatically.
 
 To address this, a solution has been developed based on Fabric Real-Time Intelligence (RTI). This solution extracts information from sources like the new capacity events available in the Real Time Hub (RTH), audit logs through the API, gateway locks via a script included in the solution, and the inventory of the whole platform through the API.
@@ -13,11 +16,25 @@ This solution uses Microsoft Fabric to address these issues by providing:
 - In-App Configurations
 - Real-Time Dashboard
 - PowerShell Setup Configurations for the Gateway Events
+- Power BI Report for the Gateway Information
 
 Benefits include faster incident response, improved health analytics, and streamlined operations, consequently enhancing overall efficiency and reducing downtime. 
 
+The solution is divided in several modules that can be used independtly or together.
+
+The modules included in this solution are:
+
+- Capacity Utilization
+   - Uses the Capacity Events to get the information of the capacity in real-time.
+- Gateway Monitoring
+   - To receive the information of the Gateway in real-time. It requires a PowerShell script deployed in the Gateway Machine. Only works with On-Premise Data Gateway and not with VNET Gateways.
+- Activity Events
+   - Extract and store as fast as possible the Activity Events of the platform, using Eventhouse for handling semi-structure data. You could extract the logs with a frequency as low as 2 minutes.
+- Inventiry
+   - Extract the information of the tenant, keeping a semi-structure format for some details like specific item details that could be added or change over time.
+
 > [!CAUTION]
-> This solution accelerator is not an official Microsoft product! It is a solution accelerator, which can help you implement a monitoring solution within Fabric. As such there is no offical support available and there is a risk that things might break.
+> At the moment the Capacity Events are in Public Preview. Any change to this event source will be reflected in the solution over time. Please update your solution if the Capacity Events source is updated.
 
 # List of items used
 
@@ -30,8 +47,8 @@ The following Fabric items are deployed and used:
    - GatewayMonitoringReports
       - To receoive the gateway reports
 - Eventhouse:
-   - Platform and Audit DB
-      - To process, store and query all the information ingested
+   - Fabric Platform Monitoring
+      - To process, store and query all the information ingested. It divides the information by module, creating a KQL DB for each of the modules.
 - Notebooks:
    - Monitoring Audit Logs
       - Extract the Audit logs from the API and ingest them incrementally in the Eventhouse.
@@ -55,7 +72,9 @@ The following Fabric items are deployed and used:
          - Gateways and Members
          - Gateway Connections
          - Git Connections
-      - Recommended to be configured to run every 1 day.
+      - Recommended to be configured to run every 30 min.
+- Pipelines:
+   -For each of the notebooks there´s a Pipeline for the execution and tracking of the Notebooks. Configure the scheduling of the activities withing the Pipelines according to the recommended times
 
 
 The Notebooks uses the [Semantic Link Labs](https://github.com/microsoft/semantic-link-labs) to interact with the APIs.
@@ -71,7 +90,6 @@ To implement this solution, we have some step to follow. This steps will cover t
 - Notebook scheduling
 - Real-Time Dashboard configuration
 - Script deployment and setup in the gateway nodes (Optional)
-- Power BI Gateway Report (Optional)
 
 
 ## Requirements and estimated workloads 
@@ -90,7 +108,7 @@ To implement this solution, we have some step to follow. This steps will cover t
    - [Enhance admin APIs responses with DAX and mashup expressions](https://learn.microsoft.com/en-us/fabric/admin/tenant-settings-index#admin-api-settings)
    - [Member Role over the workspace to use](https://learn.microsoft.com/en-us/fabric/fundamentals/roles-workspaces)
    - [Admin Role over the On-Premise Data Gateways to monitor](https://learn.microsoft.com/en-us/data-integration/gateway/manage-security-roles)
-- Frabic Workspace with the Security Group added to the Workspace
+- Frabic Workspace with the Service Principal added to the Workspace. Add the Service Principal explicitly
 - Microsoft Fabric Capacity of F8 or higher, recommended F16 (the capacity size needed will depend on the amount of logs sent and processed by the system)
 
 
@@ -98,16 +116,8 @@ To implement this solution, we have some step to follow. This steps will cover t
 
 Create a workspace and import the [Platform Monitoring Setup Notebook](/setup/Platform%20Monitoring%20Setup.ipynb). Follow the instructions for the first run.
 
-If you change the variable "FIRST_RUN" to "False" the script will update the Eventhouse definition and notebooks. 
-
 > [!CAUTION]
 > No change are made to any additional item in the workspace or eventhouse. But if you customize the default ones (Notebook, Policies, Tables, Functions, etc), the change could be reverted back or the update could fail.
-
-## Eventstream changes
-
-## Notebook scheduling
-
-## Real-Time Dashboard configuration
 
 ## Script deployment and setup in the gateway nodes (Optional)
 
@@ -160,13 +170,7 @@ We can use the Task Scheduler in Windows to automate the script. You will fin a 
 
 ## Power BI Gateway Report (Optional)
 
-Use the template in the [\Gateway Monitoring.pbit](/gateway/PBI%20Report/Gateway%20Monitor.pbit) and put the parameters:
--KustoURL: The Query URL found in the Eventhouse
--KustoDB: The name of the KQL DB
-
-<img width="515" alt="image" src="/Images/11%20-%20PBIT%20Parameters.png">
-
-Then load the report and use the credentials with access to the Eventhouse.
+The report is deployed automaticaly with the solution, and the only acction needed is to setup an user in the Semantic Model to connec to the KQL DB.
 
 You will find the following pages.
 

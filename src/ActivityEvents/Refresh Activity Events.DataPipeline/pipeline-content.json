@@ -79,7 +79,7 @@
           "secureInput": false,
           "secureOutput": false
         },
-        "name": "Audit Logs",
+        "name": "Activity Events",
         "dependsOn": []
       }
     ],

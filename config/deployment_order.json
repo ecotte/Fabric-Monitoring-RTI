@@ -93,19 +93,9 @@
         "parent": "Fabric Platform Monitoring.Eventhouse"
     },
     {
-        "name": "Monitoring Audit Logs.Notebook",
+        "name": "Monitoring Activity Events.Notebook",
         "id": "5ec5fe5b-62fc-bb83-43a5-62710ccb023c",
-        "type": "ActivityEvents",
-        "schedule": {
-            "configuration": {
-                "type": "Cron",
-                "startDateTime": "2025-03-01T00:00:00",
-                "endDateTime": "2030-12-31T23:59:59",
-                "localTimeZoneId": "GMT Standard Time",
-                "interval": 5
-              },
-            "enabled": true
-        }
+        "type": "ActivityEvents"
     },
     {
         "name": "Refresh Activity Events.DataPipeline",
@@ -150,9 +140,9 @@
         ],
         "acitivities": [
             {
-                "name": "Audit Logs",
+                "name": "Activity Events",
                 "type": "TridentNotebook",
-                "itemName": "Monitoring Audit Logs.Notebook"
+                "itemName": "Monitoring Activity Events.Notebook"
             }
         ]
     },
