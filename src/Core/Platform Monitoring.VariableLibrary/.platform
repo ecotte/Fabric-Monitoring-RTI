@@ -2,11 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "VariableLibrary",
-    "displayName": "Platform Monitoring",
-    "description": ""
+    "displayName": "Platform Monitoring"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "c33a7ab0-51c2-b7f5-442a-3b7180051688"
+    "logicalId": "9578b1f0-81e6-bc8a-4c31-f90acb439807"
   }
 }
