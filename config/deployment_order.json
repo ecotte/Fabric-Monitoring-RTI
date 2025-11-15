@@ -18,7 +18,7 @@
         "parent": "Fabric Platform Monitoring.Eventhouse"
     },
     {
-        "name": "CapacityUtilizationEvents.Eventstream",
+        "name": "CapacityEvents.Eventstream",
         "id": "d156c61a-5f5d-bf9c-4f99-69a0e68705a4",
         "type": "Capacity",
         "destinations": [
