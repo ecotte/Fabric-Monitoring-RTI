@@ -30,6 +30,23 @@
         ]
     },
     {
+        "name": "Capacity Events Update Eventstream.Notebook",
+        "id": "e56ab424-bc5c-859b-409a-e7e1534f8a10",
+        "type": "Capacity"
+    },
+    {
+        "name": "Capacity Events Update Eventstream.DataPipeline",
+        "id": "16d8ab6f-dc8c-a981-4d14-4c5aea8fcf15",
+        "type": "Capacity",
+        "acitivities": [
+            {
+                "name": "Refreshables",
+                "type": "TridentNotebook",
+                "itemName": "Capacity Events Update Eventstream.Notebook"
+            }
+        ]
+    },
+    {
         "name": "Capacity Monitoring.KQLDashboard",
         "id": "297e6a7e-2f76-8797-4b8e-d55141156547",
         "type": "Capacity",
@@ -198,17 +215,7 @@
     {
         "name": "Monitoring Extraction Refreshables.Notebook",
         "id": "754f754a-4d28-8d57-48b5-705db14578f8",
-        "type": "Inventory",
-        "schedule": {
-            "configuration": {
-                "type": "Cron",
-                "startDateTime": "2025-03-01T00:00:00",
-                "endDateTime": "2030-12-31T23:59:59",
-                "localTimeZoneId": "GMT Standard Time",
-                "interval": 5
-              },
-            "enabled": true
-        }
+        "type": "Inventory"
     },
     {
         "name": "Refresh Inventory.DataPipeline",
