@@ -40,7 +40,7 @@
         "type": "Capacity",
         "acitivities": [
             {
-                "name": "Refreshables",
+                "name": "Update Eventstream",
                 "type": "TridentNotebook",
                 "itemName": "Capacity Events Update Eventstream.Notebook"
             }
